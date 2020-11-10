@@ -1,0 +1,1289 @@
+﻿{
+"TechnologyTree": [
+  {
+    "name": "general",
+    "dependances": [
+      ""
+    ],
+    "words": {
+      "subjects": [
+        "one",
+        "none",
+        "most",
+        "lot",
+        "all",
+        "some"
+      ],
+      "verbs": [
+        ""
+      ],
+      "objects": [
+        "death",
+        "life",
+        "human",
+        "nature"
+      ]
+    }
+  },
+  {
+    "name": "farming",
+    "dependances": [
+      "oral"
+    ],
+    "words": {
+      "subjects": [
+        ""
+      ],
+      "verbs": [
+        "produce",
+        "create"
+      ],
+      "objects": [
+        ""
+      ]
+    }
+  },
+  {
+    "name": "written",
+    "dependances": [
+      ""
+    ],
+    "words": {
+      "subjects": [
+        ""
+      ],
+      "verbs": [
+        "read",
+        "write"
+      ],
+      "objects": [
+        ""
+      ]
+    }
+  },
+  {
+    "name": "oral",
+    "dependances": [
+      ""
+    ],
+    "words": {
+      "subjects": [
+        ""
+      ],
+      "verbs": [
+        "listen",
+        "know",
+        "hear",
+        "tell"
+      ],
+      "objects": [
+        ""
+      ]
+    }
+  },
+  {
+    "name": "numbers",
+    "dependances": [
+      "written"
+    ],
+    "words": {
+      "subjects": [
+        ""
+      ],
+      "verbs": [
+        ""
+      ],
+      "objects": [
+        "counting",
+        "calculation",
+        "result",
+        "total"
+      ]
+    }
+  },
+  {
+    "name": "religion",
+    "dependances": [
+      "oral",
+      "general"
+    ],
+    "words": {
+      "subjects": [
+        ""
+      ],
+      "verbs": [
+        ""
+      ],
+      "objects": [
+        "gods",
+        "offering",
+        "superior"
+      ]
+    }
+  },
+  {
+    "name": "mathematics",
+    "dependances": [
+      "written",
+      "numbers"
+    ],
+    "words": {
+      "subjects": [
+        ""
+      ],
+      "verbs": [
+        "abstract",
+        "count",
+        "calculate"
+      ],
+      "objects": [
+        ""
+      ]
+    }
+  },
+  {
+    "name": "calendar",
+    "dependances": [
+      "religion",
+      "mathematics"
+    ],
+    "words": {
+      "subjects": [
+        ""
+      ],
+      "verbs": [
+        "predict",
+        "anticipate",
+        "foresee"
+      ],
+      "objects": [
+        ""
+      ]
+    }
+  },
+  {
+    "name": "astronomy",
+    "dependances": [
+      "craftship",
+      "calendar"
+    ],
+    "words": {
+      "subjects": [
+        ""
+      ],
+      "verbs": [
+        ""
+      ],
+      "objects": [
+        "planet",
+        "sun",
+        "moon",
+        "earth"
+      ]
+    }
+  },
+  {
+    "name": "craftship",
+    "dependances": [
+      "farming",
+      "religion"
+    ],
+    "words": {
+      "subjects": [
+        ""
+      ],
+      "verbs": [
+        ""
+      ],
+      "objects": [
+        "gift",
+        "protection",
+        "tools",
+        "manufacture"
+      ]
+    }
+  },
+  {
+    "name": "physics",
+    "dependances": [
+      "mathematics",
+      "general"
+    ],
+    "words": {
+      "subjects": [
+        ""
+      ],
+      "verbs": [
+        "measure",
+        "modelize",
+        "research"
+      ],
+      "objects": [
+        ""
+      ]
+    }
+  },
+  {
+    "name": "electricity",
+    "dependances": [
+      "physics",
+      "general"
+    ],
+    "words": {
+      "subjects": [
+        ""
+      ],
+      "verbs": [
+        ""
+      ],
+      "objects": [
+        "power",
+        "flux"
+      ]
+    }
+  },
+  {
+    "name": "electronic",
+    "dependances": [
+      "electricity",
+      "physics"
+    ],
+    "words": {
+      "subjects": [
+        ""
+      ],
+      "verbs": [
+        ""
+      ],
+      "objects": [
+        "communications",
+        "informations"
+      ]
+    }
+  },
+  {
+    "name": "mecanic",
+    "dependances": [
+      "craftship",
+      "physics"
+    ],
+    "words": {
+      "subjects": [
+        ""
+      ],
+      "verbs": [
+        ""
+      ],
+      "objects": [
+        "mecanism",
+        "system",
+        "forces"
+      ]
+    }
+  },
+  {
+    "name": "computing",
+    "dependances": [
+      "electronic",
+      "physics"
+    ],
+    "words": {
+      "subjects": [
+        ""
+      ],
+      "verbs": [
+        "compute",
+        "store"
+      ],
+      "objects": [
+        ""
+      ]
+    }
+  },
+  {
+    "name": "aeronautic",
+    "dependances": [
+      "computimg",
+      "mecanic"
+    ],
+    "words": {
+      "subjects": [
+        ""
+      ],
+      "verbs": [
+        ""
+      ],
+      "objects": [
+        "flight"
+      ]
+    }
+  },
+  {
+    "name": "aerospatial",
+    "dependances": [
+      "aeronautic",
+      "physics"
+    ],
+    "words": {
+      "subjects": [
+        ""
+      ],
+      "verbs": [
+        "launch"
+      ],
+      "objects": [
+        ""
+      ]
+    }
+  }
+],
+"Descendants": [
+  {
+    "name": "death",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "life",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "human",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "nature",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "listen",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "know",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "hear",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "tell",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "read",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "write",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "counting",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "calculation",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "result",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "total",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "abstract",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "count",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "calculate",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "gods",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "spirits",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "superior",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "predict",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "anticipate",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "foresee",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "gift",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "protection",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "manufacture",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "produce",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "create",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "measure",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "modelize",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "research",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "power",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "flux",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "communications",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "informations",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "mecanism",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "system",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "forces",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "compute",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "store",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "flight",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "launch",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "planet",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "sun",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "moon",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "earth",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "one",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "none",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "most",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "lot",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "all",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "some",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "value": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+],
+"AutoTech": [
+  {
+    "name": "armors",
+    "dependance": "craftship",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "time": 0
+  },
+  {
+    "name": "weapons",
+    "dependance": "craftship",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "time": 0
+  },
+  {
+    "name": "cult",
+    "dependance": "religion",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "time": 0
+  },
+  {
+    "name": "ritual",
+    "dependance": "calendar",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "time": 0
+  },
+  {
+    "name": "logic",
+    "dependance": "mathamatics",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "time": 0
+  },
+  {
+    "name": "arithmetic",
+    "dependance": "mathematics",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "time": 0
+  },
+  {
+    "name": "telescope",
+    "dependance": "astronomy",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "time": 0
+  },
+  {
+    "name": "solar system",
+    "dependance": "astronomy",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "time": 0
+  },
+  {
+    "name": "metric system",
+    "dependance": "physics",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "time": 0
+  },
+  {
+    "name": "big bang",
+    "dependance": "physics",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "time": 0
+  },
+  {
+    "name": "lamp",
+    "dependance": "electricity",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "time": 0
+  },
+  {
+    "name": "radio",
+    "dependance": "electronic",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "time": 0
+  },
+  {
+    "name": "car",
+    "dependance": "mecanic",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "time": 0
+  },
+  {
+    "name": "plane",
+    "dependance": "aeronautic",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "time": 0
+  },
+  {
+    "name": "rocket",
+    "dependance": "aerospatial",
+    "limits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "time": 0
+  }
+]
+}
