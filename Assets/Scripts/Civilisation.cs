@@ -149,6 +149,13 @@ public class Civilisation : MonoBehaviour
                 }
             }
         }
+
+        for (int i = 0; i < words.Length; i++)
+        {
+            if (words[i].GetComponentInChildren<Image>().sprite != null)
+                Destroy(words[i].GetComponentInChildren<Image>().sprite.texture);
+            Destroy(words[i].gameObject);
+        }
     }
 
     private JsonParser.Technos GetNewWord(List<JsonParser.Word> wordsSubjects, JsonParser.Technos techs,
