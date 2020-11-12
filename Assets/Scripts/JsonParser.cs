@@ -12,16 +12,22 @@ public class JsonParser : MonoBehaviour
     public struct Data
     {
         public List<Technos> TechnologyTree;
-        public List<Descends> Descendants;
-        public List<Auto> AutoTech;
     };
+    [Serializable]
+    public struct Word
+    {
+        public string name;
+        public float[] limits;
+        public float[] value;
+        public bool useable;
+    }
 
     [Serializable]
     public struct WordsStruct
     {
-        public List<string> subjects;
-        public List<string> verbs;
-        public List<string> objects;
+        public List<Word> subjects;
+        public List<Word> verbs;
+        public List<Word> objects;
     };
 
     [Serializable]
@@ -30,15 +36,7 @@ public class JsonParser : MonoBehaviour
         public string name;
         public List<string> dependances;
         public WordsStruct words;
-        public bool useable;
-    };
-
-    [Serializable]
-    public struct Descends
-    {
-        public string name;
-        public Vector4 limits;
-        public Vector4 value;
+        public List<Auto> descendsTechs; 
         public bool useable;
     };
 
@@ -46,17 +44,16 @@ public class JsonParser : MonoBehaviour
     public struct Auto
     {
         public string name;
-        public string dependance;
-        public Vector4 limits;
+        public float[] limits;
         public float time;
         public bool useable;
     };
     public Data data;
     [FormerlySerializedAs("nameFile")] [SerializeField] private string _nameFile;
-    private void Start()
+    private void Awake()
     {
         Instance = this;
-        data = JsonUtility.FromJson<Data>(File.ReadAllText(Application.streamingAssetsPath + "/" + _nameFile));
+        data = JsonUtility.FromJson<Data>(Resources.Load<TextAsset>(_nameFile).text);
     }
 
     // Update is called once per frame

@@ -1,0 +1,1182 @@
+﻿{
+  "TechnologyTree": [
+    {
+      "name": "general",
+      "dependances": [],
+      "words": {
+        "subjects": [
+          {
+            "name": "one",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "none",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "most",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "lot",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "all",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "some",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        ],
+        "verbs": [],
+        "objects": [
+          {
+            "name": "death",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              20,
+              0,
+              10,
+              10
+            ]
+          },
+          {
+            "name": "life",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "human",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "nature",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "farming",
+      "dependances": [
+      ],
+      "words": {
+        "subjects": [],
+        "verbs": [
+          {
+            "name": "produce",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "create",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "objects": []
+      }
+    },
+    {
+      "name": "written",
+      "dependances": [],
+      "words": {
+        "subjects": [],
+        "verbs": [
+          {
+            "name": "read",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "write",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "objects": []
+      }
+    },
+    {
+      "name": "oral",
+      "dependances": [],
+      "words": {
+        "subjects": [],
+        "verbs": [
+          {
+            "name": "listen",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "know",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              5,
+              20,
+              10,
+              5
+            ]
+          },
+          {
+            "name": "hear",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "tell",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "objects": []
+      }
+    },
+    {
+      "name": "numbers",
+      "dependances": [
+        "written",
+        "general"
+      ],
+      "words": {
+        "subjects": [],
+        "verbs": [],
+        "objects": [
+          {
+            "name": "counting",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "calculation",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "result",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "total",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "religion",
+      "dependances": [
+        "oral",
+        "general"
+      ],
+      "words": {
+        "subjects": [],
+        "verbs": [],
+        "objects": [
+          {
+            "name": "gods",
+            "limits": [
+              25,
+              0,
+              20,
+              10
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "offering",
+            "limits": [
+              15,
+              0,
+              10,
+              20
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "superior",
+            "limits": [
+              25,
+              0,
+              0,
+              25
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "autoTechs": [
+        {
+          "name": "cult",
+          "limits": [
+            35,
+            0,
+            0,
+            15
+          ],
+          "time": 0
+        }
+      ]
+    },
+    {
+      "name": "mathematics",
+      "dependances": [
+        "written",
+        "numbers"
+      ],
+      "words": {
+        "subjects": [],
+        "verbs": [
+          {
+            "name": "abstract",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "count",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "calculate",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "objects": []
+      },
+      "autoTechs": [
+        {
+          "name": "arithmetic",
+          "limits": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "time": 0
+        },
+        {
+          "name": "logic",
+          "limits": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "time": 0
+        }
+      ]
+    },
+    {
+      "name": "calendar",
+      "dependances": [
+        "religion",
+        "mathematics"
+      ],
+      "words": {
+        "subjects": [],
+        "verbs": [
+          {
+            "name": "predict",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "anticipating",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "foresee",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "objects": []
+      },
+      "autoTechs": [
+        {
+          "name": "ritual",
+          "limits": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "time": 0
+        }
+      ]
+    },
+    {
+      "name": "astronomy",
+      "dependances": [
+        "craftship",
+        "calendar"
+      ],
+      "words": {
+        "subjects": [],
+        "verbs": [],
+        "objects": [
+          {
+            "name": "planet",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "sun",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "moon",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "earth",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "autoTechs": [
+        {
+          "name": "solar system",
+          "limits": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "time": 0
+        },
+        {
+          "name": "telescope",
+          "limits": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "time": 0
+        }
+      ]
+    },
+    {
+      "name": "craftship",
+      "dependances": [
+        "farming",
+        "religion"
+      ],
+      "words": {
+        "subjects": [],
+        "verbs": [],
+        "objects": [
+          {
+            "name": "gift",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "protection",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "tools",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "manufacture",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "autoTechs": [
+        {
+          "name": "armors",
+          "limits": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "time": 0
+        },
+        {
+          "name": "weapons",
+          "limits": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "time": 0
+        }
+      ]
+    },
+    {
+      "name": "physics",
+      "dependances": [
+        "mathematics",
+        "general"
+      ],
+      "words": {
+        "subjects": [],
+        "verbs": [
+          {
+            "name": "measure",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "modelize",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "research",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "objects": []
+      },
+      "autoTechs": [
+        {
+          "name": "metric system",
+          "limits": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "time": 0
+        },
+        {
+          "name": "big bang",
+          "limits": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "time": 0
+        }
+      ]
+    },
+    {
+      "name": "electricity",
+      "dependances": [
+        "physics",
+        "general"
+      ],
+      "words": {
+        "subjects": [],
+        "verbs": [],
+        "objects": [
+          {
+            "name": "power",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "flux",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "autoTechs": [
+        {
+          "name": "lamp",
+          "limits": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "time": 0
+        }
+      ]
+    },
+    {
+      "name": "electronic",
+      "dependances": [
+        "electricity",
+        "physics"
+      ],
+      "words": {
+        "subjects": [],
+        "verbs": [],
+        "objects": [
+          {
+            "name": "communications",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "informations",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "autoTechs": [
+        {
+          "name": "radio",
+          "limits": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "time": 0
+        }
+      ]
+    },
+    {
+      "name": "mecanic",
+      "dependances": [
+        "craftship",
+        "physics"
+      ],
+      "words": {
+        "subjects": [],
+        "verbs": [],
+        "objects": [
+          {
+            "name": "mecanism",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "system",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "forces",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "autoTechs": [
+        {
+          "name": "car",
+          "limits": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "time": 0
+        }
+      ]
+    },
+    {
+      "name": "computing",
+      "dependances": [
+        "electronic",
+        "physics"
+      ],
+      "words": {
+        "subjects": [],
+        "verbs": [
+          {
+            "name": "compute",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          },
+          {
+            "name": "store",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "objects": []
+      }
+    },
+    {
+      "name": "aeronautic",
+      "dependances": [
+        "computimg",
+        "mecanic"
+      ],
+      "words": {
+        "subjects": [],
+        "verbs": [],
+        "objects": [
+          {
+            "name": "fly",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ]
+      },
+      "autoTechs": [
+        {
+          "name": "plane",
+          "limits": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "time": 0
+        }
+      ]
+    },
+    {
+      "name": "aerospatial",
+      "dependances": [
+        "aeronautic",
+        "physics"
+      ],
+      "words": {
+        "subjects": [],
+        "verbs": [
+          {
+            "name": "launch",
+            "limits": [
+              0,
+              0,
+              0,
+              0
+            ],
+            "value": [
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "objects": []
+      },
+      "autoTechs": [
+        {
+          "name": "rocket",
+          "limits": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "time": 0
+        }
+      ]
+    }
+  ]
+}
