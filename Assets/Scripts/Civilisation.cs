@@ -21,13 +21,14 @@ public class Civilisation : MonoBehaviour
     public Vector4 tmpSubject;
     public Vector4 tmpVerb;
     public Vector4 tmpObject;
-
-    [SerializeField] private ColorBlock normalColors;
-    [SerializeField] private ColorBlock aboveColors;
-    [SerializeField] private ColorBlock beneathColors;
+    private GameObject _notifPanel;
+    [FormerlySerializedAs("normalColors")] [SerializeField] private ColorBlock _normalColors;
+    [FormerlySerializedAs("aboveColors")] [SerializeField] private ColorBlock _aboveColors;
+    [FormerlySerializedAs("beneathColors")] [SerializeField] private ColorBlock _beneathColors;
     // Start is called before the first frame update
     void Awake()
     {
+        PlayerPrefs.DeleteAll();
         // if (PlayerPrefs.HasKey("religion" + gameObject.name))
         //     _religion.value = PlayerPrefs.GetFloat("religion" + gameObject.name);
         // if (PlayerPrefs.HasKey("science" + gameObject.name))
@@ -46,7 +47,7 @@ public class Civilisation : MonoBehaviour
             _social.value = Random.Range(10f, 50f);
             _science.value = Random.Range(10f, 50f);
             _conquest.value = Random.Range(10f, 50f);
-            _currentValues = new Vector4(_religion.value, _science.value, _social.value, _conquest.value);
+            _currentValues = new Vector4(_religion.value, _social.value, _science.value, _conquest.value);
             data = JsonParser.Instance.data;
             for (int i = 0; i < data.TechnologyTree.Count; i++)
             {
@@ -92,6 +93,25 @@ public class Civilisation : MonoBehaviour
         
             // }
             _resultPanel = GameObject.FindWithTag("Result");
+            _notifPanel = GameObject.FindWithTag("Notifications");
+    }
+
+    public void AddTurn()
+    {
+        for (int i = 0; i < data.TechnologyTree.Count; i++)
+        {
+            if (data.TechnologyTree[i].useable)
+            {
+                for (int j = 0; j < data.TechnologyTree[i].autoTechs.Count; j++)
+                {
+                    JsonParser.Auto tech = data.TechnologyTree[i].autoTechs[j];
+                    if (tech.limits[0] >= _religion.value && tech.limits[1] >= _social.value 
+                                                          && _science.value >= tech.limits[2] &&
+                                                          _conquest.value >= tech.limits[3] && tech.time > 0)
+                        tech.time -= 1;
+                }
+            }
+        }
     }
 
     public void ExecuteResult()
@@ -108,9 +128,7 @@ public class Civilisation : MonoBehaviour
         int count = 0;
         for (int i = 0; i < data.TechnologyTree.Count; i++)
         {
-            if (data.TechnologyTree[i].useable)
-                continue;
-            else if (data.TechnologyTree[i].dependances.Contains(techs[count]))
+            if (data.TechnologyTree[i].dependances.Contains(techs[count]))
             {
                 count++;
                 while (count < techs.Count)
@@ -124,8 +142,23 @@ public class Civilisation : MonoBehaviour
                 }
                 if (count == techs.Count)
                 {
+                    Player.Instance.AddTurn();
                     JsonParser.Technos tmpStruct = data.TechnologyTree[i];
+                    if (tmpStruct.useable)
+                        break;
                     JsonParser.Technos tmpStructPlayer = Player.Instance.data.TechnologyTree[i];
+                    if (!tmpStruct.useable)
+                    {
+                        Notifications.Instance.gameObject.SetActive(true);
+                        Notifications.Instance.TimeVisible += 2.5f;
+                        Notifications.Instance.AddText("New Technology " + gameObject.name + " : " + tmpStruct.name);
+                    }
+                    if (!tmpStructPlayer.useable)
+                    {
+                        Notifications.Instance.gameObject.SetActive(true);
+                        Notifications.Instance.TimeVisible += 2.5f;
+                        Notifications.Instance.AddText("New Technology Player : " + tmpStructPlayer.name);
+                    }
                     tmpStruct.useable = true;
                     tmpStructPlayer.useable = true;
                             
@@ -158,21 +191,30 @@ public class Civilisation : MonoBehaviour
         }
     }
 
-    private JsonParser.Technos GetNewWord(List<JsonParser.Word> wordsSubjects, JsonParser.Technos techs,
+    private JsonParser.Technos GetNewWord(List<JsonParser.Word> words, JsonParser.Technos techs,
         Word.wordType type, ref JsonParser.Technos playerStruct)
     {
         float distance = 10000;
         int index = 0;
-        for (int i = 0; i < wordsSubjects.Count; i++)
+        for (int i = 0; i < words.Count; i++)
         {
-            if (Vector4.Distance(new Vector4(wordsSubjects[i].limits[0], wordsSubjects[i].limits[1],
-                wordsSubjects[i].limits[2],wordsSubjects[i].limits[3]), _currentValues) < distance)
+            if (Vector4.Distance(new Vector4(words[i].limits[0], words[i].limits[1],
+                words[i].limits[2],words[i].limits[3]), _currentValues) < distance &&
+                (type == Word.wordType.subject && !playerStruct.words.subjects[index].useable) ||
+                (type == Word.wordType.verb && !playerStruct.words.verbs[index].useable) ||
+                (type == Word.wordType.obj && !playerStruct.words.objects[index].useable))
                 index = i;
         }
-
         if (type == Word.wordType.subject)
         {
             JsonParser.Word tmpWordsPlayer = playerStruct.words.subjects[index];
+            if (!tmpWordsPlayer.useable)
+            {
+                Notifications.Instance.gameObject.SetActive(true);
+                Notifications.Instance.TimeVisible += 2.5f;
+                Notifications.Instance.AddText("New Word : " + tmpWordsPlayer.name);
+            }
+
             tmpWordsPlayer.useable = true;
             playerStruct.words.subjects[index] = tmpWordsPlayer;
             JsonParser.Word tmpWords = techs.words.subjects[index];
@@ -182,14 +224,25 @@ public class Civilisation : MonoBehaviour
         else if(type == Word.wordType.verb)
         {
             JsonParser.Word tmpWordsPlayer = playerStruct.words.verbs[index];
+            if (!tmpWordsPlayer.useable)
+            {
+                Notifications.Instance.TimeVisible += 2.5f;
+                Notifications.Instance.AddText("New Word : " + tmpWordsPlayer.name);
+            }
             tmpWordsPlayer.useable = true;
             playerStruct.words.verbs[index] = tmpWordsPlayer;
             JsonParser.Word tmpWords = techs.words.verbs[index];
             tmpWords.useable = true;
             techs.words.verbs[index] = tmpWords;
-        }else if(type == Word.wordType.obj)
+        }
+        else if(type == Word.wordType.obj)
         {
             JsonParser.Word tmpWordsPlayer = playerStruct.words.objects[index];
+            if (!tmpWordsPlayer.useable)
+            {
+                Notifications.Instance.TimeVisible += 2.5f;
+                Notifications.Instance.AddText("New Word : " + tmpWordsPlayer.name);
+            }
             tmpWordsPlayer.useable = true;
             playerStruct.words.objects[index] = tmpWordsPlayer;
             JsonParser.Word tmpWords = techs.words.objects[index];
@@ -219,28 +272,28 @@ public class Civilisation : MonoBehaviour
             _science.value = _currentValues.z + (tmpObject.z + tmpVerb.z) * tmpSubject.z;
             _conquest.value = _currentValues.w + (tmpObject.w + tmpVerb.w) * tmpSubject.w;
             if (_religion.value > _currentValues.x)
-                _religion.colors = aboveColors;
+                _religion.colors = _aboveColors;
             if (_religion.value < _currentValues.x)
-                _religion.colors = beneathColors;
+                _religion.colors = _beneathColors;
             if (_social.value > _currentValues.y)
-                _social.colors = aboveColors;
+                _social.colors = _aboveColors;
             if (_social.value < _currentValues.y)
-                _social.colors = beneathColors;
+                _social.colors = _beneathColors;
             if (_science.value > _currentValues.z)
-                _science.colors = aboveColors;
+                _science.colors = _aboveColors;
             if (_science.value < _currentValues.z)
-                _science.colors = beneathColors;
+                _science.colors = _beneathColors;
             if (_conquest.value > _currentValues.w)
-                _conquest.colors = aboveColors;
+                _conquest.colors = _aboveColors;
             if (_conquest.value < _currentValues.w)
-                _conquest.colors = beneathColors;
+                _conquest.colors = _beneathColors;
         }
         else
         {
-            _religion.colors = normalColors;
-            _social.colors = normalColors;
-            _science.colors = normalColors;
-            _conquest.colors = normalColors;
+            _religion.colors = _normalColors;
+            _social.colors = _normalColors;
+            _science.colors = _normalColors;
+            _conquest.colors = _normalColors;
         }
     }
 }

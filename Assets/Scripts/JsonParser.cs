@@ -36,7 +36,7 @@ public class JsonParser : MonoBehaviour
         public string name;
         public List<string> dependances;
         public WordsStruct words;
-        public List<Auto> descendsTechs; 
+        public List<Auto> autoTechs; 
         public bool useable;
     };
 

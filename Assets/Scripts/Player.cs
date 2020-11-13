@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -9,10 +10,21 @@ public class Player : MonoBehaviour
 {
     public static Player Instance;
     public JsonParser.Data data;
+    public int turn = 0;
+    private Civilisation[] _civilisations;
+    [SerializeField] private TextMeshProUGUI turnText;
+    public void AddTurn()
+    {
+        turn += 1;
+        for (int i = 0; i < _civilisations.Length; i++)
+            _civilisations[i].AddTurn();
+        turnText.text = "Turn " + turn;
+    }
 
     private void Awake()
     {
         Instance = this;
+        turnText = GameObject.FindWithTag("Turn").GetComponent<TextMeshProUGUI>();
         // if (File.Exists(Application.persistentDataPath + "/" + gameObject.name + ".save"))
         // {
         //     data = JsonUtility.FromJson<JsonParser.Data>(File.ReadAllText(Application.persistentDataPath + "/" + gameObject.name + ".save"));
@@ -53,7 +65,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _civilisations = FindObjectsOfType<Civilisation>();
     }
 
     private void OnApplicationQuit()
