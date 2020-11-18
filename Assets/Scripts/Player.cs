@@ -5,6 +5,7 @@ using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Player : MonoBehaviour
     public JsonParser.Data data;
     public int turn = 0;
     private Civilisation[] _civilisations;
+    private RaycastHit2D hit;
     [SerializeField] private TextMeshProUGUI turnText;
     public void AddTurn()
     {
@@ -23,6 +25,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        hit = new RaycastHit2D();
         Instance = this;
         turnText = GameObject.FindWithTag("Turn").GetComponent<TextMeshProUGUI>();
         // if (File.Exists(Application.persistentDataPath + "/" + gameObject.name + ".save"))
@@ -76,6 +79,5 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 }

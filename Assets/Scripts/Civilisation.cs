@@ -5,6 +5,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -25,7 +26,16 @@ public class Civilisation : MonoBehaviour
     [FormerlySerializedAs("normalColors")] [SerializeField] private ColorBlock _normalColors;
     [FormerlySerializedAs("aboveColors")] [SerializeField] private ColorBlock _aboveColors;
     [FormerlySerializedAs("beneathColors")] [SerializeField] private ColorBlock _beneathColors;
+    [SerializeField] private GameObject _exit;
+    [SerializeField] private TextMeshProUGUI _autoTechText;
+    private GameObject _panelAbstract;
+    private Word[] words;
+    private bool _hitting = false;
+    private int indexTech = 0;
+    [SerializeField] private GameObject _content;
+    [SerializeField]private GameObject _prefab;
     // Start is called before the first frame update
+    
     void Awake()
     {
         PlayerPrefs.DeleteAll();
@@ -94,6 +104,9 @@ public class Civilisation : MonoBehaviour
             // }
             _resultPanel = GameObject.FindWithTag("Result");
             _notifPanel = GameObject.FindWithTag("Notifications");
+            _panelAbstract = GameObject.FindWithTag("Abstract");
+            _panelAbstract.SetActive(false);
+            _exit.SetActive(false);
     }
 
     public void AddTurn()
@@ -104,6 +117,8 @@ public class Civilisation : MonoBehaviour
             {
                 for (int j = 0; j < data.TechnologyTree[i].autoTechs.Count; j++)
                 {
+                    if (!data.TechnologyTree[i].autoTechs[j].useable)
+                        continue;
                     JsonParser.Auto tech = data.TechnologyTree[i].autoTechs[j];
                     if (tech.limits[0] >= _religion.value && tech.limits[1] >= _social.value 
                                                           && _science.value >= tech.limits[2] &&
@@ -116,7 +131,7 @@ public class Civilisation : MonoBehaviour
 
     public void ExecuteResult()
     {
-        Word[] words = _resultPanel.GetComponentsInChildren<Word>();
+        words = _resultPanel.GetComponentsInChildren<Word>();
         if (words.Length != 3)
             return;
         List<string> techs = new List<string>();
@@ -159,6 +174,14 @@ public class Civilisation : MonoBehaviour
                         Notifications.Instance.TimeVisible += 2.5f;
                         Notifications.Instance.AddText("New Technology Player : " + tmpStructPlayer.name);
                     }
+
+                    if (tmpStruct.autoTechs.Count > 0)
+                    {
+                        JsonParser.Auto tmpStructAutoTech = tmpStruct.autoTechs[indexTech];
+                        tmpStructAutoTech.useable = true;
+                        tmpStruct.autoTechs[indexTech] = tmpStructAutoTech;
+                    }
+
                     tmpStruct.useable = true;
                     tmpStructPlayer.useable = true;
                             
@@ -265,6 +288,42 @@ public class Civilisation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        RaycastHit2D hit = Physics2D.Raycast(Input.mousePosition, Vector2.zero);
+        if (hit && (hit.collider.CompareTag("Civilisation") || hit.collider.CompareTag("Abstract")))
+        {
+            Debug.Log(hit.collider.tag);
+            if (!_hitting)
+            {
+                for (int i = 0; i < data.TechnologyTree.Count; i++)
+                {
+                    if (data.TechnologyTree[i].useable)
+                    {
+                        for (int j = 0; j < data.TechnologyTree[i].autoTechs.Count; j++)
+                        {
+                            if (data.TechnologyTree[i].autoTechs[j].useable)
+                            {
+                                GameObject go = Instantiate<GameObject>(_prefab, Vector3.zero, Quaternion.identity, _content.transform);
+                                go.GetComponentInChildren<TextMeshProUGUI>().text =
+                                    data.TechnologyTree[i].autoTechs[j].name;
+                                if (Resources.Load<Sprite>(data.TechnologyTree[i].autoTechs[j].name))
+                                    go.GetComponentInChildren<Image>().sprite =
+                                        Resources.Load<Sprite>(data.TechnologyTree[i].autoTechs[j].name);
+                            }
+                        }
+                    }
+                }
+                _hitting = true;
+                _panelAbstract.SetActive(true);
+            }
+        }
+        else
+        {
+            foreach (Transform child in _content.transform)
+                Destroy(child.gameObject);
+            _panelAbstract.SetActive(false);
+            _hitting = false;
+        }
+
         if (tmpObject != Vector4.zero || tmpVerb != Vector4.zero || tmpSubject != Vector4.zero)
         {
             _religion.value = _currentValues.x + (tmpObject.x + tmpVerb.x) * tmpSubject.x;
@@ -294,6 +353,62 @@ public class Civilisation : MonoBehaviour
             _social.colors = _normalColors;
             _science.colors = _normalColors;
             _conquest.colors = _normalColors;
+        }
+        words = _resultPanel.GetComponentsInChildren<Word>();
+        if (words.Length != 3)
+        {
+            _autoTechText.text = "";
+            return;
+        }
+
+        List<string> techs = new List<string>();
+        for (int i = 0; i < words.Length; i++)
+        {
+            if (words[i].type != Word.wordType.subject)
+                techs.Add(words[i].technos.name);
+        }
+        for (int i = 0; i < data.TechnologyTree.Count; i++)
+        {
+            int count = 0;
+            if (data.TechnologyTree[i].dependances.Contains(techs[count]))
+            {
+                count++;
+                while (count < techs.Count)
+                {
+                    if (data.TechnologyTree[i].dependances.Contains(techs[count]))
+                        count++;
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                if (count == techs.Count)
+                {
+                    indexTech = 0;
+                    float distance = 10000;
+                    Vector4 values = new Vector4(_religion.value, _social.value, _science.value, _conquest.value);
+                    for (int j = 0; j < data.TechnologyTree[i].autoTechs.Count; j++)
+                    {
+                        Vector4 tmpVector = new Vector4(data.TechnologyTree[i].autoTechs[j].limits[0],
+                            data.TechnologyTree[i].autoTechs[j].limits[1],
+                            data.TechnologyTree[i].autoTechs[j].limits[2],
+                            data.TechnologyTree[i].autoTechs[j].limits[3]);
+                        if (Vector4.Distance(tmpVector, values) < distance)
+                        {
+                            distance = Vector4.Distance(tmpVector, values);
+                            indexTech = j;
+                        }
+                    }
+
+                    if (distance < 10000)
+                        _autoTechText.text = "New Tech : " + data.TechnologyTree[i].autoTechs[indexTech].name;
+                    else
+                    {
+                        _autoTechText.text = "";
+                    }
+                }
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -18,6 +19,14 @@ public class Verbs : MonoBehaviour
     [SerializeField]
     private GameObject _prefabVerbs;
 
+    private void OnDisable()
+    {
+        foreach(Transform child in _content.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+    }
 
     // Start is called before the first frame update
     void OnEnable()
@@ -89,7 +98,6 @@ public class Verbs : MonoBehaviour
         currentWord.word = _civ.data.TechnologyTree[tech].words.verbs[index];
         currentWord.technos = _civ.data.TechnologyTree[tech];
         currentWord.type = Word.wordType.verb;
-        Debug.Log(currentWord.word.value);
         _civ.tmpVerb = new Vector4(currentWord.word.value[0], currentWord.word.value[1],
             currentWord.word.value[2],currentWord.word.value[3]);
         if (Resources.Load<Sprite>(_civ.data.TechnologyTree[tech].words.verbs[index].name))

@@ -19,7 +19,14 @@ public class Objects : MonoBehaviour
     private GameObject _prefabObjects;
 
     private int currentObject;
+    private void OnDisable()
+    {
+        foreach(Transform child in _content.transform)
+        {
+            Destroy(child.gameObject);
+        }
 
+    }
     // Start is called before the first frame update
     void OnEnable()
     {

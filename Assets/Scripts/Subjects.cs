@@ -18,6 +18,14 @@ public class Subjects : MonoBehaviour
     [SerializeField]
     private GameObject _prefabSubjects;
 
+    private void OnDisable()
+    {
+        foreach(Transform child in _content.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+    }
     // Start is called before the first frame update
     void OnEnable()
     {
