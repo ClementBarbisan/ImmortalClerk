@@ -11,6 +11,7 @@ public class Notifications : MonoBehaviour
     public float TimeVisible = 0;
     [SerializeField] private GameObject _text;
     private List<GameObject> _texts;
+    private RectTransform _rectTr;
     
     public void AddText(string currentText)
     {
@@ -23,6 +24,7 @@ public class Notifications : MonoBehaviour
     {
         Instance = this;
         _texts = new List<GameObject>();
+        _rectTr = gameObject.GetComponent<RectTransform>();
     }
 
     // Start is called before the first frame update

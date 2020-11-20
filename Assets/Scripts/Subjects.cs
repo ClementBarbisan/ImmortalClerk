@@ -18,7 +18,7 @@ public class Subjects : MonoBehaviour
     [SerializeField]
     private GameObject _prefabSubjects;
 
-    private void OnDisable()
+    public void OnDisable()
     {
         foreach(Transform child in _content.transform)
         {
@@ -27,7 +27,7 @@ public class Subjects : MonoBehaviour
 
     }
     // Start is called before the first frame update
-    void OnEnable()
+    public void OnEnable()
     {
         _civ = GetComponentInParent<Civilisation>();
         for (int i = 0; i < _civ.data.TechnologyTree.Count; i++)

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -14,10 +15,10 @@ public class Player : MonoBehaviour
     public int turn = 0;
     private Civilisation[] _civilisations;
     private RaycastHit2D hit;
+    private float turns = 0;
     [SerializeField] private TextMeshProUGUI turnText;
     public void AddTurn()
     {
-        turn += 1;
         for (int i = 0; i < _civilisations.Length; i++)
             _civilisations[i].AddTurn();
         turnText.text = "Turn " + turn;
@@ -34,7 +35,7 @@ public class Player : MonoBehaviour
         // }
         // else
         // {
-            data = JsonParser.Instance.data;
+            data = JsonParser.Instance.GetData();
             for (int i = 0; i < data.TechnologyTree.Count; i++)
             {
                 if (data.TechnologyTree[i].dependances.Count == 0)
@@ -71,6 +72,27 @@ public class Player : MonoBehaviour
         _civilisations = FindObjectsOfType<Civilisation>();
     }
 
+    public void Done(string level)
+    {
+        return;
+    }
+
+    public void Close()
+    {
+        for (int i = 0; i < _civilisations.Length; i++)
+            _civilisations[i].gameObject.SetActive(true);
+    }
+
+    public void Open(GameObject obj)
+    {
+        for (int i = 0; i < _civilisations.Length; i++)
+        {
+            if (_civilisations[i].gameObject != obj)
+                _civilisations[i].gameObject.SetActive(false);
+        }
+
+    }
+
     private void OnApplicationQuit()
     {
         File.WriteAllText(Application.persistentDataPath + "/" + gameObject.name + ".save", JsonUtility.ToJson(data));
@@ -79,5 +101,11 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        turns += Time.deltaTime;
+        if (turn != (int)(turns))
+        {
+            turn = (int)(turns);
+            AddTurn();
+        }
     }
 }

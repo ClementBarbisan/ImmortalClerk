@@ -451,6 +451,7 @@
             0,
             15
           ],
+          "type" : "religion",
           "time": 0
         }
       ]
@@ -521,6 +522,7 @@
             0,
             0
           ],
+          "type":"science",
           "time": 0
         },
         {
@@ -531,6 +533,7 @@
             0,
             0
           ],
+          "type" : "social", 
           "time": 0
         }
       ]
@@ -601,6 +604,7 @@
             0,
             0
           ],
+          "type" : "religion",
           "time": 0
         }
       ]
@@ -686,6 +690,7 @@
             0,
             0
           ],
+          "type" : "science",
           "time": 0
         },
         {
@@ -696,6 +701,7 @@
             0,
             0
           ],
+          "type":"conquest",
           "time": 0
         }
       ]
@@ -781,6 +787,7 @@
             0,
             0
           ],
+          "type" : "conquest",
           "time": 0
         },
         {
@@ -791,6 +798,7 @@
             0,
             0
           ],
+          "type" : "conquest",
           "time": 0
         }
       ]
@@ -861,6 +869,7 @@
             0,
             0
           ],
+          "type":"social",
           "time": 0
         },
         {
@@ -871,6 +880,7 @@
             0,
             0
           ],
+          "type":"science",
           "time": 0
         }
       ]
@@ -926,6 +936,7 @@
             0,
             0
           ],
+          "type" : "social",
           "time": 0
         }
       ]
@@ -981,6 +992,7 @@
             0,
             0
           ],
+          "type": "social",
           "time": 0
         }
       ]
@@ -1051,6 +1063,7 @@
             0,
             0
           ],
+          "type":"social",
           "time": 0
         }
       ]
@@ -1134,6 +1147,7 @@
             0,
             0
           ],
+          "type":"conquest",
           "time": 0
         }
       ]
@@ -1174,6 +1188,7 @@
             0,
             0
           ],
+          "type" : "conquest",
           "time": 0
         }
       ]

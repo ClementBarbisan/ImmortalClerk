@@ -19,7 +19,7 @@ public class Objects : MonoBehaviour
     private GameObject _prefabObjects;
 
     private int currentObject;
-    private void OnDisable()
+    public void OnDisable()
     {
         foreach(Transform child in _content.transform)
         {
@@ -28,7 +28,7 @@ public class Objects : MonoBehaviour
 
     }
     // Start is called before the first frame update
-    void OnEnable()
+    public void OnEnable()
     {
         _civ = GetComponentInParent<Civilisation>();
         for (int i = 0; i < _civ.data.TechnologyTree.Count; i++)

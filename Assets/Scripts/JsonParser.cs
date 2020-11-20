@@ -44,6 +44,7 @@ public class JsonParser : MonoBehaviour
     public struct Auto
     {
         public string name;
+        public string type;
         public float[] limits;
         public float time;
         public bool useable;
@@ -54,6 +55,11 @@ public class JsonParser : MonoBehaviour
     {
         Instance = this;
         data = JsonUtility.FromJson<Data>(Resources.Load<TextAsset>(_nameFile).text);
+    }
+
+    public Data GetData()
+    {
+        return (JsonUtility.FromJson<Data>(Resources.Load<TextAsset>(_nameFile).text));
     }
 
     // Update is called once per frame
