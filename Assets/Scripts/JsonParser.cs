@@ -36,19 +36,11 @@ public class JsonParser : MonoBehaviour
         public string name;
         public List<string> dependances;
         public WordsStruct words;
-        public List<Auto> autoTechs; 
-        public bool useable;
-    };
-
-    [Serializable]
-    public struct Auto
-    {
-        public string name;
         public string type;
-        public float[] limits;
         public float time;
         public bool useable;
     };
+
     public Data data;
     [FormerlySerializedAs("nameFile")] [SerializeField] private string _nameFile;
     private void Awake()

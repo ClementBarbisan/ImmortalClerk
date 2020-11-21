@@ -146,27 +146,17 @@ public class Civilisation : MonoBehaviour
         {
             if (data.TechnologyTree[i].useable)
             {
-                for (int j = 0; j < data.TechnologyTree[i].autoTechs.Count; j++)
+                JsonParser.Technos tech = data.TechnologyTree[i];
+                tech.time -= 1;
+                if (data.TechnologyTree[i].time <= 0)
                 {
-                    if (!data.TechnologyTree[i].autoTechs[j].useable)
-                        continue;
-                    JsonParser.Auto tech = data.TechnologyTree[i].autoTechs[j];
-                    if (tech.limits[0] >= _religion.value && tech.limits[1] >= _social.value
-                                                          && _science.value >= tech.limits[2] &&
-                                                          _conquest.value >= tech.limits[3] && tech.time > 0)
-                    {
-                        tech.time -= 1;
-                        if (tech.time <= 0)
-                        {
-                            tech.useable = true;
-                            Notifications.Instance.gameObject.SetActive(true);
-                            Notifications.Instance.TimeVisible += 2.5f;
-                            Notifications.Instance.AddText("New Technology " + gameObject.name + " : " + tech.name);
-                        }
-
-                        data.TechnologyTree[i].autoTechs[j] = tech;
-                    }
+                    tech.useable = true;
+                    Notifications.Instance.gameObject.SetActive(true);
+                    Notifications.Instance.TimeVisible += 2.5f;
+                    Notifications.Instance.AddText("New Technology " + gameObject.name + " : " + tech.name);
                 }
+
+                data.TechnologyTree[i] = tech;
             }
         }
     }
@@ -228,22 +218,16 @@ public class Civilisation : MonoBehaviour
                         Notifications.Instance.AddText("New Technology Player : " + tmpStructPlayer.name);
                     }
 
-                    if (tmpStruct.autoTechs.Count > 0)
-                    {
-                        JsonParser.Auto tmpStructAutoTech = tmpStruct.autoTechs[_indexTech];
-                        tmpStructAutoTech.useable = true;
-                        if (tmpStructAutoTech.type == "religion")
-                            tmpStructAutoTech.time *= 1 - (_religion.value / 100f);
-                        else if (tmpStructAutoTech.type == "social")
-                            tmpStructAutoTech.time *= 1 - (_social.value / 100f);
-                        else if (tmpStructAutoTech.type == "science")
-                            tmpStructAutoTech.time *= 1 - (_science.value / 100f);
-                        else if (tmpStructAutoTech.type == "conquest")
-                            tmpStructAutoTech.time *= 1 - (_conquest.value / 100f);
-                        tmpStruct.autoTechs[_indexTech] = tmpStructAutoTech;
-                    }
-
                     tmpStruct.useable = true;
+                    if (tmpStruct.type == "religion")
+                        tmpStruct.time *= 1 - (_religion.value / 100f);
+                    else if (tmpStruct.type == "social")
+                        tmpStruct.time *= 1 - (_social.value / 100f);
+                    else if (tmpStruct.type == "science")
+                        tmpStruct.time *= 1 - (_science.value / 100f);
+                    else if (tmpStruct.type == "conquest")
+                        tmpStruct.time *= 1 - (_conquest.value / 100f);
+
                     tmpStructPlayer.useable = true;
 
                     _currentValues += Vector4.Scale((tmpObject + tmpVerb), tmpSubject * (_trustIndice.value / 100f));
@@ -379,41 +363,41 @@ public class Civilisation : MonoBehaviour
     void Update()
     {
         RaycastHit2D hit = Physics2D.Raycast(Input.mousePosition, Vector2.zero);
-        if (hit && hit.collider.CompareTag("Civilisation") && (hit.collider.gameObject == _openButton || hit.collider.gameObject == _panelAbstract))
-        {
-            Debug.Log(hit.collider.tag);
-            if (!_hitting)
-            {
-                for (int i = 0; i < data.TechnologyTree.Count; i++)
-                {
-                    if (data.TechnologyTree[i].useable)
-                    {
-                        for (int j = 0; j < data.TechnologyTree[i].autoTechs.Count; j++)
-                        {
-                            if (data.TechnologyTree[i].autoTechs[j].useable)
-                            {
-                                GameObject go = Instantiate<GameObject>(_prefab, Vector3.zero, Quaternion.identity, _content.transform);
-                                go.GetComponentInChildren<TextMeshProUGUI>().text =
-                                    data.TechnologyTree[i].autoTechs[j].name;
-                                if (Resources.Load<Sprite>(data.TechnologyTree[i].autoTechs[j].name))
-                                    go.GetComponentInChildren<Image>().sprite =
-                                        Resources.Load<Sprite>(data.TechnologyTree[i].autoTechs[j].name);
-                            }
-                            _hitting = true;
-                            _panelAbstract.SetActive(true);
-                        }
-                    }
-                }
-                
-            }
-        }
-        else
-        {
-            foreach (Transform child in _content.transform)
-                Destroy(child.gameObject);
-            _panelAbstract.SetActive(false);
-            _hitting = false;
-        }
+        // if (hit && hit.collider.CompareTag("Civilisation") && (hit.collider.gameObject == _openButton || hit.collider.gameObject == _panelAbstract))
+        // {
+        //     Debug.Log(hit.collider.tag);
+        //     if (!_hitting)
+        //     {
+        //         for (int i = 0; i < data.TechnologyTree.Count; i++)
+        //         {
+        //             if (data.TechnologyTree[i].useable)
+        //             {
+        //                 for (int j = 0; j < data.TechnologyTree[i].autoTechs.Count; j++)
+        //                 {
+        //                     if (data.TechnologyTree[i].autoTechs[j].useable)
+        //                     {
+        //                         GameObject go = Instantiate<GameObject>(_prefab, Vector3.zero, Quaternion.identity, _content.transform);
+        //                         go.GetComponentInChildren<TextMeshProUGUI>().text =
+        //                             data.TechnologyTree[i].autoTechs[j].name;
+        //                         if (Resources.Load<Sprite>(data.TechnologyTree[i].autoTechs[j].name))
+        //                             go.GetComponentInChildren<Image>().sprite =
+        //                                 Resources.Load<Sprite>(data.TechnologyTree[i].autoTechs[j].name);
+        //                     }
+        //                     _hitting = true;
+        //                     _panelAbstract.SetActive(true);
+        //                 }
+        //             }
+        //         }
+        //         
+        //     }
+        // }
+        // else
+        // {
+        //     foreach (Transform child in _content.transform)
+        //         Destroy(child.gameObject);
+        //     _panelAbstract.SetActive(false);
+        //     _hitting = false;
+        // }
 
         if (tmpObject != Vector4.zero || tmpVerb != Vector4.zero || tmpSubject != Vector4.zero)
         {
@@ -464,69 +448,69 @@ public class Civilisation : MonoBehaviour
             return;
         }
 
-        List<string> techs = new List<string>();
-        for (int i = 0; i < _words.Length; i++)
-        {
-            if (_words[i].type != Word.wordType.subject)
-                techs.Add(_words[i].technos.name);
-        }
-        for (int i = 0; i < data.TechnologyTree.Count; i++)
-        {
-            int count = 0;
-            if (data.TechnologyTree[i].dependances.Contains(techs[count]))
-            {
-                count++;
-                while (count < techs.Count)
-                {
-                    if (data.TechnologyTree[i].dependances.Contains(techs[count]))
-                        count++;
-                    else
-                    {
-                        break;
-                    }
-                }
-
-                if (count == techs.Count)
-                {
-                    _indexTech = 0;
-                    float distance = 10000;
-                    Vector4 values = new Vector4(_religion.value, _social.value, _science.value, _conquest.value);
-                    for (int j = 0; j < data.TechnologyTree[i].autoTechs.Count; j++)
-                    {
-                        if (!data.TechnologyTree[i].autoTechs[j].useable)
-                        {
-                            Vector4 tmpVector = new Vector4(data.TechnologyTree[i].autoTechs[j].limits[0],
-                                data.TechnologyTree[i].autoTechs[j].limits[1],
-                                data.TechnologyTree[i].autoTechs[j].limits[2],
-                                data.TechnologyTree[i].autoTechs[j].limits[3]);
-                            if (Vector4.Distance(tmpVector, values) < distance)
-                            {
-                                distance = Vector4.Distance(tmpVector, values);
-                                _indexTech = j;
-                            }
-                        }
-                    }
-
-                    if (data.TechnologyTree[i].autoTechs.Count == 0 ||
-                        data.TechnologyTree[i].autoTechs[_indexTech].useable)
-                        return;
-                    int turns = 0;
-                    if (data.TechnologyTree[i].autoTechs[_indexTech].type == "religion")
-                        turns = Mathf.FloorToInt(data.TechnologyTree[i].autoTechs[_indexTech].time * (1 - _religion.value / 100f));
-                    else if (data.TechnologyTree[i].autoTechs[_indexTech].type == "social")
-                        turns = Mathf.FloorToInt(data.TechnologyTree[i].autoTechs[_indexTech].time * (1 - _social.value / 100f));
-                    else if (data.TechnologyTree[i].autoTechs[_indexTech].type == "science")
-                        turns = Mathf.FloorToInt(data.TechnologyTree[i].autoTechs[_indexTech].time * (1 - _science.value / 100f));
-                    else if (data.TechnologyTree[i].autoTechs[_indexTech].type == "conquest")
-                        turns = Mathf.FloorToInt(data.TechnologyTree[i].autoTechs[_indexTech].time * (1 - _conquest.value / 100f));
-                    if (distance < 10000)
-                        _autoTechText.text = "New Tech : " + data.TechnologyTree[i].autoTechs[_indexTech].name + Environment.NewLine + "turns : " + turns;
-                    else
-                    {
-                        _autoTechText.text = "";
-                    }
-                }
-            }
-        }
+        // List<string> techs = new List<string>();
+        // for (int i = 0; i < _words.Length; i++)
+        // {
+        //     if (_words[i].type != Word.wordType.subject)
+        //         techs.Add(_words[i].technos.name);
+        // }
+        // for (int i = 0; i < data.TechnologyTree.Count; i++)
+        // {
+        //     int count = 0;
+        //     if (data.TechnologyTree[i].dependances.Contains(techs[count]))
+        //     {
+        //         count++;
+        //         while (count < techs.Count)
+        //         {
+        //             if (data.TechnologyTree[i].dependances.Contains(techs[count]))
+        //                 count++;
+        //             else
+        //             {
+        //                 break;
+        //             }
+        //         }
+        //
+        //         if (count == techs.Count)
+        //         {
+        //             _indexTech = 0;
+        //             float distance = 10000;
+        //             Vector4 values = new Vector4(_religion.value, _social.value, _science.value, _conquest.value);
+        //             for (int j = 0; j < data.TechnologyTree[i].autoTechs.Count; j++)
+        //             {
+        //                 if (!data.TechnologyTree[i].autoTechs[j].useable)
+        //                 {
+        //                     Vector4 tmpVector = new Vector4(data.TechnologyTree[i].autoTechs[j].limits[0],
+        //                         data.TechnologyTree[i].autoTechs[j].limits[1],
+        //                         data.TechnologyTree[i].autoTechs[j].limits[2],
+        //                         data.TechnologyTree[i].autoTechs[j].limits[3]);
+        //                     if (Vector4.Distance(tmpVector, values) < distance)
+        //                     {
+        //                         distance = Vector4.Distance(tmpVector, values);
+        //                         _indexTech = j;
+        //                     }
+        //                 }
+        //             }
+        //
+        //             if (data.TechnologyTree[i].autoTechs.Count == 0 ||
+        //                 data.TechnologyTree[i].autoTechs[_indexTech].useable)
+        //                 return;
+        //             int turns = 0;
+        //             if (data.TechnologyTree[i].autoTechs[_indexTech].type == "religion")
+        //                 turns = Mathf.FloorToInt(data.TechnologyTree[i].autoTechs[_indexTech].time * (1 - _religion.value / 100f));
+        //             else if (data.TechnologyTree[i].autoTechs[_indexTech].type == "social")
+        //                 turns = Mathf.FloorToInt(data.TechnologyTree[i].autoTechs[_indexTech].time * (1 - _social.value / 100f));
+        //             else if (data.TechnologyTree[i].autoTechs[_indexTech].type == "science")
+        //                 turns = Mathf.FloorToInt(data.TechnologyTree[i].autoTechs[_indexTech].time * (1 - _science.value / 100f));
+        //             else if (data.TechnologyTree[i].autoTechs[_indexTech].type == "conquest")
+        //                 turns = Mathf.FloorToInt(data.TechnologyTree[i].autoTechs[_indexTech].time * (1 - _conquest.value / 100f));
+        //             if (distance < 10000)
+        //                 _autoTechText.text = "New Tech : " + data.TechnologyTree[i].autoTechs[_indexTech].name + Environment.NewLine + "turns : " + turns;
+        //             else
+        //             {
+        //                 _autoTechText.text = "";
+        //             }
+        //         }
+        //     }
+        // }
     }
 }
