@@ -70,6 +70,8 @@ public class Verbs : MonoBehaviour
         _panel.SetActive(true);
         for (int i = 0; i < _civ.data.TechnologyTree[tech].words.verbs.Count; i++)
         {
+            if (!_civ.data.TechnologyTree[tech].words.verbs[i].useable)
+                continue;
             GameObject go = Instantiate(_prefabVerbs, Vector3.zero, Quaternion.identity);
             go.GetComponentInChildren<TextMeshProUGUI>().text = _civ.data.TechnologyTree[tech].words.verbs[i].name;
             int tmpInt = i;

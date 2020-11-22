@@ -17,7 +17,6 @@ public class JsonParser : MonoBehaviour
     public struct Word
     {
         public string name;
-        public float[] limits;
         public float[] value;
         public bool useable;
     }
@@ -39,6 +38,7 @@ public class JsonParser : MonoBehaviour
         public string type;
         public float time;
         public bool useable;
+        public float[] limits;
     };
 
     public Data data;

@@ -69,6 +69,8 @@ public class Objects : MonoBehaviour
         _panel.SetActive(true);
         for (int i = 0; i < _civ.data.TechnologyTree[tech].words.objects.Count; i++)
         {
+            if (!_civ.data.TechnologyTree[tech].words.objects[i].useable)
+                continue;
             GameObject go = Instantiate(_prefabObjects, Vector3.zero, Quaternion.identity);
             go.GetComponentInChildren<TextMeshProUGUI>().text = _civ.data.TechnologyTree[tech].words.objects[i].name;
             int tmpInt = i;

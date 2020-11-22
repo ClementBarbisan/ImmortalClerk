@@ -7,6 +7,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 public class Player : MonoBehaviour
 {
@@ -16,7 +18,9 @@ public class Player : MonoBehaviour
     private Civilisation[] _civilisations;
     private RaycastHit2D hit;
     private float turns = 0;
-    [SerializeField] private TextMeshProUGUI turnText;
+    private TextMeshProUGUI turnText;
+    [SerializeField] private GameObject _prefabWordKeeper;
+    [SerializeField] private Transform _parent;
     public void AddTurn()
     {
         for (int i = 0; i < _civilisations.Length; i++)
@@ -106,6 +110,12 @@ public class Player : MonoBehaviour
         {
             turn = (int)(turns);
             AddTurn();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("Create");
+            Instantiate(_prefabWordKeeper, new Vector2(Screen.width / 2f, Screen.height / 2f), Quaternion.identity, _parent);
         }
     }
 }
