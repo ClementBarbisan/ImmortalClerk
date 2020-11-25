@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Serialization;
+using CSharpOctree;
 
 public class JsonParser : MonoBehaviour
 {
@@ -41,12 +42,15 @@ public class JsonParser : MonoBehaviour
         public float[] limits;
     };
 
+    public Octree octree;
     public Data data;
     [FormerlySerializedAs("nameFile")] [SerializeField] private string _nameFile;
+    
     private void Awake()
     {
         Instance = this;
         data = JsonUtility.FromJson<Data>(Resources.Load<TextAsset>(_nameFile).text);
+        octree = new Octree(0, 100, 0 , 100, 0, 100, 0, 100);
     }
 
     public Data GetData()
