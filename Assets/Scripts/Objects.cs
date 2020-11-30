@@ -38,8 +38,8 @@ public class Objects : MonoBehaviour
             {
                 if (Player.Instance.data.TechnologyTree[i].words.objects.FindAll(x=>x.useable).Count > 0)
                 {
-                    GameObject go = Instantiate<GameObject>(_prefab, Vector3.zero, Quaternion.identity);
-                    go.transform.SetParent(_content.transform);
+                    GameObject go = Instantiate<GameObject>(_prefab, Vector3.zero, Quaternion.identity, _content.transform);
+                    go.transform.localScale = Vector3.one;
                     int tmpInt = i;
                     go.GetComponent<Button>().onClick.AddListener(delegate
                     {
@@ -69,7 +69,8 @@ public class Objects : MonoBehaviour
         {
             if (!Player.Instance.data.TechnologyTree[tech].words.objects[i].useable)
                 continue;
-            GameObject go = Instantiate(_prefabObjects, Vector3.zero, Quaternion.identity);
+            GameObject go = Instantiate(_prefabObjects, Vector3.zero, Quaternion.identity, _panel.transform);
+            go.transform.localScale = Vector3.one;
             if (Player.Instance.debug)
                 go.GetComponentInChildren<TextMeshProUGUI>().text = _civ.data.TechnologyTree[tech].words.objects[i].name;
             else
@@ -92,6 +93,7 @@ public class Objects : MonoBehaviour
             Destroy(word);
         }    
         GameObject go = Instantiate(_prefabObjects, Vector3.zero, Quaternion.identity, _positionObjects);
+        go.transform.localScale = Vector3.one;
         go.GetComponentInChildren<Button>().interactable = false;
         go.GetComponentInChildren<TextMeshProUGUI>().text = _civ.data.TechnologyTree[tech].words.objects[index].name;
         Word currentWord = go.GetComponent<Word>();

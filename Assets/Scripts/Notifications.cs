@@ -16,6 +16,7 @@ public class Notifications : MonoBehaviour
     public void AddText(string currentText)
     {
         GameObject go = Instantiate(_text, Vector3.zero, Quaternion.identity, gameObject.transform);
+        go.transform.localScale = Vector3.one;
         go.GetComponent<TextMeshProUGUI>().text = currentText; 
         _texts.Add(go);
     }

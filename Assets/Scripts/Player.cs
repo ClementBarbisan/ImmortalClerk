@@ -5,6 +5,7 @@ using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
@@ -93,6 +94,8 @@ public class Player : MonoBehaviour
 
     public void Done(string level)
     {
+        if (level == "end")
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         return;
     }
 
@@ -151,6 +154,7 @@ public class Player : MonoBehaviour
             wordKeep = false;
             // lastTurn = turn;
             GameObject go = Instantiate(_prefabWordKeeper, new Vector2(Screen.width / 2f, Screen.height / 2f), Quaternion.identity, _parent);
+            go.transform.localScale = Vector3.one;
             GameObject openButton = go.GetComponent<WordKeeper>().buttonOpen;
             openButton.transform.position = new Vector3(Random.Range(Screen.width / 4, Screen.width / 2 + Screen.width / 4),
                 Random.Range(Screen.height / 4, Screen.height / 2 + Screen.height / 4), 0);

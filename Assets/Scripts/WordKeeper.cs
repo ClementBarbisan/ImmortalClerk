@@ -77,17 +77,23 @@ public class WordKeeper : MonoBehaviour
 
     GameObject subject = Instantiate(_prefabTechno, Vector3.zero, Quaternion.identity, _posSubject);
         subject.transform.localPosition = Vector3.zero;
+        subject.transform.localScale = Vector3.one;
+
         subject.GetComponentInChildren<TextMeshProUGUI>().text = _currentSubject.name;
         if (Resources.Load<Sprite>(_currentSubject.name))
             subject.GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>(_currentSubject.name);
         GameObject verb = Instantiate(_prefabTechno, Vector3.zero, Quaternion.identity, _posVerb);
         verb.GetComponentInChildren<TextMeshProUGUI>().text = _currentVerb.name;
         verb.transform.localPosition = Vector3.zero;
+        verb.transform.localScale = Vector3.one;
+
         if (Resources.Load<Sprite>(_currentVerb.name))
             verb.GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>(_currentVerb.name);
         GameObject obj = Instantiate(_prefabTechno, Vector3.zero, Quaternion.identity, _posObject);
         obj.GetComponentInChildren<TextMeshProUGUI>().text = _currentObject.name;
         obj.transform.localPosition = Vector3.zero;
+        obj.transform.localScale = Vector3.one;
+
         if (Resources.Load<Sprite>(_currentObject.name))
             obj.GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>(_currentObject.name);
         for (int i = 0; i < _data.TechnologyTree.Count; i++)
@@ -95,6 +101,8 @@ public class WordKeeper : MonoBehaviour
             if (!_data.TechnologyTree[i].learned)
                 continue;
             GameObject go = Instantiate(_prefabConcept, Vector3.zero, Quaternion.identity, _panelConcept.transform);
+            go.transform.localScale = Vector3.one;
+
             if (_data.TechnologyTree[i].name == _result.name)
             {
                 go.GetComponent<Button>().onClick.AddListener(delegate
