@@ -15,8 +15,11 @@ public class WordKeeper : MonoBehaviour
     [SerializeField] private Transform _posSubject;
     [SerializeField] private Transform _posVerb;
     [SerializeField] private Transform _posObject;
+    
     private JsonParser.Data _data;
     private JsonParser.Technos _result;
+    public GameObject buttonOpen;
+    public GameObject buttonClose;
 
     private JsonParser.Word _currentSubject;
     private JsonParser.Word _currentVerb;
@@ -25,15 +28,6 @@ public class WordKeeper : MonoBehaviour
     private bool _wordsSets = false;
     private JsonParser.Word _currentWord;
 
-    // Start is called before the first frame update
-    public void OnOpen()
-    {
-        
-    }
-
-    public void OnClose()
-    {
-    }
 
     private void Start()
     {
@@ -41,62 +35,47 @@ public class WordKeeper : MonoBehaviour
         var technos = _data.TechnologyTree.FindAll(x => x.useable && x.dependances.Count > 0);
         var general = _data.TechnologyTree.Find(x => x.name == "general");
         _currentSubject = general.words.subjects[Random.Range(0, general.words.subjects.Count)];
-        for (int i = 0; i < technos.Count; i++)
+        if (technos.Count <= 0)
         {
-            var tech1 = _data.TechnologyTree.Find(x => x.name == technos[i].dependances[0]);
-            var tech2 = _data.TechnologyTree.Find(x => x.name == technos[i].dependances[1]);
-            Debug.Log(tech1.name);
-            Debug.Log(tech2.name);
-            if (tech1.words.verbs.Count > 0)
-            {
-                var verbsNotUse = tech1.words.verbs.FindAll(x => x.useable == false);
-                var objectsNotUse = tech2.words.objects.FindAll(x => x.useable == false);
-                if (verbsNotUse.Count > 0)
-                {
-                    _currentObject = tech2.words.objects.Find(x=> x.useable);
-                    _currentVerb = verbsNotUse[Random.Range(0, verbsNotUse.Count)];
-                    _currentWord = _currentVerb;
-                    _wordsSets = true;
-                    _result = technos[i];
-                    break;
-                }
-                else if (objectsNotUse.Count > 0)
-                {
-                    _currentVerb = tech1.words.verbs.Find(x=> x.useable);
-                    _currentObject = objectsNotUse[Random.Range(0, objectsNotUse.Count)];
-                    _currentWord = _currentObject;
-                    _wordsSets = true;
-                    _result = technos[i];
-                    break;
-                }
-            }
-            else if (tech2.words.verbs.Count > 0)
-            {
-                var verbsNotUse = tech2.words.verbs.FindAll(x => x.useable == false);
-                var objectsNotUse = tech1.words.objects.FindAll(x => x.useable == false);
-                if (verbsNotUse.Count > 0)
-                {
-                    _currentObject = tech1.words.objects.Find(x=> x.useable);
-                    _currentVerb = verbsNotUse[Random.Range(0, verbsNotUse.Count)];
-                    _currentWord = _currentVerb;
-                    _wordsSets = true;
-                    _result = technos[i];
-                    break;
-                }
-                else if (objectsNotUse.Count > 0)
-                {
-                    _currentVerb = tech2.words.verbs.Find(x=> x.useable);
-                    _currentObject = objectsNotUse[Random.Range(0, objectsNotUse.Count)];
-                    _currentWord = _currentObject;
-                    _wordsSets = true;
-                    _result = technos[i];
-                    break;
-                }
-            }
-        }
-        if (!_wordsSets)
+            Player.Instance.wordKeep = true;
+            Player.Instance.lastTurn = Player.Instance.turn;
+            Player.Instance.DeleteWordKeeper(this.gameObject);
             Destroy(gameObject);
-        GameObject subject = Instantiate(_prefabTechno, Vector3.zero, Quaternion.identity, _posSubject);
+        }
+
+        int index = Random.Range(0, technos.Count);
+        var tech1 = _data.TechnologyTree.Find(x => x.name == technos[index].dependances[0]);
+        var tech2 = _data.TechnologyTree.Find(x => x.name == technos[index].dependances[1]);
+        if (tech1.words.verbs.Count > 0)
+        {
+                _currentObject = tech2.words.objects.Find(x => x.useable);
+                _currentVerb = tech1.words.verbs.Find(x => x.useable);
+                _wordsSets = true;
+                _result = technos[index];
+        }
+        if (tech2.words.verbs.Count > 0)
+        {
+                _currentObject = tech1.words.objects.Find(x => x.useable);
+                _currentVerb = tech2.words.verbs.Find(x => x.useable);
+                _wordsSets = true;
+                _result = technos[index];
+        }
+        if (technos[index].words.verbs.Count > 0)
+            _currentWord = technos[index].words.verbs.Find(x => x.useable == false);
+        else
+        {
+            _currentWord = technos[index].words.objects.Find(x => x.useable == false);
+        }
+
+        if (!_wordsSets)
+        {
+            Player.Instance.wordKeep = true;
+            Player.Instance.lastTurn = Player.Instance.turn;
+            Player.Instance.DeleteWordKeeper(this.gameObject);
+            Destroy(gameObject);
+        }
+
+    GameObject subject = Instantiate(_prefabTechno, Vector3.zero, Quaternion.identity, _posSubject);
         subject.transform.localPosition = Vector3.zero;
         subject.GetComponentInChildren<TextMeshProUGUI>().text = _currentSubject.name;
         if (Resources.Load<Sprite>(_currentSubject.name))
@@ -111,10 +90,12 @@ public class WordKeeper : MonoBehaviour
         obj.transform.localPosition = Vector3.zero;
         if (Resources.Load<Sprite>(_currentObject.name))
             obj.GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>(_currentObject.name);
-        for (int i = 0; i < technos.Count; i++)
+        for (int i = 0; i < _data.TechnologyTree.Count; i++)
         {
+            if (!_data.TechnologyTree[i].learned)
+                continue;
             GameObject go = Instantiate(_prefabConcept, Vector3.zero, Quaternion.identity, _panelConcept.transform);
-            if (technos[i].name == _result.name)
+            if (_data.TechnologyTree[i].name == _result.name)
             {
                 go.GetComponent<Button>().onClick.AddListener(delegate
                 {
@@ -152,7 +133,12 @@ public class WordKeeper : MonoBehaviour
 
                     Notifications.Instance.gameObject.SetActive(true);
                     Notifications.Instance.TimeVisible += 2.5f;
-                    Notifications.Instance.AddText("You found a new word!");
+                    Notifications.Instance.AddText("You found a new word : " + _currentWord.name);
+                    Player.Instance.data = _data;
+                    Player.Instance.wordKeep = true;
+                    Player.Instance.lastTurn = Player.Instance.turn;
+                    Player.Instance.DeleteWordKeeper(this.gameObject);
+                    Player.Instance.Close();
                     Destroy(gameObject);
                 });
             }
@@ -163,13 +149,26 @@ public class WordKeeper : MonoBehaviour
                     Notifications.Instance.gameObject.SetActive(true);
                     Notifications.Instance.TimeVisible += 2.5f;
                     Notifications.Instance.AddText("You didn't understand!");
+                    Player.Instance.wordKeep = true;
+                    Player.Instance.lastTurn = Player.Instance.turn;
+                    Player.Instance.DeleteWordKeeper(this.gameObject);
+                    Player.Instance.Close();
                     Destroy(gameObject);
                 });
             }
-
-            go.GetComponentInChildren<TextMeshProUGUI>().text = technos[i].name;
-            if (Resources.Load<Sprite>(technos[i].name))
-                go.GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>(technos[i].name);
+            buttonOpen.GetComponent<Button>().onClick.AddListener(delegate
+            {
+                Player.Instance.Open(this.gameObject);
+                
+            });
+            buttonClose.GetComponent<Button>().onClick.AddListener(delegate
+            {
+                Player.Instance.Close();
+                
+            });
+            go.GetComponentInChildren<TextMeshProUGUI>().text = _data.TechnologyTree[i].name;
+            if (Resources.Load<Sprite>(_data.TechnologyTree[i].name))
+                go.GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>(_data.TechnologyTree[i].name);
         }
     }
 

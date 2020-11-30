@@ -9,6 +9,14 @@ using CSharpOctree;
 public class JsonParser : MonoBehaviour
 {
     public static JsonParser Instance;
+
+    [Serializable]
+    public struct DataTree
+    {
+        public string text;
+        public string techno;
+    };
+
     [Serializable]
     public struct Data
     {
@@ -39,6 +47,7 @@ public class JsonParser : MonoBehaviour
         public string type;
         public float time;
         public bool useable;
+        public bool learned;
         public float[] limits;
     };
 
@@ -58,9 +67,5 @@ public class JsonParser : MonoBehaviour
         return (JsonUtility.FromJson<Data>(Resources.Load<TextAsset>(_nameFile).text));
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   
 }

@@ -16,55 +16,55 @@
           {
             "name": "one",
             "value": [
-              0,
-              0,
-              0,
-              0
+              1,
+              -1,
+              -1,
+              1
             ]
           },
           {
             "name": "none",
             "value": [
-              0,
-              0,
-              0,
-              0
+              0.25,
+              0.25,
+              0.25,
+              0.25
             ]
           },
           {
             "name": "most",
             "value": [
-              0,
-              0,
-              0,
-              0
+              0.5,
+              0.5,
+              0.5,
+              0.5
             ]
           },
           {
             "name": "lot",
             "value": [
-              0,
-              0,
-              0,
-              0
+              1.25,
+              1.25,
+              1.25,
+              1.25
             ]
           },
           {
             "name": "all",
             "value": [
-              0,
-              0,
-              0,
-              0
+              1,
+              1,
+              1,
+              1
             ]
           },
           {
             "name": "some",
             "value": [
+              -1,
               1,
               1,
-              1,
-              1
+              -1
             ]
           }
         ],
@@ -82,27 +82,27 @@
           {
             "name": "life",
             "value": [
-              0,
-              0,
-              0,
-              0
+              20,
+              20,
+              20,
+              20
             ]
           },
           {
             "name": "human",
             "value": [
               0,
-              0,
-              0,
+              30,
+              30,
               0
             ]
           },
           {
             "name": "nature",
             "value": [
-              0,
-              0,
-              0,
+              25,
+              25,
+              25,
               0
             ]
           }
@@ -127,18 +127,18 @@
             "name": "produce",
             "value": [
               0,
-              0,
-              0,
+              20,
+              20,
               0
             ]
           },
           {
             "name": "create",
             "value": [
+              20,
               0,
               0,
-              0,
-              0
+              20
             ]
           }
         ],
@@ -149,7 +149,7 @@
       "name": "written",
       "dependances": [],
       "time": 0,
-      "type": "social",
+      "type": "science",
       "limits": [
         0,
         0,
@@ -162,19 +162,19 @@
           {
             "name": "read",
             "value": [
-              0,
-              0,
-              0,
-              0
+              5,
+              10,
+              10,
+              5
             ]
           },
           {
             "name": "write",
             "value": [
-              0,
-              0,
-              0,
-              0
+              10,
+              5,
+              5,
+              10
             ]
           }
         ],
@@ -198,37 +198,37 @@
           {
             "name": "listen",
             "value": [
-              0,
-              0,
-              0,
-              0
+              10,
+              25,
+              10,
+              -5
             ]
           },
           {
             "name": "know",
             "value": [
               5,
-              20,
+              5,
               10,
-              5
+              10
             ]
           },
           {
             "name": "hear",
             "value": [
-              0,
-              0,
-              0,
-              0
+              10,
+              25,
+              25,
+              -5
             ]
           },
           {
             "name": "tell",
             "value": [
-              0,
-              0,
-              0,
-              0
+              15,
+              -5,
+              -5,
+              25
             ]
           }
         ],
@@ -241,13 +241,13 @@
         "written",
         "general"
       ],
-      "time": 0,
-      "type": "social",
+      "time": 10,
+      "type": "science",
       "limits": [
-        0,
-        0,
-        0,
-        0
+        10,
+        5,
+        20,
+        10
       ],
       "words": {
         "subjects": [],
@@ -256,55 +256,55 @@
           {
             "name": "counting",
             "value": [
-              0,
-              0,
-              0,
-              0
+              -10,
+              10,
+              15,
+              5
             ]
           },
           {
             "name": "calculation",
             "value": [
-              0,
-              0,
-              0,
-              0
+              -15,
+              10,
+              10,
+              -5
             ]
           },
           {
             "name": "result",
             "value": [
-              0,
-              0,
-              0,
-              0
+              5,
+              -10,
+              10,
+              5
             ]
           },
           {
             "name": "total",
             "value": [
-              0,
-              0,
-              0,
-              0
+              5,
+              -10,
+              10,
+              15
             ]
           }
         ]
       }
     },
     {
-      "name": "religion",
+      "name": "cult",
       "dependances": [
         "oral",
         "general"
       ],
-      "time": 0,
-      "type": "social",
+      "time": 10,
+      "type": "religion",
       "limits": [
+        30,
+        10,
         0,
-        0,
-        0,
-        0
+        20
       ],
       "words": {
         "subjects": [],
@@ -313,28 +313,28 @@
           {
             "name": "gods",
             "value": [
-              0,
-              0,
-              0,
-              0
+              20,
+              20,
+              -10,
+              20
             ]
           },
           {
             "name": "offering",
             "value": [
-              0,
-              0,
-              0,
-              0
+              30,
+              20,
+              -10,
+              10
             ]
           },
           {
             "name": "superior",
             "value": [
-              0,
-              0,
-              0,
-              0
+              25,
+              -5,
+              -15,
+              25
             ]
           }
         ]
@@ -346,13 +346,13 @@
         "written",
         "numbers"
       ],
-      "time": 0,
-      "type": "social",
+      "time": 10,
+      "type": "science",
       "limits": [
-        0,
-        0,
-        0,
-        0
+        10,
+        30,
+        45,
+        10
       ],
       "words": {
         "subjects": [],
@@ -360,28 +360,28 @@
           {
             "name": "abstract",
             "value": [
-              0,
-              0,
-              0,
-              0
+              10,
+              -15,
+              30,
+              20
             ]
           },
           {
             "name": "count",
             "value": [
-              0,
-              0,
-              0,
-              0
+              -20,
+              20,
+              20,
+              5
             ]
           },
           {
             "name": "calculate",
             "value": [
-              0,
-              0,
-              0,
-              0
+              -10,
+              30,
+              30,
+              -20
             ]
           }
         ],
@@ -394,13 +394,13 @@
         "religion",
         "mathematics"
       ],
-      "time": 0,
-      "type": "social",
+      "time": 20,
+      "type": "religion",
       "limits": [
-        0,
-        0,
-        0,
-        0
+        60,
+        40,
+        20,
+        20
       ],
       "words": {
         "subjects": [],
@@ -408,28 +408,28 @@
           {
             "name": "predict",
             "value": [
+              30,
               0,
-              0,
-              0,
-              0
+              10,
+              25
             ]
           },
           {
             "name": "anticipating",
             "value": [
-              0,
-              0,
-              0,
-              0
+              10,
+              10,
+              25,
+              10
             ]
           },
           {
             "name": "foresee",
             "value": [
-              0,
-              0,
-              0,
-              0
+              20,
+              5,
+              5,
+              20
             ]
           }
         ],
@@ -442,8 +442,14 @@
         "craftship",
         "calendar"
       ],
-      "time": 0,
-      "type": "social",
+      "time": 20,
+      "type": "science",
+       "limits": [
+          40,
+          25,
+          50,
+          30
+        ],
       "words": {
         "subjects": [],
         "verbs": [],
@@ -451,37 +457,37 @@
           {
             "name": "planet",
             "value": [
+              10,
               0,
-              0,
-              0,
-              0
+              25,
+              30
             ]
           },
           {
             "name": "sun",
             "value": [
+              20,
               0,
-              0,
-              0,
-              0
+              30,
+              30
             ]
           },
           {
             "name": "moon",
             "value": [
+              30,
               0,
-              0,
-              0,
-              0
+              20,
+              30
             ]
           },
           {
             "name": "earth",
             "value": [
-              0,
-              0,
-              0,
-              0
+              5,
+              20,
+              20,
+              5
             ]
           }
         ]
@@ -493,13 +499,13 @@
         "farming",
         "religion"
       ],
-      "time": 0,
-      "type": "social",
+      "time": 10,
+      "type": "conquest",
       "limits": [
-        0,
-        0,
-        0,
-        0
+        40,
+        30,
+        10,
+        50
       ],
       "words": {
         "subjects": [],
@@ -508,34 +514,34 @@
           {
             "name": "gift",
             "value": [
+              20,
+              40,
               0,
-              0,
-              0,
-              0
+              -10
             ]
           },
           {
             "name": "protection",
             "value": [
+              -5,
+              15,
               0,
-              0,
-              0,
-              0
+              25
             ]
           },
           {
             "name": "tools",
             "value": [
               0,
-              0,
-              0,
-              0
+              20,
+              10,
+              10
             ]
           },
           {
             "name": "manufacture",
             "value": [
-              0,
+              -10,
               0,
               0,
               0
@@ -550,13 +556,13 @@
         "mathematics",
         "general"
       ],
-      "time": 0,
-      "type": "social",
+      "time": 10,
+      "type": "science",
       "limits": [
-        0,
-        0,
-        0,
-        0
+        10,
+        20,
+        40,
+        10
       ],
       "words": {
         "subjects": [],
@@ -564,18 +570,18 @@
           {
             "name": "measure",
             "value": [
-              0,
-              0,
-              0,
+              -20,
+              20,
+              30,
               0
             ]
           },
           {
             "name": "modelize",
             "value": [
-              0,
-              0,
-              0,
+              -30,
+              30,
+              30,
               0
             ]
           },
@@ -583,9 +589,9 @@
             "name": "research",
             "value": [
               0,
-              0,
-              0,
-              0
+              10,
+              20,
+              30
             ]
           }
         ],
@@ -598,13 +604,13 @@
         "physics",
         "general"
       ],
-      "time": 0,
+      "time": 10,
       "type": "social",
       "limits": [
         0,
-        0,
-        0,
-        0
+        30,
+        40,
+        35
       ],
       "words": {
         "subjects": [],
@@ -613,19 +619,19 @@
           {
             "name": "power",
             "value": [
+              30,
+              10,
               0,
-              0,
-              0,
-              0
+              40
             ]
           },
           {
             "name": "flux",
             "value": [
-              0,
-              0,
-              0,
-              0
+              -10,
+              20,
+              20,
+              -10
             ]
           }
         ]
@@ -637,13 +643,13 @@
         "electricity",
         "physics"
       ],
-      "time": 0,
-      "type": "social",
+      "time": 30,
+      "type": "conquest",
       "limits": [
-        0,
-        0,
-        0,
-        0
+        10,
+        20,
+        60,
+        10
       ],
       "words": {
         "subjects": [],
@@ -652,19 +658,19 @@
           {
             "name": "communications",
             "value": [
-              0,
-              0,
-              0,
-              0
+              20,
+              40,
+              -20,
+              20
             ]
           },
           {
             "name": "informations",
             "value": [
-              0,
-              0,
-              0,
-              0
+              10,
+              20,
+              -10,
+              40
             ]
           }
         ]
@@ -676,13 +682,13 @@
         "craftship",
         "physics"
       ],
-      "time": 0,
+      "time": 30,
       "type": "social",
       "limits": [
-        0,
-        0,
-        0,
-        0
+        20,
+        60,
+        40,
+        20
       ],
       "words": {
         "subjects": [],
@@ -691,28 +697,28 @@
           {
             "name": "mecanism",
             "value": [
-              0,
-              0,
-              0,
-              0
+              10,
+              30,
+              30,
+              20
             ]
           },
           {
             "name": "system",
             "value": [
-              0,
-              0,
-              0,
-              0
+              10,
+              20,
+              20,
+              40
             ]
           },
           {
             "name": "forces",
             "value": [
               0,
-              0,
-              0,
-              0
+              20,
+              50,
+              20
             ]
           }
         ]
@@ -724,13 +730,13 @@
         "electronic",
         "physics"
       ],
-      "time": 0,
-      "type": "social",
+      "time": 30,
+      "type": "science",
       "limits": [
-        0,
-        0,
-        0,
-        0
+        10,
+        30,
+        70,
+        10
       ],
       "words": {
         "subjects": [],
@@ -738,19 +744,19 @@
           {
             "name": "compute",
             "value": [
-              0,
-              0,
-              0,
-              0
+              -20,
+              10,
+              30,
+              30
             ]
           },
           {
-            "name": "store",
+            "name": "data",
             "value": [
-              0,
-              0,
-              0,
-              0
+              -20,
+              -20,
+              30,
+              30
             ]
           }
         ],
@@ -763,13 +769,13 @@
         "computimg",
         "mecanic"
       ],
-      "time": 0,
-      "type": "social",
+      "time": 40,
+      "type": "conquest",
       "limits": [
-        0,
-        0,
-        0,
-        0
+        50,
+        30,
+        80,
+        70
       ],
       "words": {
         "subjects": [],
@@ -778,10 +784,10 @@
           {
             "name": "fly",
             "value": [
-              0,
-              0,
-              0,
-              0
+              30,
+              30,
+              20,
+              40
             ]
           }
         ]
@@ -793,13 +799,13 @@
         "aeronautic",
         "physics"
       ],
-      "time": 0,
-      "type": "social",
+      "time": 40,
+      "type": "conquest",
       "limits": [
-        0,
-        0,
-        0,
-        0
+        60,
+        40,
+        90,
+        70
       ],
       "words": {
         "subjects": [],

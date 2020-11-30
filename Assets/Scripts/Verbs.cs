@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class Verbs : MonoBehaviour
 {
+    [SerializeField]
     private Civilisation _civ;
     [SerializeField]
     private GameObject _prefab;
@@ -31,10 +32,10 @@ public class Verbs : MonoBehaviour
     // Start is called before the first frame update
     public void OnEnable()
     {
-        _civ = GetComponentInParent<Civilisation>();
+        OnDisable();
         for (int i = 0; i < _civ.data.TechnologyTree.Count; i++)
         {
-            if (_civ.data.TechnologyTree[i].useable)
+            if (_civ.data.TechnologyTree[i].useable && _civ.data.TechnologyTree[i].learned)
             {
                 if (Player.Instance.data.TechnologyTree[i].words.verbs.FindAll(x=>x.useable).Count > 0)
                 {
@@ -44,7 +45,10 @@ public class Verbs : MonoBehaviour
                     go.GetComponent<Button>().onClick.AddListener(delegate
                     {
                         ClickOnVerbs(tmpInt); });
-                    go.GetComponentInChildren<TextMeshProUGUI>().text = _civ.data.TechnologyTree[i].name;
+                    if (Player.Instance.debug)
+                        go.GetComponentInChildren<TextMeshProUGUI>().text = _civ.data.TechnologyTree[i].name;
+                    else
+                        go.GetComponentInChildren<TextMeshProUGUI>().text = "";
                     if (Resources.Load<Sprite>(_civ.data.TechnologyTree[i].name))
                         go.GetComponentInChildren<Image>().sprite =
                             Resources.Load<Sprite>(_civ.data.TechnologyTree[i].name);
@@ -55,25 +59,23 @@ public class Verbs : MonoBehaviour
 
     void ClickOnVerbs(int tech)
     {
-        if (_panel.GetComponentsInChildren<Word>().Length > 0)
+        Word[] words = _panel.GetComponentsInChildren<Word>();
+        for (int i = 0; i < words.Length; i++)
         {
-            Word[] words = _panel.GetComponentsInChildren<Word>();
-            for (int i = 0; i < words.Length; i++)
-            {
-                if (words[i].GetComponentInChildren<Image>().sprite != null)
-                    Destroy(words[i].GetComponentInChildren<Image>().sprite.texture);
-                Destroy(words[i].gameObject);
-            }
-
+            Destroy(words[i].gameObject);
         }
+
 
         _panel.SetActive(true);
         for (int i = 0; i < _civ.data.TechnologyTree[tech].words.verbs.Count; i++)
         {
-            if (!_civ.data.TechnologyTree[tech].words.verbs[i].useable)
+            if (!Player.Instance.data.TechnologyTree[tech].words.verbs[i].useable)
                 continue;
             GameObject go = Instantiate(_prefabVerbs, Vector3.zero, Quaternion.identity);
-            go.GetComponentInChildren<TextMeshProUGUI>().text = _civ.data.TechnologyTree[tech].words.verbs[i].name;
+            if (Player.Instance.debug)
+                go.GetComponentInChildren<TextMeshProUGUI>().text = _civ.data.TechnologyTree[tech].words.verbs[i].name;
+            else
+                go.GetComponentInChildren<TextMeshProUGUI>().text = "";
             int tmpInt = i;
             go.GetComponentInChildren<Button>().onClick.AddListener(delegate
             {
@@ -89,8 +91,6 @@ public class Verbs : MonoBehaviour
         if (_positionVerbs.GetComponentInChildren<Word>() != null)
         {
             GameObject word = _positionVerbs.GetComponentInChildren<Word>().gameObject;
-            if (word.GetComponentInChildren<Image>().sprite != null)
-                Destroy(word.GetComponentInChildren<Image>().sprite.texture);
             Destroy(word);
         }    
         GameObject go = Instantiate(_prefabVerbs, Vector3.zero, Quaternion.identity, _positionVerbs);
@@ -108,13 +108,4 @@ public class Verbs : MonoBehaviour
         _panel.SetActive(false);
     }
 
-    private void Start()
-    {
-    }
-    
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

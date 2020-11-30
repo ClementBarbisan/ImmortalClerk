@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class Subjects : MonoBehaviour
 {
+    [SerializeField]
     private Civilisation _civ;
     [SerializeField]
     private GameObject _prefab;
@@ -29,10 +30,10 @@ public class Subjects : MonoBehaviour
     // Start is called before the first frame update
     public void OnEnable()
     {
-        _civ = GetComponentInParent<Civilisation>();
+        OnDisable();
         for (int i = 0; i < _civ.data.TechnologyTree.Count; i++)
         {
-            if (_civ.data.TechnologyTree[i].useable)
+            if (_civ.data.TechnologyTree[i].useable && _civ.data.TechnologyTree[i].learned)
             {
                 if (Player.Instance.data.TechnologyTree[i].words.subjects.FindAll(x=>x.useable).Count > 0)
                 {
@@ -42,7 +43,10 @@ public class Subjects : MonoBehaviour
                     go.GetComponent<Button>().onClick.AddListener(delegate
                     {
                         ClickOnSubjects(tmpInt); });
-                    go.GetComponentInChildren<TextMeshProUGUI>().text = _civ.data.TechnologyTree[i].name;
+                    if (Player.Instance.debug)
+                        go.GetComponentInChildren<TextMeshProUGUI>().text = _civ.data.TechnologyTree[i].name;
+                    else
+                        go.GetComponentInChildren<TextMeshProUGUI>().text = "";
                     if (Resources.Load<Sprite>(_civ.data.TechnologyTree[i].name))
                         go.GetComponentInChildren<Image>().sprite =
                             Resources.Load<Sprite>(_civ.data.TechnologyTree[i].name);
@@ -53,25 +57,22 @@ public class Subjects : MonoBehaviour
 
     void ClickOnSubjects(int tech)
     {
-         if (_panel.GetComponentsInChildren<Word>().Length > 0)
+        Word[] words = _panel.GetComponentsInChildren<Word>();
+        for (int i = 0; i < words.Length; i++)
         {
-            Word[] words = _panel.GetComponentsInChildren<Word>();
-            for (int i = 0; i < words.Length; i++)
-            {
-                if (words[i].GetComponentInChildren<Image>().sprite != null)
-                    Destroy(words[i].GetComponentInChildren<Image>().sprite.texture);
-                Destroy(words[i].gameObject);
-            }
-
+            Destroy(words[i].gameObject);
         }
 
         _panel.SetActive(true);
         for (int i = 0; i < _civ.data.TechnologyTree[tech].words.subjects.Count; i++)
         {
-            if (!_civ.data.TechnologyTree[tech].words.subjects[i].useable)
+            if (!Player.Instance.data.TechnologyTree[tech].words.subjects[i].useable)
                 continue;
             GameObject go = Instantiate(_prefabSubjects, Vector3.zero, Quaternion.identity);
-            go.GetComponentInChildren<TextMeshProUGUI>().text = _civ.data.TechnologyTree[tech].words.subjects[i].name;
+            if (Player.Instance.debug)
+                go.GetComponentInChildren<TextMeshProUGUI>().text = _civ.data.TechnologyTree[tech].words.subjects[i].name;
+            else
+                go.GetComponentInChildren<TextMeshProUGUI>().text = "";
             int tmpInt = i;
             go.GetComponentInChildren<Button>().onClick.AddListener(delegate
             {
@@ -87,8 +88,6 @@ public class Subjects : MonoBehaviour
         if (_positionSubject.GetComponentInChildren<Word>() != null)
         {
             GameObject word = _positionSubject.GetComponentInChildren<Word>().gameObject;
-            if (word.GetComponentInChildren<Image>().sprite != null)
-                            Destroy(word.GetComponentInChildren<Image>().sprite.texture);
             Destroy(word);
         }    
         GameObject go = Instantiate(_prefabSubjects, Vector3.zero, Quaternion.identity, _positionSubject);
@@ -106,13 +105,5 @@ public class Subjects : MonoBehaviour
         _panel.SetActive(false);
     }
 
-    private void Start()
-    {
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

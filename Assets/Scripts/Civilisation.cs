@@ -15,8 +15,8 @@ public class Civilisation : MonoBehaviour
     public JsonParser.Data data;
     [SerializeField ]private GameObject _resultPanel;
     [SerializeField] private Slider _religion;
-    [SerializeField] private Slider _science;
     [SerializeField] private Slider _social;
+    [SerializeField] private Slider _science;
     [SerializeField] private Slider _conquest;
     [SerializeField] private Slider _trustIndice;
     private Vector4 _currentValues;
@@ -39,54 +39,61 @@ public class Civilisation : MonoBehaviour
     private Subjects _subjects;
     private Verbs _verbs;
     private Objects _objects;
+    private bool _techFound = false;
+    private bool _done = false;
 
     // Start is called before the first frame update
 
     public void CloseCivilisation()
     {
+        _openButton.SetActive(true);
         Player.Instance.Close();
     }
 
     public void OpenCivilisation()
     {
-        Player.Instance.Open(this.gameObject);
-        if (_trustIndice.value < 10f)
+        if (_trustIndice.value < 10f || _done)
         {
             Notifications.Instance.gameObject.SetActive(true);
             Notifications.Instance.TimeVisible += 2.5f;
-            Notifications.Instance.AddText(gameObject.name +  " don't want to talk with you anymore!");
+            Notifications.Instance.AddText(gameObject.name +  " don't want to deal with you anymore!");
         }
         else
         {
+            _openButton.SetActive(false);
+            Player.Instance.Open(this.gameObject);
             _open.SetActive(true);
         }
     }
 
     void Awake()
     {
-        PlayerPrefs.DeleteAll();
-        // if (PlayerPrefs.HasKey("religion" + gameObject.name))
-        //     _religion.value = PlayerPrefs.GetFloat("religion" + gameObject.name);
-        // if (PlayerPrefs.HasKey("science" + gameObject.name))
-        //     _science.value = PlayerPrefs.GetFloat("science" + gameObject.name);
-        // if (PlayerPrefs.HasKey("social" + gameObject.name))
-        //     _social.value = PlayerPrefs.GetFloat("social" + gameObject.name);
-        // if (PlayerPrefs.HasKey("conquest" + gameObject.name))
-        //     _conquest.value = PlayerPrefs.GetFloat("conquest" + gameObject.name);
-        // if (File.Exists(Application.persistentDataPath + "/" + gameObject.name + ".save"))
-        // {
-        //     _data = JsonUtility.FromJson<JsonParser.Data>(File.ReadAllText(Application.persistentDataPath + "/" + gameObject.name + ".save"));
-        // }
-        // else
-        // {
-            _religion.value = Random.Range(10f, 50f);
-            _social.value = Random.Range(10f, 50f);
-            _science.value = Random.Range(10f, 50f);
-            _conquest.value = Random.Range(10f, 50f);
-            _currentValues = new Vector4(_religion.value, _social.value, _science.value, _conquest.value);
-            _trustIndice.value = 100f - (Mathf.Max(Mathf.Max(_currentValues.x, _currentValues.y),
-                                     Mathf.Max(_currentValues.z, _currentValues.w)) -
-                                 Mathf.Min(Mathf.Min(_currentValues.x, _currentValues.y), Mathf.Min(_currentValues.z, _currentValues.w)));
+        // if (Player.Instance.debug)
+            // PlayerPrefs.DeleteAll();
+
+        if (PlayerPrefs.HasKey("religion" + gameObject.name))
+        {
+            Debug.Log("_religion");
+            _religion.value = PlayerPrefs.GetFloat("religion" + gameObject.name);
+            Debug.Log(_religion.value);
+        }
+
+        if (PlayerPrefs.HasKey("science" + gameObject.name))
+            _science.value = PlayerPrefs.GetFloat("science" + gameObject.name);
+        if (PlayerPrefs.HasKey("social" + gameObject.name))
+            _social.value = PlayerPrefs.GetFloat("social" + gameObject.name);
+        if (PlayerPrefs.HasKey("conquest" + gameObject.name))
+            _conquest.value = PlayerPrefs.GetFloat("conquest" + gameObject.name);
+        if (File.Exists(Application.persistentDataPath + "/" + gameObject.name + ".save") && !Player.Instance.debug)
+        {
+            data = JsonUtility.FromJson<JsonParser.Data>(File.ReadAllText(Application.persistentDataPath + "/" + gameObject.name + ".save"));
+        }
+        else
+        {
+            _religion.value = Random.Range(30f, 50f);
+            _social.value = Random.Range(30f, 50f);
+            _science.value = Random.Range(30f, 50f);
+            _conquest.value = Random.Range(30f, 50f);
             data = JsonParser.Instance.GetData();
             for (int i = 0; i < data.TechnologyTree.Count; i++)
             {
@@ -94,6 +101,7 @@ public class Civilisation : MonoBehaviour
                 {
                     var tmpStruct = data.TechnologyTree[i];
                     tmpStruct.useable = true;
+                    tmpStruct.learned = true;
                     for (int j = 0; j < tmpStruct.words.objects.Count; j++)
                     {
                         var tmpStructDescends = tmpStruct.words.objects[j];
@@ -121,13 +129,18 @@ public class Civilisation : MonoBehaviour
                 
             }
         
-            // }
-            _subjects = GetComponentInChildren<Subjects>();
-            _objects = GetComponentInChildren<Objects>();
-            _verbs = GetComponentInChildren<Verbs>();
-            _notifPanel = GameObject.FindWithTag("Notifications");
-            _panelAbstract.SetActive(false);
-            _open.SetActive(false);
+        }
+        _currentValues = new Vector4(_religion.value, _social.value, _science.value, _conquest.value);
+        _trustIndice.value = 100f - (Mathf.Max(Mathf.Max(_religion.value, _social.value),
+                                         Mathf.Max(_science.value, _conquest.value)) -
+                                     Mathf.Min(Mathf.Min(_religion.value, _social.value), Mathf.Min(_science.value, _conquest.value)));
+
+        _subjects = GetComponentInChildren<Subjects>();
+        _objects = GetComponentInChildren<Objects>();
+        _verbs = GetComponentInChildren<Verbs>();
+        _notifPanel = GameObject.FindWithTag("Notifications");
+        _panelAbstract.SetActive(false);
+        _open.SetActive(false);
             
     }
 
@@ -135,18 +148,33 @@ public class Civilisation : MonoBehaviour
     {
         for (int i = 0; i < data.TechnologyTree.Count; i++)
         {
-            if (data.TechnologyTree[i].useable && data.TechnologyTree[i].time > 0)
+            if (data.TechnologyTree[i].useable && !data.TechnologyTree[i].learned)
             {
                 JsonParser.Technos tech = data.TechnologyTree[i];
                 tech.time -= 1;
-                if (data.TechnologyTree[i].time <= 0)
+                if (tech.time <= 0)
                 {
+                    JsonParser.Technos tmpStructPlayer = Player.Instance.data.TechnologyTree[i];
                     Notifications.Instance.gameObject.SetActive(true);
                     Notifications.Instance.TimeVisible += 2.5f;
                     Notifications.Instance.AddText("New Technology " + gameObject.name + " : " + tech.name);
+                    tech.learned = true;
+                    tmpStructPlayer.learned = true;
+                    Player.Instance.data.TechnologyTree[i] = tmpStructPlayer;
+                    data.TechnologyTree[i] = tech;
+                    // _subjects.OnDisable();
+                    _subjects.OnEnable();
+                    // _objects.OnDisable();
+                    _objects.OnEnable();
+                    // _verbs.OnDisable();
+                    _verbs.OnEnable();
+                    if (tech.name == "aerospatial")
+                        Player.Instance.Done("End");
                 }
-
-                data.TechnologyTree[i] = tech;
+                else
+                {
+                    data.TechnologyTree[i] = tech;
+                }
             }
         }
     }
@@ -163,6 +191,7 @@ public class Civilisation : MonoBehaviour
                 techs.Add(_words[i].technos.name);
         }
         int count = 0;
+        _techFound = false;
         for (int i = 0; i < data.TechnologyTree.Count; i++)
         {
             if (data.TechnologyTree[i].dependances.Contains(techs[count]))
@@ -181,6 +210,7 @@ public class Civilisation : MonoBehaviour
                 if (count == techs.Count)
                 {
                     // Player.Instance.AddTurn();
+                    _techFound = true;
                     JsonParser.Technos tmpStruct = data.TechnologyTree[i];
                     if (tmpStruct.useable)
                     {
@@ -194,12 +224,20 @@ public class Civilisation : MonoBehaviour
                     }
 
                     JsonParser.Technos tmpStructPlayer = Player.Instance.data.TechnologyTree[i];
-                    
-                    if (!tmpStructPlayer.useable)
+
+                    // if (!tmpStructPlayer.useable)
+                    // {
+                    //     Notifications.Instance.gameObject.SetActive(true);
+                    //     Notifications.Instance.TimeVisible += 2.5f;
+                    //     Notifications.Instance.AddText("New Technology Player : " + tmpStructPlayer.name);
+                    // }
+                    if (tmpStruct.limits[0] > _currentValues.x || tmpStruct.limits[1] > _currentValues.y ||
+                        tmpStruct.limits[2] > _currentValues.z || tmpStruct.limits[3] > _currentValues.w)
                     {
-                        Notifications.Instance.gameObject.SetActive(true);
-                        Notifications.Instance.TimeVisible += 2.5f;
-                        Notifications.Instance.AddText("New Technology Player : " + tmpStructPlayer.name);
+                        tmpObject = Vector4.zero;
+                        tmpSubject = Vector4.zero;
+                        tmpVerb = Vector4.zero;
+                        break;
                     }
 
                     tmpStruct.useable = true;
@@ -239,16 +277,32 @@ public class Civilisation : MonoBehaviour
                             tmpStruct = GetNewWord(tmpStruct.words.objects, tmpStruct, Word.wordType.obj,
                                 ref tmpStructPlayer);
                     }
+
                     data.TechnologyTree[i] = tmpStruct;
                     Player.Instance.data.TechnologyTree[i] = tmpStructPlayer;
                     if (_religion.value >= 100f)
+                    {
+                        _done = true;
                         Player.Instance.Done("religion");
+                    }
+
                     if (_social.value >= 100f)
+                    {
+                        _done = true;
                         Player.Instance.Done("social");
+                    }
+
                     if (_science.value >= 100f)
+                    {
+                        _done = true;
                         Player.Instance.Done("science");
+                    }
                     if (_conquest.value >= 100f)
+                    {
+                        _done = true;
                         Player.Instance.Done("conquest");
+                    }
+
                     break;
                 }
                 else
@@ -257,17 +311,23 @@ public class Civilisation : MonoBehaviour
                 }
             }
         }
-        _subjects.OnDisable();
-        _subjects.OnEnable();
-        _objects.OnDisable();
-        _objects.OnEnable();
-        _verbs.OnDisable();
-        _verbs.OnEnable();
+
+        if (!_techFound)
+        {
+            tmpObject = Vector4.zero;
+            tmpSubject = Vector4.zero;
+            tmpVerb = Vector4.zero;
+        }
+
+        // _subjects.OnDisable();
+        // _subjects.OnEnable();
+        // _objects.OnDisable();
+        // _objects.OnEnable();
+        // _verbs.OnDisable();
+        // _verbs.OnEnable();
         
         for (int i = 0; i < _words.Length; i++)
         {
-            if (_words[i].GetComponentInChildren<Image>().sprite != null)
-                Destroy(_words[i].GetComponentInChildren<Image>().sprite.texture);
             Destroy(_words[i].gameObject);
         }
     }
@@ -346,7 +406,7 @@ public class Civilisation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        RaycastHit2D hit = Physics2D.Raycast(Input.mousePosition, Vector2.zero);
+        // RaycastHit2D hit = Physics2D.Raycast(Input.mousePosition, Vector2.zero);
         // if (hit && hit.collider.CompareTag("Civilisation") && (hit.collider.gameObject == _openButton || hit.collider.gameObject == _panelAbstract))
         // {
         //     Debug.Log(hit.collider.tag);
@@ -385,10 +445,11 @@ public class Civilisation : MonoBehaviour
 
         if (tmpObject != Vector4.zero || tmpVerb != Vector4.zero || tmpSubject != Vector4.zero)
         {
-            _religion.value = _currentValues.x + (tmpObject.x + tmpVerb.x) * (tmpSubject.x * (_trustIndice.value / 100f));
-            _social.value = _currentValues.y + (tmpObject.y + tmpVerb.y) * (tmpSubject.y * (_trustIndice.value / 100f));
-            _science.value = _currentValues.z + (tmpObject.z + tmpVerb.z) * (tmpSubject.z * (_trustIndice.value / 100f));
-            _conquest.value = _currentValues.w + (tmpObject.w + tmpVerb.w) * (tmpSubject.w * (_trustIndice.value / 100f));
+            float tmpValue = _trustIndice.value;
+            _religion.value = _currentValues.x + (tmpObject.x + tmpVerb.x) * (tmpSubject.x * (tmpValue / 100f));
+            _social.value = _currentValues.y + (tmpObject.y + tmpVerb.y) * (tmpSubject.y * (tmpValue / 100f));
+            _science.value = _currentValues.z + (tmpObject.z + tmpVerb.z) * (tmpSubject.z * (tmpValue / 100f));
+            _conquest.value = _currentValues.w + (tmpObject.w + tmpVerb.w) * (tmpSubject.w * (tmpValue / 100f));
             float tmpIndice = 100f - (Mathf.Max(Mathf.Max(_religion.value, _social.value),
                                           Mathf.Max(_science.value, _conquest.value)) -
                                       Mathf.Min(Mathf.Min(_religion.value, _social.value), Mathf.Min(_science.value, _conquest.value)));
@@ -453,25 +514,29 @@ public class Civilisation : MonoBehaviour
                         break;
                     }
                 }
-        
+
                 if (count == techs.Count)
                 {
                     bool learnable = false;
-                    Vector4 values = new Vector4(_religion.value, _social.value, _science.value, _conquest.value);
                     if (!data.TechnologyTree[i].useable)
                     {
                         Vector4 tmpVector = new Vector4(data.TechnologyTree[i].limits[0],
                             data.TechnologyTree[i].limits[1],
                             data.TechnologyTree[i].limits[2],
                             data.TechnologyTree[i].limits[3]);
-                        if (tmpVector.x < values.x && tmpVector.y < values.y && tmpVector.z < values.z && tmpVector.w < values.w)
+                        if (tmpVector.x < _currentValues.x && tmpVector.y < _currentValues.y &&
+                            tmpVector.z < _currentValues.z && tmpVector.w < _currentValues.w)
                         {
                             learnable = true;
                         }
                     }
-        
+
                     if (data.TechnologyTree[i].useable)
-                        return;
+                    {
+                        _autoTechText.text = "No new technology.";
+                        continue;
+                    }
+
                     int turns = 0;
                     if (data.TechnologyTree[i].type == "religion")
                         turns = Mathf.FloorToInt(data.TechnologyTree[i].time * (1 - _religion.value / 100f));
@@ -482,12 +547,13 @@ public class Civilisation : MonoBehaviour
                     else if (data.TechnologyTree[i].type == "conquest")
                         turns = Mathf.FloorToInt(data.TechnologyTree[i].time * (1 - _conquest.value / 100f));
                     if (learnable)
-                        _autoTechText.text = "New Tech : " + data.TechnologyTree[i].name + Environment.NewLine + "turns : " + turns;
-                    else
                     {
-                        _autoTechText.text = "";
+                        _autoTechText.text = "New Tech : " + data.TechnologyTree[i].name + Environment.NewLine +
+                                             "turns : " + turns;
+                        break;
                     }
                 }
+                _autoTechText.text = "No new technology.";
             }
         }
     }

@@ -21,24 +21,37 @@ public class Player : MonoBehaviour
     private TextMeshProUGUI turnText;
     [SerializeField] private GameObject _prefabWordKeeper;
     [SerializeField] private Transform _parent;
+    public bool debug = true;
+    private int _turnPast;
+    public bool wordKeep = true;
+    public int lastTurn;
+    private List<GameObject> _wordKeepers;
+    private bool _open;
+
     public void AddTurn()
     {
         for (int i = 0; i < _civilisations.Length; i++)
             _civilisations[i].AddTurn();
-        turnText.text = "Turn " + turn;
+        turnText.text = "Year " + turn;
     }
 
     private void Awake()
     {
-        hit = new RaycastHit2D();
+        // hit = new RaycastHit2D();
+        PlayerPrefs.DeleteAll();
         Instance = this;
+        _wordKeepers = new List<GameObject>();
         turnText = GameObject.FindWithTag("Turn").GetComponent<TextMeshProUGUI>();
-        // if (File.Exists(Application.persistentDataPath + "/" + gameObject.name + ".save"))
-        // {
-        //     data = JsonUtility.FromJson<JsonParser.Data>(File.ReadAllText(Application.persistentDataPath + "/" + gameObject.name + ".save"));
-        // }
-        // else
-        // {
+        if (PlayerPrefs.HasKey("year"))
+            turns = PlayerPrefs.GetInt("year");
+        if (PlayerPrefs.HasKey("debug"))
+            debug = bool.Parse(PlayerPrefs.GetString("debug"));
+        if (File.Exists(Application.persistentDataPath + "/" + gameObject.name + ".save") && !debug)
+        {
+            data = JsonUtility.FromJson<JsonParser.Data>(File.ReadAllText(Application.persistentDataPath + "/" + gameObject.name + ".save"));
+        }
+        else
+        {
             data = JsonParser.Instance.GetData();
             for (int i = 0; i < data.TechnologyTree.Count; i++)
             {
@@ -46,6 +59,7 @@ public class Player : MonoBehaviour
                 {
                     var tmpStruct = data.TechnologyTree[i];
                     tmpStruct.useable = true;
+                    tmpStruct.learned = true;
                     for (int j = 0; j < tmpStruct.words.objects.Count; j++)
                     {
                         var tmpStructDescends = tmpStruct.words.objects[j];
@@ -67,7 +81,8 @@ public class Player : MonoBehaviour
                     data.TechnologyTree[i] = tmpStruct;
                 }
             }
-        // }
+        }
+        _turnPast = Random.Range(20, 40);
     }
 
     // Start is called before the first frame update
@@ -81,18 +96,35 @@ public class Player : MonoBehaviour
         return;
     }
 
+    public void DeleteWordKeeper(GameObject obj)
+    {
+        _wordKeepers.Remove(obj);
+    }
+
     public void Close()
     {
+        _open = false;
         for (int i = 0; i < _civilisations.Length; i++)
             _civilisations[i].gameObject.SetActive(true);
+        for (int i = 0; i < _wordKeepers.Count; i++)
+        {
+            _wordKeepers[i].gameObject.SetActive(true);
+        }
     }
 
     public void Open(GameObject obj)
     {
+        _open = true;
         for (int i = 0; i < _civilisations.Length; i++)
         {
             if (_civilisations[i].gameObject != obj)
                 _civilisations[i].gameObject.SetActive(false);
+        }
+        Debug.Log(_wordKeepers.Count);
+        for (int i = 0; i < _wordKeepers.Count; i++)
+        {
+            if (_wordKeepers[i].gameObject != obj)
+                _wordKeepers[i].gameObject.SetActive(false);
         }
 
     }
@@ -100,6 +132,8 @@ public class Player : MonoBehaviour
     private void OnApplicationQuit()
     {
         File.WriteAllText(Application.persistentDataPath + "/" + gameObject.name + ".save", JsonUtility.ToJson(data));
+        PlayerPrefs.SetInt("year", turn);
+        PlayerPrefs.Save();
     }
     
     // Update is called once per frame
@@ -112,10 +146,18 @@ public class Player : MonoBehaviour
             AddTurn();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (wordKeep && _turnPast < turn - lastTurn)
         {
-            Debug.Log("Create");
-            Instantiate(_prefabWordKeeper, new Vector2(Screen.width / 2f, Screen.height / 2f), Quaternion.identity, _parent);
+            wordKeep = false;
+            // lastTurn = turn;
+            GameObject go = Instantiate(_prefabWordKeeper, new Vector2(Screen.width / 2f, Screen.height / 2f), Quaternion.identity, _parent);
+            GameObject openButton = go.GetComponent<WordKeeper>().buttonOpen;
+            openButton.transform.position = new Vector3(Random.Range(Screen.width / 4, Screen.width / 2 + Screen.width / 4),
+                Random.Range(Screen.height / 4, Screen.height / 2 + Screen.height / 4), 0);
+            _wordKeepers.Add(go);
+            if (_open)
+                go.SetActive(false);
+            _turnPast = Random.Range(10, 30);
         }
     }
 }

@@ -14,15 +14,4 @@ public class Word : MonoBehaviour
     public wordType type;
     public JsonParser.Technos technos;
     public JsonParser.Word word;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
