@@ -9,7 +9,7 @@ public class GetYearElapsed : MonoBehaviour
     void Start()
     {
         int years = PlayerPrefs.GetInt("year");
-        GetComponent<TextMeshProUGUI>().text = "Congratulations ! You made it in " + years.ToString();
+        GetComponent<TextMeshProUGUI>().text = "Congratulations ! You made it to the moon in " + years.ToString();
     }
 
     // Update is called once per frame

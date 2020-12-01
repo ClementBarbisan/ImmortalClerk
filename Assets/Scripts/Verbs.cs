@@ -19,6 +19,7 @@ public class Verbs : MonoBehaviour
     [SerializeField] private Transform _positionVerbs;
     [SerializeField]
     private GameObject _prefabVerbs;
+    [SerializeField] private GameObject _prefabResult;
 
     public void OnDisable()
     {
@@ -96,10 +97,9 @@ public class Verbs : MonoBehaviour
             GameObject word = _positionVerbs.GetComponentInChildren<Word>().gameObject;
             Destroy(word);
         }    
-        GameObject go = Instantiate(_prefabVerbs, Vector3.zero, Quaternion.identity, _positionVerbs);
+        GameObject go = Instantiate(_prefabResult, Vector3.zero, Quaternion.identity, _positionVerbs);
         go.transform.localScale = Vector3.one;
 
-        go.GetComponentInChildren<Button>().interactable = false;
         go.GetComponentInChildren<TextMeshProUGUI>().text = _civ.data.TechnologyTree[tech].words.verbs[index].name;
         Word currentWord = go.GetComponent<Word>();
         currentWord.word = _civ.data.TechnologyTree[tech].words.verbs[index];

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 public class Subjects : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class Subjects : MonoBehaviour
     [SerializeField] private Transform _positionSubject;
     [SerializeField]
     private GameObject _prefabSubjects;
+
+    [SerializeField] private GameObject _prefabResult;
 
     public void OnDisable()
     {
@@ -92,10 +95,9 @@ public class Subjects : MonoBehaviour
             GameObject word = _positionSubject.GetComponentInChildren<Word>().gameObject;
             Destroy(word);
         }    
-        GameObject go = Instantiate(_prefabSubjects, Vector3.zero, Quaternion.identity, _positionSubject);
+        GameObject go = Instantiate(_prefabResult, Vector3.zero, Quaternion.identity, _positionSubject);
         go.transform.localScale = Vector3.one;
 
-        go.GetComponentInChildren<Button>().interactable = false;
         go.GetComponentInChildren<TextMeshProUGUI>().text = _civ.data.TechnologyTree[tech].words.subjects[index].name;
         Word currentWord = go.GetComponent<Word>();
         currentWord.word = _civ.data.TechnologyTree[tech].words.subjects[index];
