@@ -222,6 +222,13 @@ public class Civilisation : MonoBehaviour
                         tmpVerb = Vector4.zero;
                         break;
                     }
+                    else
+                    {
+                        Notifications.Instance.gameObject.SetActive(true);
+                        Notifications.Instance.TimeVisible += 2.5f;
+                        Notifications.Instance.AddText(this.gameObject.name  + " start to research : " + tmpStruct.name);
+                        
+                    }
 
                     JsonParser.Technos tmpStructPlayer = Player.Instance.data.TechnologyTree[i];
 
@@ -241,6 +248,7 @@ public class Civilisation : MonoBehaviour
                     }
 
                     tmpStruct.useable = true;
+                    
                     if (tmpStruct.type == "religion")
                         tmpStruct.time *= 1 - (_religion.value / 100f);
                     else if (tmpStruct.type == "social")
@@ -549,7 +557,7 @@ public class Civilisation : MonoBehaviour
                     if (learnable)
                     {
                         _autoTechText.text = "New Tech : " + data.TechnologyTree[i].name + Environment.NewLine +
-                                             "turns : " + turns;
+                                             "Years : " + turns;
                         break;
                     }
                 }
