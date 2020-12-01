@@ -391,7 +391,7 @@
     {
       "name": "calendar",
       "dependances": [
-        "religion",
+        "cult",
         "mathematics"
       ],
       "time": 20,
@@ -497,7 +497,7 @@
       "name": "craftship",
       "dependances": [
         "farming",
-        "religion"
+        "cult"
       ],
       "time": 10,
       "type": "conquest",
