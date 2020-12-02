@@ -40,7 +40,7 @@ public class Civilisation : MonoBehaviour
     private Verbs _verbs;
     private Objects _objects;
     private bool _techFound = false;
-    private bool _done = false;
+    [FormerlySerializedAs("_done")] public bool done = false;
 
     // Start is called before the first frame update
 
@@ -52,7 +52,7 @@ public class Civilisation : MonoBehaviour
 
     public void OpenCivilisation()
     {
-        if (_trustIndice.value < 10f || _done)
+        if (_trustIndice.value < 10f || done)
         {
             Notifications.Instance.gameObject.SetActive(true);
             Notifications.Instance.TimeVisible += 2.5f;
@@ -84,7 +84,7 @@ public class Civilisation : MonoBehaviour
             _social.value = PlayerPrefs.GetFloat("social" + gameObject.name);
         if (PlayerPrefs.HasKey("conquest" + gameObject.name))
             _conquest.value = PlayerPrefs.GetFloat("conquest" + gameObject.name);
-        if (File.Exists(Application.persistentDataPath + "/" + gameObject.name + ".save") && !Player.Instance.debug)
+        if (File.Exists(Application.persistentDataPath + "/" + gameObject.name + ".save"))
         {
             data = JsonUtility.FromJson<JsonParser.Data>(File.ReadAllText(Application.persistentDataPath + "/" + gameObject.name + ".save"));
         }
@@ -285,30 +285,50 @@ public class Civilisation : MonoBehaviour
                             tmpStruct = GetNewWord(tmpStruct.words.objects, tmpStruct, Word.wordType.obj,
                                 ref tmpStructPlayer);
                     }
+                    else if (_trustIndice.value < 10f)
+                    {
+                        done = true;
+                        Player.Instance.Done("trust");
+                        Player.Instance.Close();
+                        _open.SetActive(false);
+                        _openButton.SetActive(true);
+                    }
 
                     data.TechnologyTree[i] = tmpStruct;
                     Player.Instance.data.TechnologyTree[i] = tmpStructPlayer;
-                    if (_religion.value >= 100f)
+                    if (_religion.value >= 100f || _religion.value <= 10f)
                     {
-                        _done = true;
+                        done = true;
                         Player.Instance.Done("religion");
+                        Player.Instance.Close();
+                        _open.SetActive(false);
+                        _openButton.SetActive(true);
                     }
 
-                    if (_social.value >= 100f)
+                    if (_social.value >= 100f || _social.value <= 10f)
                     {
-                        _done = true;
+                        done = true;
                         Player.Instance.Done("social");
+                        Player.Instance.Close();
+                        _open.SetActive(false);
+                        _openButton.SetActive(true);
                     }
 
-                    if (_science.value >= 100f)
+                    if (_science.value >= 100f || _science.value <= 10f)
                     {
-                        _done = true;
+                        done = true;
                         Player.Instance.Done("science");
+                        Player.Instance.Close();
+                        _open.SetActive(false);
+                        _openButton.SetActive(true);
                     }
-                    if (_conquest.value >= 100f)
+                    if (_conquest.value >= 100f || _conquest.value <= 10f)
                     {
-                        _done = true;
+                        done = true;
                         Player.Instance.Done("conquest");
+                        Player.Instance.Close();
+                        _open.SetActive(false);
+                        _openButton.SetActive(true);
                     }
 
                     break;

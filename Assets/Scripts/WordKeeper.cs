@@ -41,6 +41,7 @@ public class WordKeeper : MonoBehaviour
             Player.Instance.lastTurn = Player.Instance.turn;
             Player.Instance.DeleteWordKeeper(this.gameObject);
             Destroy(gameObject);
+            return;
         }
 
         int index = Random.Range(0, technos.Count);

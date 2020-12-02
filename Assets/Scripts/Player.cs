@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         // hit = new RaycastHit2D();
-        PlayerPrefs.DeleteAll();
+        // PlayerPrefs.DeleteAll();
         Instance = this;
         _wordKeepers = new List<GameObject>();
         turnText = GameObject.FindWithTag("Turn").GetComponent<TextMeshProUGUI>();
@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
             turns = PlayerPrefs.GetInt("year");
         if (PlayerPrefs.HasKey("debug"))
             debug = bool.Parse(PlayerPrefs.GetString("debug"));
-        if (File.Exists(Application.persistentDataPath + "/" + gameObject.name + ".save") && !debug)
+        if (File.Exists(Application.persistentDataPath + "/" + gameObject.name + ".save"))
         {
             data = JsonUtility.FromJson<JsonParser.Data>(File.ReadAllText(Application.persistentDataPath + "/" + gameObject.name + ".save"));
         }
@@ -83,7 +83,7 @@ public class Player : MonoBehaviour
                 }
             }
         }
-        _turnPast = Random.Range(20, 40);
+        _turnPast = Random.Range(20, 30);
     }
 
     // Start is called before the first frame update
@@ -95,7 +95,41 @@ public class Player : MonoBehaviour
     public void Done(string level)
     {
         if (level == "end")
+        {
+            PlayerPrefs.DeleteAll();
+            File.Delete(Application.persistentDataPath + "/" + gameObject.name + ".save");
+            for (int i = 0; i < _civilisations.Length; i++)
+            {
+                File.Delete(Application.persistentDataPath + "/" + _civilisations[i].gameObject.name + ".save");
+            }
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+        else
+        {
+            bool fail = true;
+            Notifications.Instance.gameObject.SetActive(true);
+            Notifications.Instance.TimeVisible += 2.5f;
+            Notifications.Instance.AddText("Civilisation fail : " + level);
+            for (int i = 0; i < _civilisations.Length; i++)
+            {
+                if (!_civilisations[i].done)
+                {
+                    fail = false;
+                    break;
+                }
+            }
+
+            if (fail)
+            {
+                File.Delete(Application.persistentDataPath + "/" + gameObject.name + ".save");
+                for (int i = 0; i < _civilisations.Length; i++)
+                {
+                    File.Delete(Application.persistentDataPath + "/" + _civilisations[i].gameObject.name + ".save");
+                }
+                PlayerPrefs.DeleteAll();
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
+            }
+        }
         return;
     }
 
@@ -161,7 +195,7 @@ public class Player : MonoBehaviour
             _wordKeepers.Add(go);
             if (_open)
                 go.SetActive(false);
-            _turnPast = Random.Range(10, 30);
+            _turnPast = Random.Range(10, 20);
         }
     }
 }

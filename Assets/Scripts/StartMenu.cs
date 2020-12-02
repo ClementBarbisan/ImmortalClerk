@@ -14,6 +14,7 @@ public class StartMenu : MonoBehaviour
     public void ChangeLevel(bool debug)
     {
         PlayerPrefs.SetString("debug", debug.ToString());
+        // PlayerPrefs.DeleteAll();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
