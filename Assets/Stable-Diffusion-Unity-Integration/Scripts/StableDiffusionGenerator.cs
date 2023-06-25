@@ -1,5 +1,4 @@
 using System;
-using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
@@ -30,7 +29,7 @@ public class StableDiffusionGenerator : MonoBehaviour
             string responseBody = client.DownloadString(url);
 
             // Deserialize the response to a class
-            SDProgress sdp = JsonConvert.DeserializeObject<SDProgress>(responseBody);
+            SDProgress sdp = JsonUtility.FromJson<SDProgress>(responseBody);
             progress = sdp.progress;
 
             EditorUtility.DisplayProgressBar("Generation in progress", (progress*100).ToString("F1") + "%", progress);
@@ -64,7 +63,7 @@ public class StableDiffusionGenerator : MonoBehaviour
             yield return modelInfoRequest.SendWebRequest();
 
             // Deserialize the response to a class
-            SDProgress sdp = JsonConvert.DeserializeObject<SDProgress>(modelInfoRequest.downloadHandler.text);
+            SDProgress sdp = JsonUtility.FromJson<SDProgress>(modelInfoRequest.downloadHandler.text);
             progress = sdp.progress;
 
             EditorUtility.DisplayProgressBar("Generation in progress", progress * 100 + "%", progress);

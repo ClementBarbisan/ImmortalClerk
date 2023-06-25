@@ -1,4 +1,3 @@
-using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.IO;
@@ -305,7 +304,7 @@ public class StableDiffusionText2Material : StableDiffusionGenerator
                     sd.sampler_name = samplersList[selectedSampler];
 
                 // Serialize the input parameters
-                string json = JsonConvert.SerializeObject(sd);
+                string json = JsonUtility.ToJson(sd);
 
                 // Send to the server
                 streamWriter.Write(json);
@@ -341,7 +340,7 @@ public class StableDiffusionText2Material : StableDiffusionGenerator
                 string result = streamReader.ReadToEnd();
 
                 // Deserialize the JSON string into a data structure
-                SDResponseTxt2Img json = JsonConvert.DeserializeObject<SDResponseTxt2Img>(result);
+                SDResponseTxt2Img json = JsonUtility.FromJson<SDResponseTxt2Img>(result);
 
                 // If no image, there was probably an error so abort
                 if (json.images == null || json.images.Length == 0)
@@ -386,7 +385,7 @@ public class StableDiffusionText2Material : StableDiffusionGenerator
                     // Read the generation info back (only seed should have changed, as the generation picked a particular seed)
                     if (json.info != "")
                     {
-                        SDParamsOutTxt2Img info = JsonConvert.DeserializeObject<SDParamsOutTxt2Img>(json.info);
+                        SDParamsOutTxt2Img info = JsonUtility.FromJson<SDParamsOutTxt2Img>(json.info);
 
                         // Read the seed that was used by Stable Diffusion to generate this result
                         generatedSeed = info.seed;

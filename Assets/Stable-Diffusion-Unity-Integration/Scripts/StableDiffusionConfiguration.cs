@@ -1,5 +1,4 @@
 using System;
-using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -73,7 +72,7 @@ public class StableDiffusionConfiguration : MonoBehaviour
         try
         {
             // Deserialize the response to a class
-            Model[] ms = JsonConvert.DeserializeObject<Model[]>(request.downloadHandler.text);
+            Model[] ms = JsonUtility.FromJson<Model[]>(request.downloadHandler.text);
 
             // Keep only the names of the models
             List<string> modelsNames = new List<string>();
@@ -131,7 +130,7 @@ public class StableDiffusionConfiguration : MonoBehaviour
                     sd.sd_model_checkpoint = modelName;
 
                     // Serialize into a JSON string
-                    string json = JsonConvert.SerializeObject(sd);
+                    string json = JsonUtility.ToJson(sd);
 
                     // Send the POST request to the server
                     streamWriter.Write(json);
