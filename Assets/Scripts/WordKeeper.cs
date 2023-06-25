@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,8 +33,8 @@ public class WordKeeper : MonoBehaviour
     private void Start()
     {
         _data = Player.Instance.data;
-        var technos = _data.TechnologyTree.FindAll(x => x.useable && x.dependances.Count > 0);
-        var general = _data.TechnologyTree.Find(x => x.name == "general");
+        List<JsonParser.Technos> technos = _data.TechnologyTree.FindAll(x => x.useable && x.dependances.Count > 0);
+        JsonParser.Technos general = _data.TechnologyTree.Find(x => x.name == "general");
         _currentSubject = general.words.subjects[Random.Range(0, general.words.subjects.Count)];
         if (technos.Count <= 0)
         {
@@ -44,39 +45,59 @@ public class WordKeeper : MonoBehaviour
             return;
         }
 
-        int index = Random.Range(0, technos.Count);
-        var tech1 = _data.TechnologyTree.Find(x => x.name == technos[index].dependances[0]);
-        var tech2 = _data.TechnologyTree.Find(x => x.name == technos[index].dependances[1]);
-        if (tech1.words.verbs.Count > 0)
+        int indexFirst = Random.Range(0, technos.Count);
+        int index = indexFirst;
+        do
         {
-                _currentObject = tech2.words.objects.Find(x => x.useable);
-                _currentVerb = tech1.words.verbs.Find(x => x.useable);
-                _wordsSets = true;
+            JsonParser.Technos tech1 = _data.TechnologyTree.Find(x => x.name == technos[index].dependances[0]);
+            JsonParser.Technos tech2 = _data.TechnologyTree.Find(x => x.name == technos[index].dependances[1]);
+            if (tech1 != null && tech2 != null)
+            {
+                if (tech1.words.verbs.Count > 0 && tech2.words.objects.Any(x => x.useable) &&
+                    tech1.words.verbs.Any(x => x.useable))
+                {
+                    JsonParser.Word[] listObjects = tech2.words.objects.FindAll(x => x.useable).ToArray();
+                    _currentObject = listObjects[Random.Range(0, listObjects.Length)];
+                    JsonParser.Word[] listVerbs = tech1.words.verbs.FindAll(x => x.useable).ToArray();
+                    _currentVerb = listVerbs[Random.Range(0, listVerbs.Length)];
+                }
+                else if (tech2.words.verbs.Count > 0 && tech1.words.objects.Any(x => x.useable) &&
+                         tech2.words.verbs.Any(x => x.useable))
+                {
+                    JsonParser.Word[] listObjects = tech1.words.objects.FindAll(x => x.useable).ToArray();
+                    _currentObject = listObjects[Random.Range(0, listObjects.Length)];
+                    JsonParser.Word[] listVerbs = tech2.words.verbs.FindAll(x => x.useable).ToArray();
+                    _currentVerb = listVerbs[Random.Range(0, listVerbs.Length)];
+                }
+                if (technos[index].words.verbs.Count > 0 && technos[index].words.verbs.Any(x => x.useable == false))
+                {
+                    _currentWord = technos[index].words.verbs.Find(x => x.useable == false);
+                }
+                else if (technos[index].words.objects.Count > 0 && technos[index].words.objects.Any(x => x.useable == false))
+                {
+                    _currentWord = technos[index].words.objects.Find(x => x.useable == false);
+                }
                 _result = technos[index];
-        }
-        if (tech2.words.verbs.Count > 0)
-        {
-                _currentObject = tech1.words.objects.Find(x => x.useable);
-                _currentVerb = tech2.words.verbs.Find(x => x.useable);
-                _wordsSets = true;
-                _result = technos[index];
-        }
-        if (technos[index].words.verbs.Count > 0)
-            _currentWord = technos[index].words.verbs.Find(x => x.useable == false);
-        else
-        {
-            _currentWord = technos[index].words.objects.Find(x => x.useable == false);
-        }
-
+                if (_currentObject != null && _currentVerb != null && _currentWord != null)
+                {
+                    _wordsSets = true;
+                    break;
+                }
+                _currentObject = null;
+                _currentVerb = null;
+                _currentWord = null;
+            }
+            index = (index + 1) % technos.Count;
+        } while (index != indexFirst);
         if (!_wordsSets)
         {
             Player.Instance.wordKeep = true;
             Player.Instance.lastTurn = Player.Instance.turn;
             Player.Instance.DeleteWordKeeper(this.gameObject);
             Destroy(gameObject);
+            return;
         }
-
-    GameObject subject = Instantiate(_prefabTechno, Vector3.zero, Quaternion.identity, _posSubject);
+        GameObject subject = Instantiate(_prefabTechno, Vector3.zero, Quaternion.identity, _posSubject);
         subject.transform.localPosition = Vector3.zero;
         subject.transform.localScale = Vector3.one;
 

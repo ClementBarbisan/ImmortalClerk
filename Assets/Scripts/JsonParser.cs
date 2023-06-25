@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Serialization;
-using CSharpOctree;
 
 public class JsonParser : MonoBehaviour
 {
@@ -23,8 +22,13 @@ public class JsonParser : MonoBehaviour
         public List<Technos> TechnologyTree;
     };
     [Serializable]
-    public struct Word
+    public class Word
     {
+        public override string ToString()
+        {
+            return name;
+        }
+
         public string name;
         public float[] value;
         public bool useable;
@@ -39,8 +43,13 @@ public class JsonParser : MonoBehaviour
     };
 
     [Serializable]
-    public struct Technos
+    public class Technos
     {
+        public override string ToString()
+        {
+            return name;
+        }
+
         public string name;
         public List<string> dependances;
         public WordsStruct words;
@@ -51,7 +60,6 @@ public class JsonParser : MonoBehaviour
         public float[] limits;
     };
 
-    public Octree octree;
     public Data data;
     [FormerlySerializedAs("nameFile")] [SerializeField] private string _nameFile;
     
@@ -59,7 +67,6 @@ public class JsonParser : MonoBehaviour
     {
         Instance = this;
         data = JsonUtility.FromJson<Data>(Resources.Load<TextAsset>(_nameFile).text);
-        octree = new Octree(0, 100, 0 , 100, 0, 100, 0, 100);
     }
 
     public Data GetData()

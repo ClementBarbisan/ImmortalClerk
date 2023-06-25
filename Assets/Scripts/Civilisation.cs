@@ -68,27 +68,7 @@ public class Civilisation : MonoBehaviour
 
     void Awake()
     {
-        // if (Player.Instance.debug)
-            // PlayerPrefs.DeleteAll();
-
-        if (PlayerPrefs.HasKey("religion" + gameObject.name))
-        {
-            Debug.Log("_religion");
-            _religion.value = PlayerPrefs.GetFloat("religion" + gameObject.name);
-            Debug.Log(_religion.value);
-        }
-
-        if (PlayerPrefs.HasKey("science" + gameObject.name))
-            _science.value = PlayerPrefs.GetFloat("science" + gameObject.name);
-        if (PlayerPrefs.HasKey("social" + gameObject.name))
-            _social.value = PlayerPrefs.GetFloat("social" + gameObject.name);
-        if (PlayerPrefs.HasKey("conquest" + gameObject.name))
-            _conquest.value = PlayerPrefs.GetFloat("conquest" + gameObject.name);
-        if (File.Exists(Application.persistentDataPath + "/" + gameObject.name + ".save"))
-        {
-            data = JsonUtility.FromJson<JsonParser.Data>(File.ReadAllText(Application.persistentDataPath + "/" + gameObject.name + ".save"));
-        }
-        else
+        if (Player.Instance.debug || !File.Exists(Application.persistentDataPath + "/" + gameObject.name + ".save"))
         {
             _religion.value = Random.Range(30f, 50f);
             _social.value = Random.Range(30f, 50f);
@@ -99,36 +79,48 @@ public class Civilisation : MonoBehaviour
             {
                 if (data.TechnologyTree[i].dependances.Count == 0)
                 {
-                    var tmpStruct = data.TechnologyTree[i];
+                    JsonParser.Technos tmpStruct = data.TechnologyTree[i];
                     tmpStruct.useable = true;
                     tmpStruct.learned = true;
                     for (int j = 0; j < tmpStruct.words.objects.Count; j++)
                     {
-                        var tmpStructDescends = tmpStruct.words.objects[j];
+                        JsonParser.Word tmpStructDescends = tmpStruct.words.objects[j];
                     
                         tmpStructDescends.useable = true;
                         tmpStruct.words.objects[j] = tmpStructDescends;
                     }
                     for (int j = 0; j < tmpStruct.words.subjects.Count; j++)
                     {
-                        var tmpStructDescends = tmpStruct.words.subjects[j];
+                        JsonParser.Word tmpStructDescends = tmpStruct.words.subjects[j];
                        
                         tmpStructDescends.useable = true;
                         tmpStruct.words.subjects[j] = tmpStructDescends;
                     }
                     for (int j = 0; j < tmpStruct.words.verbs.Count; j++)
                     {
-                        var tmpStructDescends = tmpStruct.words.verbs[j];
+                        JsonParser.Word tmpStructDescends = tmpStruct.words.verbs[j];
                        
                         tmpStructDescends.useable = true;
                         tmpStruct.words.verbs[j] = tmpStructDescends;
                     }
                     data.TechnologyTree[i] = tmpStruct;
                 }
-
-                
             }
-        
+        }
+        else
+        {
+            if (PlayerPrefs.HasKey("religion" + gameObject.name))
+                _religion.value = PlayerPrefs.GetFloat("religion" + gameObject.name);
+            if (PlayerPrefs.HasKey("science" + gameObject.name))
+                _science.value = PlayerPrefs.GetFloat("science" + gameObject.name);
+            if (PlayerPrefs.HasKey("social" + gameObject.name))
+                _social.value = PlayerPrefs.GetFloat("social" + gameObject.name);
+            if (PlayerPrefs.HasKey("conquest" + gameObject.name))
+                _conquest.value = PlayerPrefs.GetFloat("conquest" + gameObject.name);
+            if (File.Exists(Application.persistentDataPath + "/" + gameObject.name + ".save"))
+            {
+                data = JsonUtility.FromJson<JsonParser.Data>(File.ReadAllText(Application.persistentDataPath + "/" + gameObject.name + ".save"));
+            }
         }
         _currentValues = new Vector4(_religion.value, _social.value, _science.value, _conquest.value);
         _trustIndice.value = 100f - (Mathf.Max(Mathf.Max(_religion.value, _social.value),

@@ -39,19 +39,10 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         // hit = new RaycastHit2D();
-        // PlayerPrefs.DeleteAll();
         Instance = this;
         _wordKeepers = new List<GameObject>();
         turnText = GameObject.FindWithTag("Turn").GetComponent<TextMeshProUGUI>();
-        if (PlayerPrefs.HasKey("year"))
-            turns = PlayerPrefs.GetInt("year");
-        if (PlayerPrefs.HasKey("debug"))
-            debug = bool.Parse(PlayerPrefs.GetString("debug"));
-        if (File.Exists(Application.persistentDataPath + "/" + gameObject.name + ".save"))
-        {
-            data = JsonUtility.FromJson<JsonParser.Data>(File.ReadAllText(Application.persistentDataPath + "/" + gameObject.name + ".save"));
-        }
-        else
+        if (debug || !File.Exists(Application.persistentDataPath + "/" + gameObject.name + ".save"))
         {
             data = JsonParser.Instance.GetData();
             for (int i = 0; i < data.TechnologyTree.Count; i++)
@@ -81,9 +72,28 @@ public class Player : MonoBehaviour
                     }
                     data.TechnologyTree[i] = tmpStruct;
                 }
+                // else if (debug)
+                // {
+                //     JsonParser.Technos tmpStruct = data.TechnologyTree[i];
+                //     tmpStruct.useable = Random.Range(0, 5) < 2;
+                //     tmpStruct.learned = tmpStruct.useable;
+                //     data.TechnologyTree[i] = tmpStruct;
+                // }
             }
+            _turnPast = Random.Range(0, 5);
         }
-        _turnPast = Random.Range(20, 30);
+        else
+        {
+            if (PlayerPrefs.HasKey("year"))
+                turns = PlayerPrefs.GetInt("year");
+            if (PlayerPrefs.HasKey("debug"))
+                debug = bool.Parse(PlayerPrefs.GetString("debug"));
+            if (File.Exists(Application.persistentDataPath + "/" + gameObject.name + ".save"))
+            {
+                data = JsonUtility.FromJson<JsonParser.Data>(File.ReadAllText(Application.persistentDataPath + "/" + gameObject.name + ".save"));
+            }
+            _turnPast = Random.Range(20, 30);
+        }
     }
 
     // Start is called before the first frame update
@@ -130,7 +140,6 @@ public class Player : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 2);
             }
         }
-        return;
     }
 
     public void DeleteWordKeeper(GameObject obj)
@@ -157,7 +166,6 @@ public class Player : MonoBehaviour
             if (_civilisations[i].gameObject != obj)
                 _civilisations[i].gameObject.SetActive(false);
         }
-        Debug.Log(_wordKeepers.Count);
         for (int i = 0; i < _wordKeepers.Count; i++)
         {
             if (_wordKeepers[i].gameObject != obj)
@@ -173,7 +181,6 @@ public class Player : MonoBehaviour
         PlayerPrefs.Save();
     }
     
-    // Update is called once per frame
     void Update()
     {
         turns += Time.deltaTime;
