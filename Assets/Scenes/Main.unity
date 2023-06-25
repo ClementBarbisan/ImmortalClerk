@@ -247,6 +247,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 313292147, guid: a282f7a19fe3b1a4c9d7921e009b867f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 336080821, guid: a282f7a19fe3b1a4c9d7921e009b867f, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -410,6 +414,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5505760970237032138, guid: a282f7a19fe3b1a4c9d7921e009b867f,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5988162677575298091, guid: a282f7a19fe3b1a4c9d7921e009b867f,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -418,6 +427,11 @@ PrefabInstance:
     - target: {fileID: 5988162677575298091, guid: a282f7a19fe3b1a4c9d7921e009b867f,
         type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988162677575298091, guid: a282f7a19fe3b1a4c9d7921e009b867f,
+        type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8213232896976891074, guid: a282f7a19fe3b1a4c9d7921e009b867f,
@@ -486,187 +500,99 @@ MonoBehaviour:
       words:
         subjects:
         - name: one
-          value:
-          - 1
-          - -1
-          - -1
-          - 1
+          value: {x: 1, y: -1, z: -1, w: 1}
           useable: 0
         - name: none
-          value:
-          - 0.25
-          - 0.25
-          - 0.25
-          - 0.25
+          value: {x: 1, y: -1, z: -1, w: 1}
           useable: 0
         - name: most
-          value:
-          - 0.5
-          - 0.5
-          - 0.5
-          - 0.5
+          value: {x: 1, y: -1, z: -1, w: 1}
           useable: 0
         - name: lot
-          value:
-          - 1.25
-          - 1.25
-          - 1.25
-          - 1.25
+          value: {x: 1, y: -1, z: -1, w: 1}
           useable: 0
         - name: all
-          value:
-          - 1
-          - 1
-          - 1
-          - 1
+          value: {x: 1, y: -1, z: -1, w: 1}
           useable: 0
         - name: some
-          value:
-          - -1
-          - 1
-          - 1
-          - -1
+          value: {x: 1, y: -1, z: -1, w: 1}
           useable: 0
         verbs: []
         objects:
         - name: death
-          value:
-          - 20
-          - 0
-          - 10
-          - 10
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: life
-          value:
-          - 20
-          - 20
-          - 20
-          - 20
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: human
-          value:
-          - 0
-          - 30
-          - 30
-          - 0
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: nature
-          value:
-          - 25
-          - 25
-          - 25
-          - 0
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
       type: social
       time: 0
       useable: 0
       learned: 0
-      limits:
-      - 0
-      - 0
-      - 0
-      - 0
+      limits: {x: 20, y: 0, z: 10, w: 10}
     - name: farming
       dependances: []
       words:
         subjects: []
         verbs:
         - name: produce
-          value:
-          - 0
-          - 20
-          - 20
-          - 0
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: create
-          value:
-          - 20
-          - 0
-          - 0
-          - 20
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         objects: []
       type: social
       time: 0
       useable: 0
       learned: 0
-      limits:
-      - 0
-      - 0
-      - 0
-      - 0
+      limits: {x: 20, y: 0, z: 10, w: 10}
     - name: written
       dependances: []
       words:
         subjects: []
         verbs:
         - name: read
-          value:
-          - 5
-          - 10
-          - 10
-          - 5
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: write
-          value:
-          - 10
-          - 5
-          - 5
-          - 10
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         objects: []
       type: science
       time: 0
       useable: 0
       learned: 0
-      limits:
-      - 0
-      - 0
-      - 0
-      - 0
+      limits: {x: 20, y: 0, z: 10, w: 10}
     - name: oral
       dependances: []
       words:
         subjects: []
         verbs:
         - name: listen
-          value:
-          - 10
-          - 25
-          - 10
-          - -5
+          value: {x: 0, y: 0, z: 0, w: 0}
           useable: 0
         - name: know
-          value:
-          - 5
-          - 5
-          - 10
-          - 10
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: hear
-          value:
-          - 10
-          - 25
-          - 25
-          - -5
+          value: {x: 0, y: 0, z: 0, w: 0}
           useable: 0
         - name: tell
-          value:
-          - 15
-          - -5
-          - -5
-          - 25
+          value: {x: 0, y: 0, z: 0, w: 0}
           useable: 0
         objects: []
       type: social
       time: 0
       useable: 0
       learned: 0
-      limits:
-      - 0
-      - 0
-      - 0
-      - 0
+      limits: {x: 20, y: 0, z: 10, w: 10}
     - name: numbers
       dependances:
       - written
@@ -676,42 +602,22 @@ MonoBehaviour:
         verbs: []
         objects:
         - name: counting
-          value:
-          - -10
-          - 10
-          - 15
-          - 5
+          value: {x: 0, y: 0, z: 0, w: 0}
           useable: 0
         - name: calculation
-          value:
-          - -15
-          - 10
-          - 10
-          - -5
+          value: {x: 0, y: 0, z: 0, w: 0}
           useable: 0
         - name: result
-          value:
-          - 5
-          - -10
-          - 10
-          - 5
+          value: {x: 0, y: 0, z: 0, w: 0}
           useable: 0
         - name: total
-          value:
-          - 5
-          - -10
-          - 10
-          - 15
+          value: {x: 0, y: 0, z: 0, w: 0}
           useable: 0
       type: science
       time: 10
       useable: 0
       learned: 0
-      limits:
-      - 10
-      - 5
-      - 20
-      - 10
+      limits: {x: 20, y: 0, z: 10, w: 10}
     - name: cult
       dependances:
       - oral
@@ -721,35 +627,19 @@ MonoBehaviour:
         verbs: []
         objects:
         - name: gods
-          value:
-          - 20
-          - 20
-          - -10
-          - 20
+          value: {x: 0, y: 0, z: 0, w: 0}
           useable: 0
         - name: offering
-          value:
-          - 30
-          - 20
-          - -10
-          - 10
+          value: {x: 0, y: 0, z: 0, w: 0}
           useable: 0
         - name: superior
-          value:
-          - 25
-          - -5
-          - -15
-          - 25
+          value: {x: 0, y: 0, z: 0, w: 0}
           useable: 0
       type: religion
       time: 10
       useable: 0
       learned: 0
-      limits:
-      - 30
-      - 10
-      - 0
-      - 20
+      limits: {x: 20, y: 0, z: 10, w: 10}
     - name: mathematics
       dependances:
       - written
@@ -758,36 +648,20 @@ MonoBehaviour:
         subjects: []
         verbs:
         - name: abstract
-          value:
-          - 10
-          - -15
-          - 30
-          - 20
+          value: {x: 0, y: 0, z: 0, w: 0}
           useable: 0
         - name: count
-          value:
-          - -20
-          - 20
-          - 20
-          - 5
+          value: {x: 0, y: 0, z: 0, w: 0}
           useable: 0
         - name: calculate
-          value:
-          - -10
-          - 30
-          - 30
-          - -20
+          value: {x: 0, y: 0, z: 0, w: 0}
           useable: 0
         objects: []
       type: science
       time: 10
       useable: 0
       learned: 0
-      limits:
-      - 10
-      - 30
-      - 45
-      - 10
+      limits: {x: 20, y: 0, z: 10, w: 10}
     - name: calendar
       dependances:
       - cult
@@ -796,36 +670,20 @@ MonoBehaviour:
         subjects: []
         verbs:
         - name: predict
-          value:
-          - 30
-          - 0
-          - 10
-          - 25
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: anticipating
-          value:
-          - 10
-          - 10
-          - 25
-          - 10
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: foresee
-          value:
-          - 20
-          - 5
-          - 5
-          - 20
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         objects: []
       type: religion
       time: 20
       useable: 0
       learned: 0
-      limits:
-      - 60
-      - 40
-      - 20
-      - 20
+      limits: {x: 20, y: 0, z: 10, w: 10}
     - name: astronomy
       dependances:
       - craftship
@@ -835,42 +693,22 @@ MonoBehaviour:
         verbs: []
         objects:
         - name: planet
-          value:
-          - 10
-          - 0
-          - 25
-          - 30
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: sun
-          value:
-          - 20
-          - 0
-          - 30
-          - 30
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: moon
-          value:
-          - 30
-          - 0
-          - 20
-          - 30
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: earth
-          value:
-          - 5
-          - 20
-          - 20
-          - 5
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
       type: science
       time: 20
       useable: 0
       learned: 0
-      limits:
-      - 40
-      - 25
-      - 50
-      - 30
+      limits: {x: 20, y: 0, z: 10, w: 10}
     - name: craftship
       dependances:
       - farming
@@ -880,42 +718,22 @@ MonoBehaviour:
         verbs: []
         objects:
         - name: gift
-          value:
-          - 20
-          - 40
-          - 0
-          - -10
+          value: {x: 0, y: 0, z: 0, w: 0}
           useable: 0
         - name: protection
-          value:
-          - -5
-          - 15
-          - 0
-          - 25
+          value: {x: 0, y: 0, z: 0, w: 0}
           useable: 0
         - name: tools
-          value:
-          - 0
-          - 20
-          - 10
-          - 10
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: manufacture
-          value:
-          - -10
-          - 0
-          - 0
-          - 0
+          value: {x: 0, y: 0, z: 0, w: 0}
           useable: 0
       type: conquest
       time: 10
       useable: 0
       learned: 0
-      limits:
-      - 40
-      - 30
-      - 10
-      - 50
+      limits: {x: 20, y: 0, z: 10, w: 10}
     - name: physics
       dependances:
       - mathematics
@@ -924,36 +742,20 @@ MonoBehaviour:
         subjects: []
         verbs:
         - name: measure
-          value:
-          - -20
-          - 20
-          - 30
-          - 0
+          value: {x: 0, y: 0, z: 0, w: 0}
           useable: 0
         - name: modelize
-          value:
-          - -30
-          - 30
-          - 30
-          - 0
+          value: {x: 0, y: 0, z: 0, w: 0}
           useable: 0
         - name: research
-          value:
-          - 0
-          - 10
-          - 20
-          - 30
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         objects: []
       type: science
       time: 10
       useable: 0
       learned: 0
-      limits:
-      - 10
-      - 20
-      - 40
-      - 10
+      limits: {x: 20, y: 0, z: 10, w: 10}
     - name: electricity
       dependances:
       - physics
@@ -963,28 +765,16 @@ MonoBehaviour:
         verbs: []
         objects:
         - name: power
-          value:
-          - 30
-          - 10
-          - 0
-          - 40
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: flux
-          value:
-          - -10
-          - 20
-          - 20
-          - -10
+          value: {x: 0, y: 0, z: 0, w: 0}
           useable: 0
       type: social
       time: 10
       useable: 0
       learned: 0
-      limits:
-      - 0
-      - 30
-      - 40
-      - 35
+      limits: {x: 20, y: 0, z: 10, w: 10}
     - name: electronic
       dependances:
       - electricity
@@ -994,28 +784,16 @@ MonoBehaviour:
         verbs: []
         objects:
         - name: communications
-          value:
-          - 20
-          - 40
-          - -20
-          - 20
+          value: {x: 0, y: 0, z: 0, w: 0}
           useable: 0
         - name: informations
-          value:
-          - 10
-          - 20
-          - -10
-          - 40
+          value: {x: 0, y: 0, z: 0, w: 0}
           useable: 0
       type: conquest
       time: 30
       useable: 0
       learned: 0
-      limits:
-      - 10
-      - 20
-      - 60
-      - 10
+      limits: {x: 20, y: 0, z: 10, w: 10}
     - name: mecanic
       dependances:
       - craftship
@@ -1025,35 +803,19 @@ MonoBehaviour:
         verbs: []
         objects:
         - name: mecanism
-          value:
-          - 10
-          - 30
-          - 30
-          - 20
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: system
-          value:
-          - 10
-          - 20
-          - 20
-          - 40
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: forces
-          value:
-          - 0
-          - 20
-          - 50
-          - 20
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
       type: social
       time: 30
       useable: 0
       learned: 0
-      limits:
-      - 20
-      - 60
-      - 40
-      - 20
+      limits: {x: 20, y: 0, z: 10, w: 10}
     - name: computing
       dependances:
       - electronic
@@ -1062,29 +824,17 @@ MonoBehaviour:
         subjects: []
         verbs:
         - name: compute
-          value:
-          - -20
-          - 10
-          - 30
-          - 30
+          value: {x: 0, y: 0, z: 0, w: 0}
           useable: 0
         - name: data
-          value:
-          - -20
-          - -20
-          - 30
-          - 30
+          value: {x: 0, y: 0, z: 0, w: 0}
           useable: 0
         objects: []
       type: science
       time: 30
       useable: 0
       learned: 0
-      limits:
-      - 10
-      - 30
-      - 70
-      - 10
+      limits: {x: 20, y: 0, z: 10, w: 10}
     - name: aeronautic
       dependances:
       - computimg
@@ -1094,21 +844,13 @@ MonoBehaviour:
         verbs: []
         objects:
         - name: fly
-          value:
-          - 30
-          - 30
-          - 20
-          - 40
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
       type: conquest
       time: 40
       useable: 0
       learned: 0
-      limits:
-      - 50
-      - 30
-      - 80
-      - 70
+      limits: {x: 20, y: 0, z: 10, w: 10}
     - name: aerospatial
       dependances:
       - aeronautic
@@ -1117,22 +859,14 @@ MonoBehaviour:
         subjects: []
         verbs:
         - name: launch
-          value:
-          - 0
-          - 0
-          - 0
-          - 0
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         objects: []
       type: conquest
       time: 40
       useable: 0
       learned: 0
-      limits:
-      - 60
-      - 40
-      - 90
-      - 70
+      limits: {x: 20, y: 0, z: 10, w: 10}
   _nameFile: techTree
 --- !u!20 &519420031
 Camera:
@@ -1210,7 +944,7 @@ MonoBehaviour:
   _prefabWordKeeper: {fileID: 6797882220972824072, guid: f963f762af685694f8c01f9f0330e7fe,
     type: 3}
   _parent: {fileID: 60867420}
-  debug: 1
+  debug: 0
   wordKeep: 1
   lastTurn: 0
 --- !u!224 &627642670 stripped
@@ -1244,6 +978,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 313292147, guid: a282f7a19fe3b1a4c9d7921e009b867f, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 313292147, guid: a282f7a19fe3b1a4c9d7921e009b867f, type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 336080821, guid: a282f7a19fe3b1a4c9d7921e009b867f, type: 3}
@@ -1417,6 +1155,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5505760970237032138, guid: a282f7a19fe3b1a4c9d7921e009b867f,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5988162677575298091, guid: a282f7a19fe3b1a4c9d7921e009b867f,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -1425,6 +1168,11 @@ PrefabInstance:
     - target: {fileID: 5988162677575298091, guid: a282f7a19fe3b1a4c9d7921e009b867f,
         type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988162677575298091, guid: a282f7a19fe3b1a4c9d7921e009b867f,
+        type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8213232896976891074, guid: a282f7a19fe3b1a4c9d7921e009b867f,
@@ -1593,6 +1341,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 313292147, guid: a282f7a19fe3b1a4c9d7921e009b867f, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 313292147, guid: a282f7a19fe3b1a4c9d7921e009b867f, type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 336080821, guid: a282f7a19fe3b1a4c9d7921e009b867f, type: 3}
@@ -1766,6 +1518,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5505760970237032138, guid: a282f7a19fe3b1a4c9d7921e009b867f,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5988162677575298091, guid: a282f7a19fe3b1a4c9d7921e009b867f,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -1774,6 +1531,11 @@ PrefabInstance:
     - target: {fileID: 5988162677575298091, guid: a282f7a19fe3b1a4c9d7921e009b867f,
         type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988162677575298091, guid: a282f7a19fe3b1a4c9d7921e009b867f,
+        type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8213232896976891074, guid: a282f7a19fe3b1a4c9d7921e009b867f,

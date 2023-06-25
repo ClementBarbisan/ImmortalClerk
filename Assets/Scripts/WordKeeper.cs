@@ -28,12 +28,14 @@ public class WordKeeper : MonoBehaviour
 
     private bool _wordsSets = false;
     private JsonParser.Word _currentWord;
-
+    [SerializeField]
+    private Vector4 _values;
 
     private void Start()
     {
         _data = Player.Instance.data;
-        List<JsonParser.Technos> technos = _data.TechnologyTree.FindAll(x => x.useable && x.dependances.Count > 0);
+        _values = new Vector4(Random.Range(5, 90), Random.Range(5, 90), Random.Range(5, 90), Random.Range(5, 90));
+        List<JsonParser.Technos> technos = _data.TechnologyTree.FindAll(x => x.learned && x.dependances.Count > 0);
         JsonParser.Technos general = _data.TechnologyTree.Find(x => x.name == "general");
         _currentSubject = general.words.subjects[Random.Range(0, general.words.subjects.Count)];
         if (technos.Count <= 0)
@@ -56,26 +58,28 @@ public class WordKeeper : MonoBehaviour
                 if (tech1.words.verbs.Count > 0 && tech2.words.objects.Any(x => x.useable) &&
                     tech1.words.verbs.Any(x => x.useable))
                 {
-                    JsonParser.Word[] listObjects = tech2.words.objects.FindAll(x => x.useable).ToArray();
-                    _currentObject = listObjects[Random.Range(0, listObjects.Length)];
-                    JsonParser.Word[] listVerbs = tech1.words.verbs.FindAll(x => x.useable).ToArray();
-                    _currentVerb = listVerbs[Random.Range(0, listVerbs.Length)];
+                    _currentObject = tech2.words.objects.FindAll(x => x.useable).OrderBy((x)
+                        => Vector4.Distance(x.value, _values)).First();
+                    _currentVerb = tech1.words.verbs.FindAll(x => x.useable).OrderBy((x)
+                        => Vector4.Distance(x.value, _values)).First();
                 }
                 else if (tech2.words.verbs.Count > 0 && tech1.words.objects.Any(x => x.useable) &&
                          tech2.words.verbs.Any(x => x.useable))
                 {
-                    JsonParser.Word[] listObjects = tech1.words.objects.FindAll(x => x.useable).ToArray();
-                    _currentObject = listObjects[Random.Range(0, listObjects.Length)];
-                    JsonParser.Word[] listVerbs = tech2.words.verbs.FindAll(x => x.useable).ToArray();
-                    _currentVerb = listVerbs[Random.Range(0, listVerbs.Length)];
+                    _currentObject = tech1.words.objects.FindAll(x => x.useable).OrderBy((x)
+                        => Vector4.Distance(x.value, _values)).First();
+                    _currentVerb = tech2.words.verbs.FindAll(x => x.useable).OrderBy((x)
+                        => Vector4.Distance(x.value, _values)).First();
                 }
                 if (technos[index].words.verbs.Count > 0 && technos[index].words.verbs.Any(x => x.useable == false))
                 {
-                    _currentWord = technos[index].words.verbs.Find(x => x.useable == false);
+                    _currentWord = technos[index].words.verbs.FindAll(x => x.useable == false).OrderBy((x)
+                        => Vector4.Distance(x.value, _values)).First();;
                 }
                 else if (technos[index].words.objects.Count > 0 && technos[index].words.objects.Any(x => x.useable == false))
                 {
-                    _currentWord = technos[index].words.objects.Find(x => x.useable == false);
+                    _currentWord = technos[index].words.objects.FindAll(x => x.useable == false).OrderBy((x)
+                        => Vector4.Distance(x.value, _values)).First();;
                 }
                 _result = technos[index];
                 if (_currentObject != null && _currentVerb != null && _currentWord != null)

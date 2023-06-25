@@ -230,16 +230,11 @@ public class Civilisation : MonoBehaviour
                     //     Notifications.Instance.TimeVisible += 2.5f;
                     //     Notifications.Instance.AddText("New Technology Player : " + tmpStructPlayer.name);
                     // }
-                    if (tmpStruct.limits[0] > _currentValues.x || tmpStruct.limits[1] > _currentValues.y ||
-                        tmpStruct.limits[2] > _currentValues.z || tmpStruct.limits[3] > _currentValues.w)
-                    {
-                        tmpObject = Vector4.zero;
-                        tmpSubject = Vector4.zero;
-                        tmpVerb = Vector4.zero;
-                        break;
-                    }
+                   
 
                     tmpStruct.useable = true;
+                    tmpStruct.time *= Vector4.Distance(tmpStruct.limits,
+                        new Vector4(_religion.value, _social.value, _science.value, _conquest.value)) / 25f;
                     
                     if (tmpStruct.type == "religion")
                         tmpStruct.time *= 1 - (_religion.value / 100f);
@@ -249,7 +244,6 @@ public class Civilisation : MonoBehaviour
                         tmpStruct.time *= 1 - (_science.value / 100f);
                     else if (tmpStruct.type == "conquest")
                         tmpStruct.time *= 1 - (_conquest.value / 100f);
-
                     tmpStructPlayer.useable = true;
 
                     _currentValues += Vector4.Scale((tmpObject + tmpVerb), tmpSubject * (_trustIndice.value / 100f));
@@ -277,7 +271,7 @@ public class Civilisation : MonoBehaviour
                             tmpStruct = GetNewWord(tmpStruct.words.objects, tmpStruct, Word.wordType.obj,
                                 ref tmpStructPlayer);
                     }
-                    else if (_trustIndice.value < 10f)
+                    else if (_trustIndice.value < 2f)
                     {
                         done = true;
                         Player.Instance.Done("trust");
@@ -288,7 +282,7 @@ public class Civilisation : MonoBehaviour
 
                     data.TechnologyTree[i] = tmpStruct;
                     Player.Instance.data.TechnologyTree[i] = tmpStructPlayer;
-                    if (_religion.value >= 100f || _religion.value <= 10f)
+                    if (_religion.value >= 100f || _religion.value <= 2f)
                     {
                         done = true;
                         Player.Instance.Done("religion");
@@ -297,7 +291,7 @@ public class Civilisation : MonoBehaviour
                         _openButton.SetActive(true);
                     }
 
-                    if (_social.value >= 100f || _social.value <= 10f)
+                    if (_social.value >= 100f || _social.value <= 2f)
                     {
                         done = true;
                         Player.Instance.Done("social");
@@ -306,7 +300,7 @@ public class Civilisation : MonoBehaviour
                         _openButton.SetActive(true);
                     }
 
-                    if (_science.value >= 100f || _science.value <= 10f)
+                    if (_science.value >= 100f || _science.value <= 2f)
                     {
                         done = true;
                         Player.Instance.Done("science");
@@ -314,7 +308,7 @@ public class Civilisation : MonoBehaviour
                         _open.SetActive(false);
                         _openButton.SetActive(true);
                     }
-                    if (_conquest.value >= 100f || _conquest.value <= 10f)
+                    if (_conquest.value >= 100f || _conquest.value <= 2f)
                     {
                         done = true;
                         Player.Instance.Done("conquest");

@@ -22,8 +22,9 @@ public class Player : MonoBehaviour
     private TextMeshProUGUI turnText;
     [SerializeField] private GameObject _prefabWordKeeper;
     [SerializeField] private Transform _parent;
-    public bool debug = true;
+    public bool debug;
     private int _turnPast;
+    [HideInInspector]
     public bool wordKeep = true;
     public int lastTurn;
     private List<GameObject> _wordKeepers;
