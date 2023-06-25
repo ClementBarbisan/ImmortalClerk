@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEditor;
 
+[ExecuteInEditMode]
 public class JsonParser : MonoBehaviour
 {
     public static JsonParser Instance;
-
+    public bool Load = false;
+    public bool Save = false;
     [Serializable]
     public struct DataTree
     {
@@ -30,7 +33,7 @@ public class JsonParser : MonoBehaviour
         }
 
         public string name;
-        public float[] value;
+        public Vector4 value;
         public bool useable;
     }
 
@@ -57,12 +60,29 @@ public class JsonParser : MonoBehaviour
         public float time;
         public bool useable;
         public bool learned;
-        public float[] limits;
+        public Vector4 limits;
     };
 
     public Data data;
     [FormerlySerializedAs("nameFile")] [SerializeField] private string _nameFile;
-    
+
+    private void Update()
+    {
+        if (Load)
+        {
+            data = JsonUtility.FromJson<Data>(Resources.Load<TextAsset>(_nameFile).text);
+            Load = false;
+        }
+
+        if (Save)
+        {
+            string dataJson = JsonUtility.ToJson(data);
+            System.IO.File.WriteAllText(Application.dataPath + "/Resources/"  + _nameFile + ".json", dataJson);
+            AssetDatabase.Refresh();
+            Save = false;
+        }
+    }
+
     private void Awake()
     {
         Instance = this;

@@ -1,1 +1,988 @@
-{"TechnologyTree":[{"name":"general","dependances":[],"words":{"subjects":[{"name":"one","value":[1.0,-1.0,-1.0,1.0],"useable":false},{"name":"none","value":[0.25,0.25,0.25,0.25],"useable":false},{"name":"most","value":[0.5,0.5,0.5,0.5],"useable":false},{"name":"lot","value":[1.25,1.25,1.25,1.25],"useable":false},{"name":"all","value":[1.0,1.0,1.0,1.0],"useable":false},{"name":"some","value":[-1.0,1.0,1.0,-1.0],"useable":false}],"verbs":[],"objects":[{"name":"death","value":[20.0,0.0,10.0,10.0],"useable":false},{"name":"life","value":[20.0,20.0,20.0,20.0],"useable":false},{"name":"human","value":[0.0,30.0,30.0,0.0],"useable":false},{"name":"nature","value":[25.0,25.0,25.0,0.0],"useable":false}]},"type":"social","time":0.0,"useable":false,"learned":false,"limits":[0.0,0.0,0.0,0.0]},{"name":"farming","dependances":[],"words":{"subjects":[],"verbs":[{"name":"produce","value":[0.0,20.0,20.0,0.0],"useable":false},{"name":"create","value":[20.0,0.0,0.0,20.0],"useable":false}],"objects":[]},"type":"social","time":0.0,"useable":false,"learned":false,"limits":[0.0,0.0,0.0,0.0]},{"name":"written","dependances":[],"words":{"subjects":[],"verbs":[{"name":"read","value":[5.0,10.0,10.0,5.0],"useable":false},{"name":"write","value":[10.0,5.0,5.0,10.0],"useable":false}],"objects":[]},"type":"science","time":0.0,"useable":false,"learned":false,"limits":[0.0,0.0,0.0,0.0]},{"name":"oral","dependances":[],"words":{"subjects":[],"verbs":[{"name":"listen","value":[10.0,25.0,10.0,-5.0],"useable":false},{"name":"know","value":[5.0,5.0,10.0,10.0],"useable":false},{"name":"hear","value":[10.0,25.0,25.0,-5.0],"useable":false},{"name":"tell","value":[15.0,-5.0,-5.0,25.0],"useable":false}],"objects":[]},"type":"social","time":0.0,"useable":false,"learned":false,"limits":[0.0,0.0,0.0,0.0]},{"name":"numbers","dependances":["written","general"],"words":{"subjects":[],"verbs":[],"objects":[{"name":"counting","value":[-10.0,10.0,15.0,5.0],"useable":false},{"name":"calculation","value":[-15.0,10.0,10.0,-5.0],"useable":false},{"name":"result","value":[5.0,-10.0,10.0,5.0],"useable":false},{"name":"total","value":[5.0,-10.0,10.0,15.0],"useable":false}]},"type":"science","time":10.0,"useable":false,"learned":false,"limits":[10.0,5.0,20.0,10.0]},{"name":"cult","dependances":["oral","general"],"words":{"subjects":[],"verbs":[],"objects":[{"name":"gods","value":[20.0,20.0,-10.0,20.0],"useable":false},{"name":"offering","value":[30.0,20.0,-10.0,10.0],"useable":false},{"name":"superior","value":[25.0,-5.0,-15.0,25.0],"useable":false}]},"type":"religion","time":10.0,"useable":false,"learned":false,"limits":[30.0,10.0,0.0,20.0]},{"name":"mathematics","dependances":["written","numbers"],"words":{"subjects":[],"verbs":[{"name":"abstract","value":[10.0,-15.0,30.0,20.0],"useable":false},{"name":"count","value":[-20.0,20.0,20.0,5.0],"useable":false},{"name":"calculate","value":[-10.0,30.0,30.0,-20.0],"useable":false}],"objects":[]},"type":"science","time":10.0,"useable":false,"learned":false,"limits":[10.0,30.0,45.0,10.0]},{"name":"calendar","dependances":["cult","mathematics"],"words":{"subjects":[],"verbs":[{"name":"predict","value":[30.0,0.0,10.0,25.0],"useable":false},{"name":"anticipating","value":[10.0,10.0,25.0,10.0],"useable":false},{"name":"foresee","value":[20.0,5.0,5.0,20.0],"useable":false}],"objects":[]},"type":"religion","time":20.0,"useable":false,"learned":false,"limits":[60.0,40.0,20.0,20.0]},{"name":"astronomy","dependances":["craftship","calendar"],"words":{"subjects":[],"verbs":[],"objects":[{"name":"planet","value":[10.0,0.0,25.0,30.0],"useable":false},{"name":"sun","value":[20.0,0.0,30.0,30.0],"useable":false},{"name":"moon","value":[30.0,0.0,20.0,30.0],"useable":false},{"name":"earth","value":[5.0,20.0,20.0,5.0],"useable":false}]},"type":"science","time":20.0,"useable":false,"learned":false,"limits":[40.0,25.0,50.0,30.0]},{"name":"craftship","dependances":["farming","cult"],"words":{"subjects":[],"verbs":[],"objects":[{"name":"gift","value":[20.0,40.0,0.0,-10.0],"useable":false},{"name":"protection","value":[-5.0,15.0,0.0,25.0],"useable":false},{"name":"tools","value":[0.0,20.0,10.0,10.0],"useable":false},{"name":"manufacture","value":[-10.0,0.0,0.0,0.0],"useable":false}]},"type":"conquest","time":10.0,"useable":false,"learned":false,"limits":[40.0,30.0,10.0,50.0]},{"name":"physics","dependances":["mathematics","general"],"words":{"subjects":[],"verbs":[{"name":"measure","value":[-20.0,20.0,30.0,0.0],"useable":false},{"name":"modelize","value":[-30.0,30.0,30.0,0.0],"useable":false},{"name":"research","value":[0.0,10.0,20.0,30.0],"useable":false}],"objects":[]},"type":"science","time":10.0,"useable":false,"learned":false,"limits":[10.0,20.0,40.0,10.0]},{"name":"electricity","dependances":["physics","general"],"words":{"subjects":[],"verbs":[],"objects":[{"name":"power","value":[30.0,10.0,0.0,40.0],"useable":false},{"name":"flux","value":[-10.0,20.0,20.0,-10.0],"useable":false}]},"type":"social","time":10.0,"useable":false,"learned":false,"limits":[0.0,30.0,40.0,35.0]},{"name":"electronic","dependances":["electricity","physics"],"words":{"subjects":[],"verbs":[],"objects":[{"name":"communications","value":[20.0,40.0,-20.0,20.0],"useable":false},{"name":"informations","value":[10.0,20.0,-10.0,40.0],"useable":false}]},"type":"conquest","time":30.0,"useable":false,"learned":false,"limits":[10.0,20.0,60.0,10.0]},{"name":"mecanic","dependances":["craftship","physics"],"words":{"subjects":[],"verbs":[],"objects":[{"name":"mecanism","value":[10.0,30.0,30.0,20.0],"useable":false},{"name":"system","value":[10.0,20.0,20.0,40.0],"useable":false},{"name":"forces","value":[0.0,20.0,50.0,20.0],"useable":false}]},"type":"social","time":30.0,"useable":false,"learned":false,"limits":[20.0,60.0,40.0,20.0]},{"name":"computing","dependances":["electronic","physics"],"words":{"subjects":[],"verbs":[{"name":"compute","value":[-20.0,10.0,30.0,30.0],"useable":false},{"name":"data","value":[-20.0,-20.0,30.0,30.0],"useable":false}],"objects":[]},"type":"science","time":30.0,"useable":false,"learned":false,"limits":[10.0,30.0,70.0,10.0]},{"name":"aeronautic","dependances":["computimg","mecanic"],"words":{"subjects":[],"verbs":[],"objects":[{"name":"fly","value":[30.0,30.0,20.0,40.0],"useable":false}]},"type":"conquest","time":40.0,"useable":false,"learned":false,"limits":[50.0,30.0,80.0,70.0]},{"name":"aerospatial","dependances":["aeronautic","physics"],"words":{"subjects":[],"verbs":[{"name":"launch","value":[0.0,0.0,0.0,0.0],"useable":false}],"objects":[]},"type":"conquest","time":40.0,"useable":false,"learned":false,"limits":[60.0,40.0,90.0,70.0]}]}
+{
+  "TechnologyTree":[
+    {
+      "name":"general",
+      "dependances":[
+
+      ],
+      "words":{
+        "subjects":[
+          {
+            "name":"one",
+            "value": {
+              "x": 1.0,
+              "y": -1.0,
+              "z": -1.0,
+              "w": 1.0
+            },
+            "useable":false
+          },
+          {
+            "name":"none",
+            "value":{
+              "x": 1.0,
+              "y": -1.0,
+              "z": -1.0,
+              "w": 1.0
+            },
+            "useable":false
+          },
+          {
+            "name":"most",
+            "value":{
+              "x": 1.0,
+              "y": -1.0,
+              "z": -1.0,
+              "w": 1.0
+            },
+            "useable":false
+          },
+          {
+            "name":"lot",
+            "value":{
+              "x": 1.0,
+              "y": -1.0,
+              "z": -1.0,
+              "w": 1.0
+            },
+            "useable":false
+          },
+          {
+            "name":"all",
+            "value":{
+              "x": 1.0,
+              "y": -1.0,
+              "z": -1.0,
+              "w": 1.0
+            },
+            "useable":false
+          },
+          {
+            "name":"some",
+            "value":{
+              "x": 1.0,
+              "y": -1.0,
+              "z": -1.0,
+              "w": 1.0
+            },
+            "useable":false
+          }
+        ],
+        "verbs":[
+
+        ],
+        "objects":[
+          {
+            "name":"death",
+            "value": {
+              "x" : 20.0,
+              "y" : 0.0,
+              "z" : 10.0,
+              "w" : 10.0
+            },
+            "useable":false
+          },
+          {
+            "name":"life",
+            "value":{
+              "x" : 20.0,
+              "y" : 0.0,
+              "z" : 10.0,
+              "w" : 10.0
+            },
+            "useable":false
+          },
+          {
+            "name":"human",
+            "value":{
+              "x" : 20.0,
+              "y" : 0.0,
+              "z" : 10.0,
+              "w" : 10.0
+            },
+            "useable":false
+          },
+          {
+            "name":"nature",
+            "value":{
+              "x" : 20.0,
+              "y" : 0.0,
+              "z" : 10.0,
+              "w" : 10.0
+            },
+            "useable":false
+          }
+        ]
+      },
+      "type":"social",
+      "time":0.0,
+      "useable":false,
+      "learned":false,
+      "limits":{
+        "x" : 20.0,
+        "y" : 0.0,
+        "z" : 10.0,
+        "w" : 10.0
+      }
+    },
+    {
+      "name":"farming",
+      "dependances":[
+
+      ],
+      "words":{
+        "subjects":[
+
+        ],
+        "verbs":[
+          {
+            "name":"produce",
+            "value":{
+              "x" : 20.0,
+              "y" : 0.0,
+              "z" : 10.0,
+              "w" : 10.0
+            },
+            "useable":false
+          },
+          {
+            "name":"create",
+            "value":{
+              "x" : 20.0,
+              "y" : 0.0,
+              "z" : 10.0,
+              "w" : 10.0
+            },
+            "useable":false
+          }
+        ],
+        "objects":[
+
+        ]
+      },
+      "type":"social",
+      "time":0.0,
+      "useable":false,
+      "learned":false,
+      "limits":{
+        "x" : 20.0,
+        "y" : 0.0,
+        "z" : 10.0,
+        "w" : 10.0
+      }
+    },
+    {
+      "name":"written",
+      "dependances":[
+
+      ],
+      "words":{
+        "subjects":[
+
+        ],
+        "verbs":[
+          {
+            "name":"read",
+            "value":{
+              "x" : 20.0,
+              "y" : 0.0,
+              "z" : 10.0,
+              "w" : 10.0
+            },
+            "useable":false
+          },
+          {
+            "name":"write",
+            "value":{
+              "x" : 20.0,
+              "y" : 0.0,
+              "z" : 10.0,
+              "w" : 10.0
+            },
+            "useable":false
+          }
+        ],
+        "objects":[
+
+        ]
+      },
+      "type":"science",
+      "time":0.0,
+      "useable":false,
+      "learned":false,
+      "limits":{
+        "x" : 20.0,
+        "y" : 0.0,
+        "z" : 10.0,
+        "w" : 10.0
+      }
+    },
+    {
+      "name":"oral",
+      "dependances":[
+
+      ],
+      "words":{
+        "subjects":[
+
+        ],
+        "verbs":[
+          {
+            "name":"listen",
+            "value":[
+              10.0,
+              25.0,
+              10.0,
+              -5.0
+            ],
+            "useable":false
+          },
+          {
+            "name":"know",
+            "value":{
+              "x" : 20.0,
+              "y" : 0.0,
+              "z" : 10.0,
+              "w" : 10.0
+            },
+            "useable":false
+          },
+          {
+            "name":"hear",
+            "value":[
+              10.0,
+              25.0,
+              25.0,
+              -5.0
+            ],
+            "useable":false
+          },
+          {
+            "name":"tell",
+            "value":[
+              15.0,
+              -5.0,
+              -5.0,
+              25.0
+            ],
+            "useable":false
+          }
+        ],
+        "objects":[
+
+        ]
+      },
+      "type":"social",
+      "time":0.0,
+      "useable":false,
+      "learned":false,
+      "limits":{
+        "x" : 20.0,
+        "y" : 0.0,
+        "z" : 10.0,
+        "w" : 10.0
+      }
+    },
+    {
+      "name":"numbers",
+      "dependances":[
+        "written",
+        "general"
+      ],
+      "words":{
+        "subjects":[
+
+        ],
+        "verbs":[
+
+        ],
+        "objects":[
+          {
+            "name":"counting",
+            "value":[
+              -10.0,
+              10.0,
+              15.0,
+              5.0
+            ],
+            "useable":false
+          },
+          {
+            "name":"calculation",
+            "value":[
+              -15.0,
+              10.0,
+              10.0,
+              -5.0
+            ],
+            "useable":false
+          },
+          {
+            "name":"result",
+            "value":[
+              5.0,
+              -10.0,
+              10.0,
+              5.0
+            ],
+            "useable":false
+          },
+          {
+            "name":"total",
+            "value":[
+              5.0,
+              -10.0,
+              10.0,
+              15.0
+            ],
+            "useable":false
+          }
+        ]
+      },
+      "type":"science",
+      "time":10.0,
+      "useable":false,
+      "learned":false,
+      "limits":{
+        "x" : 20.0,
+        "y" : 0.0,
+        "z" : 10.0,
+        "w" : 10.0
+      }
+    },
+    {
+      "name":"cult",
+      "dependances":[
+        "oral",
+        "general"
+      ],
+      "words":{
+        "subjects":[
+
+        ],
+        "verbs":[
+
+        ],
+        "objects":[
+          {
+            "name":"gods",
+            "value":[
+              20.0,
+              20.0,
+              -10.0,
+              20.0
+            ],
+            "useable":false
+          },
+          {
+            "name":"offering",
+            "value":[
+              30.0,
+              20.0,
+              -10.0,
+              10.0
+            ],
+            "useable":false
+          },
+          {
+            "name":"superior",
+            "value":[
+              25.0,
+              -5.0,
+              -15.0,
+              25.0
+            ],
+            "useable":false
+          }
+        ]
+      },
+      "type":"religion",
+      "time":10.0,
+      "useable":false,
+      "learned":false,
+      "limits":{
+        "x" : 20.0,
+        "y" : 0.0,
+        "z" : 10.0,
+        "w" : 10.0
+      }
+    },
+    {
+      "name":"mathematics",
+      "dependances":[
+        "written",
+        "numbers"
+      ],
+      "words":{
+        "subjects":[
+
+        ],
+        "verbs":[
+          {
+            "name":"abstract",
+            "value":[
+              10.0,
+              -15.0,
+              30.0,
+              20.0
+            ],
+            "useable":false
+          },
+          {
+            "name":"count",
+            "value":[
+              -20.0,
+              20.0,
+              20.0,
+              5.0
+            ],
+            "useable":false
+          },
+          {
+            "name":"calculate",
+            "value":[
+              -10.0,
+              30.0,
+              30.0,
+              -20.0
+            ],
+            "useable":false
+          }
+        ],
+        "objects":[
+
+        ]
+      },
+      "type":"science",
+      "time":10.0,
+      "useable":false,
+      "learned":false,
+      "limits":{
+        "x" : 20.0,
+        "y" : 0.0,
+        "z" : 10.0,
+        "w" : 10.0
+      }
+    },
+    {
+      "name":"calendar",
+      "dependances":[
+        "cult",
+        "mathematics"
+      ],
+      "words":{
+        "subjects":[
+
+        ],
+        "verbs":[
+          {
+            "name":"predict",
+            "value":{
+              "x" : 20.0,
+              "y" : 0.0,
+              "z" : 10.0,
+              "w" : 10.0
+            },
+            "useable":false
+          },
+          {
+            "name":"anticipating",
+            "value":{
+              "x" : 20.0,
+              "y" : 0.0,
+              "z" : 10.0,
+              "w" : 10.0
+            },
+            "useable":false
+          },
+          {
+            "name":"foresee",
+            "value":{
+              "x" : 20.0,
+              "y" : 0.0,
+              "z" : 10.0,
+              "w" : 10.0
+            },
+            "useable":false
+          }
+        ],
+        "objects":[
+
+        ]
+      },
+      "type":"religion",
+      "time":20.0,
+      "useable":false,
+      "learned":false,
+      "limits":{
+        "x" : 20.0,
+        "y" : 0.0,
+        "z" : 10.0,
+        "w" : 10.0
+      }
+    },
+    {
+      "name":"astronomy",
+      "dependances":[
+        "craftship",
+        "calendar"
+      ],
+      "words":{
+        "subjects":[
+
+        ],
+        "verbs":[
+
+        ],
+        "objects":[
+          {
+            "name":"planet",
+            "value":{
+              "x" : 20.0,
+              "y" : 0.0,
+              "z" : 10.0,
+              "w" : 10.0
+            },
+            "useable":false
+          },
+          {
+            "name":"sun",
+            "value":{
+              "x" : 20.0,
+              "y" : 0.0,
+              "z" : 10.0,
+              "w" : 10.0
+            },
+            "useable":false
+          },
+          {
+            "name":"moon",
+            "value":{
+              "x" : 20.0,
+              "y" : 0.0,
+              "z" : 10.0,
+              "w" : 10.0
+            },
+            "useable":false
+          },
+          {
+            "name":"earth",
+            "value":{
+              "x" : 20.0,
+              "y" : 0.0,
+              "z" : 10.0,
+              "w" : 10.0
+            },
+            "useable":false
+          }
+        ]
+      },
+      "type":"science",
+      "time":20.0,
+      "useable":false,
+      "learned":false,
+      "limits":{
+        "x" : 20.0,
+        "y" : 0.0,
+        "z" : 10.0,
+        "w" : 10.0
+      }
+    },
+    {
+      "name":"craftship",
+      "dependances":[
+        "farming",
+        "cult"
+      ],
+      "words":{
+        "subjects":[
+
+        ],
+        "verbs":[
+
+        ],
+        "objects":[
+          {
+            "name":"gift",
+            "value":[
+              20.0,
+              40.0,
+              0.0,
+              -10.0
+            ],
+            "useable":false
+          },
+          {
+            "name":"protection",
+            "value":[
+              -5.0,
+              15.0,
+              0.0,
+              25.0
+            ],
+            "useable":false
+          },
+          {
+            "name":"tools",
+            "value":{
+              "x" : 20.0,
+              "y" : 0.0,
+              "z" : 10.0,
+              "w" : 10.0
+            },
+            "useable":false
+          },
+          {
+            "name":"manufacture",
+            "value":[
+              -10.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "useable":false
+          }
+        ]
+      },
+      "type":"conquest",
+      "time":10.0,
+      "useable":false,
+      "learned":false,
+      "limits":{
+        "x" : 20.0,
+        "y" : 0.0,
+        "z" : 10.0,
+        "w" : 10.0
+      }
+    },
+    {
+      "name":"physics",
+      "dependances":[
+        "mathematics",
+        "general"
+      ],
+      "words":{
+        "subjects":[
+
+        ],
+        "verbs":[
+          {
+            "name":"measure",
+            "value":[
+              -20.0,
+              20.0,
+              30.0,
+              0.0
+            ],
+            "useable":false
+          },
+          {
+            "name":"modelize",
+            "value":[
+              -30.0,
+              30.0,
+              30.0,
+              0.0
+            ],
+            "useable":false
+          },
+          {
+            "name":"research",
+            "value":{
+              "x" : 20.0,
+              "y" : 0.0,
+              "z" : 10.0,
+              "w" : 10.0
+            },
+            "useable":false
+          }
+        ],
+        "objects":[
+
+        ]
+      },
+      "type":"science",
+      "time":10.0,
+      "useable":false,
+      "learned":false,
+      "limits":{
+        "x" : 20.0,
+        "y" : 0.0,
+        "z" : 10.0,
+        "w" : 10.0
+      }
+    },
+    {
+      "name":"electricity",
+      "dependances":[
+        "physics",
+        "general"
+      ],
+      "words":{
+        "subjects":[
+
+        ],
+        "verbs":[
+
+        ],
+        "objects":[
+          {
+            "name":"power",
+            "value":{
+              "x" : 20.0,
+              "y" : 0.0,
+              "z" : 10.0,
+              "w" : 10.0
+            },
+            "useable":false
+          },
+          {
+            "name":"flux",
+            "value":[
+              -10.0,
+              20.0,
+              20.0,
+              -10.0
+            ],
+            "useable":false
+          }
+        ]
+      },
+      "type":"social",
+      "time":10.0,
+      "useable":false,
+      "learned":false,
+      "limits":{
+        "x" : 20.0,
+        "y" : 0.0,
+        "z" : 10.0,
+        "w" : 10.0
+      }
+    },
+    {
+      "name":"electronic",
+      "dependances":[
+        "electricity",
+        "physics"
+      ],
+      "words":{
+        "subjects":[
+
+        ],
+        "verbs":[
+
+        ],
+        "objects":[
+          {
+            "name":"communications",
+            "value":[
+              20.0,
+              40.0,
+              -20.0,
+              20.0
+            ],
+            "useable":false
+          },
+          {
+            "name":"informations",
+            "value":[
+              10.0,
+              20.0,
+              -10.0,
+              40.0
+            ],
+            "useable":false
+          }
+        ]
+      },
+      "type":"conquest",
+      "time":30.0,
+      "useable":false,
+      "learned":false,
+      "limits":{
+        "x" : 20.0,
+        "y" : 0.0,
+        "z" : 10.0,
+        "w" : 10.0
+      }
+    },
+    {
+      "name":"mecanic",
+      "dependances":[
+        "craftship",
+        "physics"
+      ],
+      "words":{
+        "subjects":[
+
+        ],
+        "verbs":[
+
+        ],
+        "objects":[
+          {
+            "name":"mecanism",
+            "value":{
+              "x" : 20.0,
+              "y" : 0.0,
+              "z" : 10.0,
+              "w" : 10.0
+            },
+            "useable":false
+          },
+          {
+            "name":"system",
+            "value":{
+              "x" : 20.0,
+              "y" : 0.0,
+              "z" : 10.0,
+              "w" : 10.0
+            },
+            "useable":false
+          },
+          {
+            "name":"forces",
+            "value":{
+              "x" : 20.0,
+              "y" : 0.0,
+              "z" : 10.0,
+              "w" : 10.0
+            },
+            "useable":false
+          }
+        ]
+      },
+      "type":"social",
+      "time":30.0,
+      "useable":false,
+      "learned":false,
+      "limits":{
+        "x" : 20.0,
+        "y" : 0.0,
+        "z" : 10.0,
+        "w" : 10.0
+      }
+    },
+    {
+      "name":"computing",
+      "dependances":[
+        "electronic",
+        "physics"
+      ],
+      "words":{
+        "subjects":[
+
+        ],
+        "verbs":[
+          {
+            "name":"compute",
+            "value":[
+              -20.0,
+              10.0,
+              30.0,
+              30.0
+            ],
+            "useable":false
+          },
+          {
+            "name":"data",
+            "value":[
+              -20.0,
+              -20.0,
+              30.0,
+              30.0
+            ],
+            "useable":false
+          }
+        ],
+        "objects":[
+
+        ]
+      },
+      "type":"science",
+      "time":30.0,
+      "useable":false,
+      "learned":false,
+      "limits":{
+        "x" : 20.0,
+        "y" : 0.0,
+        "z" : 10.0,
+        "w" : 10.0
+      }
+    },
+    {
+      "name":"aeronautic",
+      "dependances":[
+        "computimg",
+        "mecanic"
+      ],
+      "words":{
+        "subjects":[
+
+        ],
+        "verbs":[
+
+        ],
+        "objects":[
+          {
+            "name":"fly",
+            "value":{
+              "x" : 20.0,
+              "y" : 0.0,
+              "z" : 10.0,
+              "w" : 10.0
+            },
+            "useable":false
+          }
+        ]
+      },
+      "type":"conquest",
+      "time":40.0,
+      "useable":false,
+      "learned":false,
+      "limits":{
+        "x" : 20.0,
+        "y" : 0.0,
+        "z" : 10.0,
+        "w" : 10.0
+      }
+    },
+    {
+      "name":"aerospatial",
+      "dependances":[
+        "aeronautic",
+        "physics"
+      ],
+      "words":{
+        "subjects":[
+
+        ],
+        "verbs":[
+          {
+            "name":"launch",
+            "value":{
+              "x" : 20.0,
+              "y" : 0.0,
+              "z" : 10.0,
+              "w" : 10.0
+            },
+            "useable":false
+          }
+        ],
+        "objects":[
+
+        ]
+      },
+      "type":"conquest",
+      "time":40.0,
+      "useable":false,
+      "learned":false,
+      "limits":{
+        "x" : 20.0,
+        "y" : 0.0,
+        "z" : 10.0,
+        "w" : 10.0
+      }
+    }
+  ]
+}

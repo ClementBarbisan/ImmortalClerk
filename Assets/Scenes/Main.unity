@@ -477,8 +477,662 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b74baa2485bf294385df34d68d8f6cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Load: 0
+  Save: 0
   data:
-    TechnologyTree: []
+    TechnologyTree:
+    - name: general
+      dependances: []
+      words:
+        subjects:
+        - name: one
+          value:
+          - 1
+          - -1
+          - -1
+          - 1
+          useable: 0
+        - name: none
+          value:
+          - 0.25
+          - 0.25
+          - 0.25
+          - 0.25
+          useable: 0
+        - name: most
+          value:
+          - 0.5
+          - 0.5
+          - 0.5
+          - 0.5
+          useable: 0
+        - name: lot
+          value:
+          - 1.25
+          - 1.25
+          - 1.25
+          - 1.25
+          useable: 0
+        - name: all
+          value:
+          - 1
+          - 1
+          - 1
+          - 1
+          useable: 0
+        - name: some
+          value:
+          - -1
+          - 1
+          - 1
+          - -1
+          useable: 0
+        verbs: []
+        objects:
+        - name: death
+          value:
+          - 20
+          - 0
+          - 10
+          - 10
+          useable: 0
+        - name: life
+          value:
+          - 20
+          - 20
+          - 20
+          - 20
+          useable: 0
+        - name: human
+          value:
+          - 0
+          - 30
+          - 30
+          - 0
+          useable: 0
+        - name: nature
+          value:
+          - 25
+          - 25
+          - 25
+          - 0
+          useable: 0
+      type: social
+      time: 0
+      useable: 0
+      learned: 0
+      limits:
+      - 0
+      - 0
+      - 0
+      - 0
+    - name: farming
+      dependances: []
+      words:
+        subjects: []
+        verbs:
+        - name: produce
+          value:
+          - 0
+          - 20
+          - 20
+          - 0
+          useable: 0
+        - name: create
+          value:
+          - 20
+          - 0
+          - 0
+          - 20
+          useable: 0
+        objects: []
+      type: social
+      time: 0
+      useable: 0
+      learned: 0
+      limits:
+      - 0
+      - 0
+      - 0
+      - 0
+    - name: written
+      dependances: []
+      words:
+        subjects: []
+        verbs:
+        - name: read
+          value:
+          - 5
+          - 10
+          - 10
+          - 5
+          useable: 0
+        - name: write
+          value:
+          - 10
+          - 5
+          - 5
+          - 10
+          useable: 0
+        objects: []
+      type: science
+      time: 0
+      useable: 0
+      learned: 0
+      limits:
+      - 0
+      - 0
+      - 0
+      - 0
+    - name: oral
+      dependances: []
+      words:
+        subjects: []
+        verbs:
+        - name: listen
+          value:
+          - 10
+          - 25
+          - 10
+          - -5
+          useable: 0
+        - name: know
+          value:
+          - 5
+          - 5
+          - 10
+          - 10
+          useable: 0
+        - name: hear
+          value:
+          - 10
+          - 25
+          - 25
+          - -5
+          useable: 0
+        - name: tell
+          value:
+          - 15
+          - -5
+          - -5
+          - 25
+          useable: 0
+        objects: []
+      type: social
+      time: 0
+      useable: 0
+      learned: 0
+      limits:
+      - 0
+      - 0
+      - 0
+      - 0
+    - name: numbers
+      dependances:
+      - written
+      - general
+      words:
+        subjects: []
+        verbs: []
+        objects:
+        - name: counting
+          value:
+          - -10
+          - 10
+          - 15
+          - 5
+          useable: 0
+        - name: calculation
+          value:
+          - -15
+          - 10
+          - 10
+          - -5
+          useable: 0
+        - name: result
+          value:
+          - 5
+          - -10
+          - 10
+          - 5
+          useable: 0
+        - name: total
+          value:
+          - 5
+          - -10
+          - 10
+          - 15
+          useable: 0
+      type: science
+      time: 10
+      useable: 0
+      learned: 0
+      limits:
+      - 10
+      - 5
+      - 20
+      - 10
+    - name: cult
+      dependances:
+      - oral
+      - general
+      words:
+        subjects: []
+        verbs: []
+        objects:
+        - name: gods
+          value:
+          - 20
+          - 20
+          - -10
+          - 20
+          useable: 0
+        - name: offering
+          value:
+          - 30
+          - 20
+          - -10
+          - 10
+          useable: 0
+        - name: superior
+          value:
+          - 25
+          - -5
+          - -15
+          - 25
+          useable: 0
+      type: religion
+      time: 10
+      useable: 0
+      learned: 0
+      limits:
+      - 30
+      - 10
+      - 0
+      - 20
+    - name: mathematics
+      dependances:
+      - written
+      - numbers
+      words:
+        subjects: []
+        verbs:
+        - name: abstract
+          value:
+          - 10
+          - -15
+          - 30
+          - 20
+          useable: 0
+        - name: count
+          value:
+          - -20
+          - 20
+          - 20
+          - 5
+          useable: 0
+        - name: calculate
+          value:
+          - -10
+          - 30
+          - 30
+          - -20
+          useable: 0
+        objects: []
+      type: science
+      time: 10
+      useable: 0
+      learned: 0
+      limits:
+      - 10
+      - 30
+      - 45
+      - 10
+    - name: calendar
+      dependances:
+      - cult
+      - mathematics
+      words:
+        subjects: []
+        verbs:
+        - name: predict
+          value:
+          - 30
+          - 0
+          - 10
+          - 25
+          useable: 0
+        - name: anticipating
+          value:
+          - 10
+          - 10
+          - 25
+          - 10
+          useable: 0
+        - name: foresee
+          value:
+          - 20
+          - 5
+          - 5
+          - 20
+          useable: 0
+        objects: []
+      type: religion
+      time: 20
+      useable: 0
+      learned: 0
+      limits:
+      - 60
+      - 40
+      - 20
+      - 20
+    - name: astronomy
+      dependances:
+      - craftship
+      - calendar
+      words:
+        subjects: []
+        verbs: []
+        objects:
+        - name: planet
+          value:
+          - 10
+          - 0
+          - 25
+          - 30
+          useable: 0
+        - name: sun
+          value:
+          - 20
+          - 0
+          - 30
+          - 30
+          useable: 0
+        - name: moon
+          value:
+          - 30
+          - 0
+          - 20
+          - 30
+          useable: 0
+        - name: earth
+          value:
+          - 5
+          - 20
+          - 20
+          - 5
+          useable: 0
+      type: science
+      time: 20
+      useable: 0
+      learned: 0
+      limits:
+      - 40
+      - 25
+      - 50
+      - 30
+    - name: craftship
+      dependances:
+      - farming
+      - cult
+      words:
+        subjects: []
+        verbs: []
+        objects:
+        - name: gift
+          value:
+          - 20
+          - 40
+          - 0
+          - -10
+          useable: 0
+        - name: protection
+          value:
+          - -5
+          - 15
+          - 0
+          - 25
+          useable: 0
+        - name: tools
+          value:
+          - 0
+          - 20
+          - 10
+          - 10
+          useable: 0
+        - name: manufacture
+          value:
+          - -10
+          - 0
+          - 0
+          - 0
+          useable: 0
+      type: conquest
+      time: 10
+      useable: 0
+      learned: 0
+      limits:
+      - 40
+      - 30
+      - 10
+      - 50
+    - name: physics
+      dependances:
+      - mathematics
+      - general
+      words:
+        subjects: []
+        verbs:
+        - name: measure
+          value:
+          - -20
+          - 20
+          - 30
+          - 0
+          useable: 0
+        - name: modelize
+          value:
+          - -30
+          - 30
+          - 30
+          - 0
+          useable: 0
+        - name: research
+          value:
+          - 0
+          - 10
+          - 20
+          - 30
+          useable: 0
+        objects: []
+      type: science
+      time: 10
+      useable: 0
+      learned: 0
+      limits:
+      - 10
+      - 20
+      - 40
+      - 10
+    - name: electricity
+      dependances:
+      - physics
+      - general
+      words:
+        subjects: []
+        verbs: []
+        objects:
+        - name: power
+          value:
+          - 30
+          - 10
+          - 0
+          - 40
+          useable: 0
+        - name: flux
+          value:
+          - -10
+          - 20
+          - 20
+          - -10
+          useable: 0
+      type: social
+      time: 10
+      useable: 0
+      learned: 0
+      limits:
+      - 0
+      - 30
+      - 40
+      - 35
+    - name: electronic
+      dependances:
+      - electricity
+      - physics
+      words:
+        subjects: []
+        verbs: []
+        objects:
+        - name: communications
+          value:
+          - 20
+          - 40
+          - -20
+          - 20
+          useable: 0
+        - name: informations
+          value:
+          - 10
+          - 20
+          - -10
+          - 40
+          useable: 0
+      type: conquest
+      time: 30
+      useable: 0
+      learned: 0
+      limits:
+      - 10
+      - 20
+      - 60
+      - 10
+    - name: mecanic
+      dependances:
+      - craftship
+      - physics
+      words:
+        subjects: []
+        verbs: []
+        objects:
+        - name: mecanism
+          value:
+          - 10
+          - 30
+          - 30
+          - 20
+          useable: 0
+        - name: system
+          value:
+          - 10
+          - 20
+          - 20
+          - 40
+          useable: 0
+        - name: forces
+          value:
+          - 0
+          - 20
+          - 50
+          - 20
+          useable: 0
+      type: social
+      time: 30
+      useable: 0
+      learned: 0
+      limits:
+      - 20
+      - 60
+      - 40
+      - 20
+    - name: computing
+      dependances:
+      - electronic
+      - physics
+      words:
+        subjects: []
+        verbs:
+        - name: compute
+          value:
+          - -20
+          - 10
+          - 30
+          - 30
+          useable: 0
+        - name: data
+          value:
+          - -20
+          - -20
+          - 30
+          - 30
+          useable: 0
+        objects: []
+      type: science
+      time: 30
+      useable: 0
+      learned: 0
+      limits:
+      - 10
+      - 30
+      - 70
+      - 10
+    - name: aeronautic
+      dependances:
+      - computimg
+      - mecanic
+      words:
+        subjects: []
+        verbs: []
+        objects:
+        - name: fly
+          value:
+          - 30
+          - 30
+          - 20
+          - 40
+          useable: 0
+      type: conquest
+      time: 40
+      useable: 0
+      learned: 0
+      limits:
+      - 50
+      - 30
+      - 80
+      - 70
+    - name: aerospatial
+      dependances:
+      - aeronautic
+      - physics
+      words:
+        subjects: []
+        verbs:
+        - name: launch
+          value:
+          - 0
+          - 0
+          - 0
+          - 0
+          useable: 0
+        objects: []
+      type: conquest
+      time: 40
+      useable: 0
+      learned: 0
+      limits:
+      - 60
+      - 40
+      - 90
+      - 70
   _nameFile: techTree
 --- !u!20 &519420031
 Camera:
