@@ -493,6 +493,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Load: 0
   Save: 0
+  DeleteAll: 0
   data:
     TechnologyTree:
     - name: general
@@ -576,16 +577,16 @@ MonoBehaviour:
         subjects: []
         verbs:
         - name: listen
-          value: {x: 0, y: 0, z: 0, w: 0}
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: know
           value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: hear
-          value: {x: 0, y: 0, z: 0, w: 0}
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: tell
-          value: {x: 0, y: 0, z: 0, w: 0}
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         objects: []
       type: social
@@ -602,16 +603,16 @@ MonoBehaviour:
         verbs: []
         objects:
         - name: counting
-          value: {x: 0, y: 0, z: 0, w: 0}
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: calculation
-          value: {x: 0, y: 0, z: 0, w: 0}
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: result
-          value: {x: 0, y: 0, z: 0, w: 0}
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: total
-          value: {x: 0, y: 0, z: 0, w: 0}
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
       type: science
       time: 10
@@ -627,13 +628,13 @@ MonoBehaviour:
         verbs: []
         objects:
         - name: gods
-          value: {x: 0, y: 0, z: 0, w: 0}
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: offering
-          value: {x: 0, y: 0, z: 0, w: 0}
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: superior
-          value: {x: 0, y: 0, z: 0, w: 0}
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
       type: religion
       time: 10
@@ -648,13 +649,13 @@ MonoBehaviour:
         subjects: []
         verbs:
         - name: abstract
-          value: {x: 0, y: 0, z: 0, w: 0}
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: count
-          value: {x: 0, y: 0, z: 0, w: 0}
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: calculate
-          value: {x: 0, y: 0, z: 0, w: 0}
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         objects: []
       type: science
@@ -718,16 +719,16 @@ MonoBehaviour:
         verbs: []
         objects:
         - name: gift
-          value: {x: 0, y: 0, z: 0, w: 0}
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: protection
-          value: {x: 0, y: 0, z: 0, w: 0}
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: tools
           value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: manufacture
-          value: {x: 0, y: 0, z: 0, w: 0}
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
       type: conquest
       time: 10
@@ -742,10 +743,10 @@ MonoBehaviour:
         subjects: []
         verbs:
         - name: measure
-          value: {x: 0, y: 0, z: 0, w: 0}
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: modelize
-          value: {x: 0, y: 0, z: 0, w: 0}
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: research
           value: {x: 20, y: 0, z: 10, w: 10}
@@ -768,7 +769,7 @@ MonoBehaviour:
           value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: flux
-          value: {x: 0, y: 0, z: 0, w: 0}
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
       type: social
       time: 10
@@ -784,10 +785,10 @@ MonoBehaviour:
         verbs: []
         objects:
         - name: communications
-          value: {x: 0, y: 0, z: 0, w: 0}
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: informations
-          value: {x: 0, y: 0, z: 0, w: 0}
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
       type: conquest
       time: 30
@@ -824,10 +825,10 @@ MonoBehaviour:
         subjects: []
         verbs:
         - name: compute
-          value: {x: 0, y: 0, z: 0, w: 0}
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         - name: data
-          value: {x: 0, y: 0, z: 0, w: 0}
+          value: {x: 20, y: 0, z: 10, w: 10}
           useable: 0
         objects: []
       type: science

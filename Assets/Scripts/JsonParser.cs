@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEditor;
@@ -12,6 +14,7 @@ public class JsonParser : MonoBehaviour
     public static JsonParser Instance;
     public bool Load = false;
     public bool Save = false;
+    public bool DeleteAll;
     [Serializable]
     public struct DataTree
     {
@@ -80,6 +83,16 @@ public class JsonParser : MonoBehaviour
             System.IO.File.WriteAllText(Application.dataPath + "/Resources/"  + _nameFile + ".json", dataJson);
             AssetDatabase.Refresh();
             Save = false;
+        }
+
+        if (DeleteAll)
+        {
+            Regex reg = new Regex(@"(\.save)$");
+            Directory.EnumerateFiles(@Application.persistentDataPath)
+                .Where(file => reg.Match(file).Success).ToList()
+                .ForEach(File.Delete);
+            PlayerPrefs.DeleteAll();
+            DeleteAll = false;
         }
     }
 

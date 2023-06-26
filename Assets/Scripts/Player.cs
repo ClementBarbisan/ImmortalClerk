@@ -177,9 +177,12 @@ public class Player : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        File.WriteAllText(Application.persistentDataPath + "/" + gameObject.name + ".save", JsonUtility.ToJson(data));
-        PlayerPrefs.SetInt("year", turn);
-        PlayerPrefs.Save();
+        if (!debug)
+        {
+            File.WriteAllText(Application.persistentDataPath + "/" + gameObject.name + ".save", JsonUtility.ToJson(data));
+            PlayerPrefs.SetInt("year", turn);
+            PlayerPrefs.Save();
+        }
     }
     
     void Update()

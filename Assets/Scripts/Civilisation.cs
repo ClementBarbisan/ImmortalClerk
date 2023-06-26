@@ -273,48 +273,28 @@ public class Civilisation : MonoBehaviour
                     }
                     else if (_trustIndice.value < 2f)
                     {
-                        done = true;
-                        Player.Instance.Done("trust");
-                        Player.Instance.Close();
-                        _open.SetActive(false);
-                        _openButton.SetActive(true);
+                        CloseCiv("trust");
                     }
 
                     data.TechnologyTree[i] = tmpStruct;
                     Player.Instance.data.TechnologyTree[i] = tmpStructPlayer;
                     if (_religion.value >= 100f || _religion.value <= 2f)
                     {
-                        done = true;
-                        Player.Instance.Done("religion");
-                        Player.Instance.Close();
-                        _open.SetActive(false);
-                        _openButton.SetActive(true);
+                        CloseCiv("religion");
                     }
 
                     if (_social.value >= 100f || _social.value <= 2f)
                     {
-                        done = true;
-                        Player.Instance.Done("social");
-                        Player.Instance.Close();
-                        _open.SetActive(false);
-                        _openButton.SetActive(true);
+                        CloseCiv("social");
                     }
 
                     if (_science.value >= 100f || _science.value <= 2f)
                     {
-                        done = true;
-                        Player.Instance.Done("science");
-                        Player.Instance.Close();
-                        _open.SetActive(false);
-                        _openButton.SetActive(true);
+                        CloseCiv("science");
                     }
                     if (_conquest.value >= 100f || _conquest.value <= 2f)
                     {
-                        done = true;
-                        Player.Instance.Done("conquest");
-                        Player.Instance.Close();
-                        _open.SetActive(false);
-                        _openButton.SetActive(true);
+                        CloseCiv("conquest");
                     }
 
                     break;
@@ -344,6 +324,15 @@ public class Civilisation : MonoBehaviour
         {
             Destroy(_words[i].gameObject);
         }
+    }
+
+    void CloseCiv(string reason)
+    {
+        done = true;
+        Player.Instance.Done(reason);
+        Player.Instance.Close();
+        _open.SetActive(false);
+        _openButton.SetActive(true);
     }
 
     private JsonParser.Technos GetNewWord(List<JsonParser.Word> words, JsonParser.Technos techs,
@@ -409,12 +398,15 @@ public class Civilisation : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        File.WriteAllText(Application.persistentDataPath + "/" + gameObject.name + ".save", JsonUtility.ToJson(data));
-        PlayerPrefs.SetFloat("religion" + gameObject.name, _religion.value);
-        PlayerPrefs.SetFloat("science" + gameObject.name, _science.value);
-        PlayerPrefs.SetFloat("social" + gameObject.name, _social.value);
-        PlayerPrefs.SetFloat("conquest" + gameObject.name, _conquest.value);
-        PlayerPrefs.Save();
+        if (!Player.Instance.debug)
+        {
+            File.WriteAllText(Application.persistentDataPath + "/" + gameObject.name + ".save", JsonUtility.ToJson(data));
+            PlayerPrefs.SetFloat("religion" + gameObject.name, _religion.value);
+            PlayerPrefs.SetFloat("science" + gameObject.name, _science.value);
+            PlayerPrefs.SetFloat("social" + gameObject.name, _social.value);
+            PlayerPrefs.SetFloat("conquest" + gameObject.name, _conquest.value);
+            PlayerPrefs.Save();
+        }
     }
 
     // Update is called once per frame
