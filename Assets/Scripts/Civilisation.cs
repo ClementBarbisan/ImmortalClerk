@@ -230,29 +230,14 @@ public class Civilisation : MonoBehaviour
                    
 
                     tmpStruct.useable = true;
-                    tmpStruct.time *= Vector4.Distance(tmpStruct.limits,
-                        new Vector4(_religion.value, _social.value, _science.value, _conquest.value)) / 25f;
+                    tmpStruct.time = ComputeTurnTech(tmpStruct);
                     
-                    if (tmpStruct.type == "religion")
-                        tmpStruct.time *= 1 - (_religion.value / 100f);
-                    else if (tmpStruct.type == "social")
-                        tmpStruct.time *= 1 - (_social.value / 100f);
-                    else if (tmpStruct.type == "science")
-                        tmpStruct.time *= 1 - (_science.value / 100f);
-                    else if (tmpStruct.type == "conquest")
-                        tmpStruct.time *= 1 - (_conquest.value / 100f);
-                    tmpStructPlayer.useable = true;
-
                     _currentValues += Vector4.Scale((tmpObject + tmpVerb), tmpSubject * (_trustIndice.value / 100f));
                     _religion.value = _currentValues.x;
                     _social.value = _currentValues.y;
                     _science.value = _currentValues.z;
                     _conquest.value = _currentValues.w;
-
-                    _trustIndice.value = 100f - (Mathf.Max(Mathf.Max(_currentValues.x, _currentValues.y),
-                                                     Mathf.Max(_currentValues.z, _currentValues.w)) -
-                                                 Mathf.Min(Mathf.Min(_currentValues.x, _currentValues.y),
-                                                     Mathf.Min(_currentValues.z, _currentValues.w)));
+                    _trustIndice.value = ComputeNextTrustIndice();
                     tmpObject = Vector4.zero;
                     tmpSubject = Vector4.zero;
                     tmpVerb = Vector4.zero;
@@ -321,6 +306,14 @@ public class Civilisation : MonoBehaviour
         }
     }
 
+    private float ComputeNextTrustIndice()
+    {
+        return (100f - (Mathf.Max(Mathf.Max(_currentValues.x, _currentValues.y),
+                            Mathf.Max(_currentValues.z, _currentValues.w)) -
+                        Mathf.Min(Mathf.Min(_currentValues.x, _currentValues.y),
+                            Mathf.Min(_currentValues.z, _currentValues.w))));
+    }
+
     void CloseCiv(string reason)
     {
         done = true;
@@ -328,6 +321,25 @@ public class Civilisation : MonoBehaviour
         Player.Instance.Close();
         _open.SetActive(false);
         _openButton.SetActive(true);
+    }
+
+    
+    
+    float ComputeTurnTech(JsonParser.Technos tmpStruct)
+    {
+        float time = tmpStruct.time;
+        time *= Vector4.Distance(tmpStruct.limits,
+            new Vector4(_religion.value, _social.value, _science.value, _conquest.value)) / 25f;
+                    
+        if (tmpStruct.type == "religion")
+            time *= 1 - (_religion.value / 100f);
+        else if (tmpStruct.type == "social") 
+            time *= 1 - (_social.value / 100f);
+        else if (tmpStruct.type == "science") 
+            time *= 1 - (_science.value / 100f);
+        else if (tmpStruct.type == "conquest")
+            time *= 1 - (_conquest.value / 100f);
+        return (time);
     }
 
     private JsonParser.Technos GetNewWord(List<JsonParser.Word> words, JsonParser.Technos techs,
@@ -451,9 +463,7 @@ public class Civilisation : MonoBehaviour
             _social.value = _currentValues.y + (tmpObject.y + tmpVerb.y) * (tmpSubject.y * (tmpValue / 100f));
             _science.value = _currentValues.z + (tmpObject.z + tmpVerb.z) * (tmpSubject.z * (tmpValue / 100f));
             _conquest.value = _currentValues.w + (tmpObject.w + tmpVerb.w) * (tmpSubject.w * (tmpValue / 100f));
-            float tmpIndice = 100f - (Mathf.Max(Mathf.Max(_religion.value, _social.value),
-                                          Mathf.Max(_science.value, _conquest.value)) -
-                                      Mathf.Min(Mathf.Min(_religion.value, _social.value), Mathf.Min(_science.value, _conquest.value)));
+            float tmpIndice = ComputeNextTrustIndice();
             if (tmpIndice > _trustIndice.value)
                 _trustIndice.colors = _aboveColors;
             else if (tmpIndice < _trustIndice.value)
@@ -523,15 +533,7 @@ public class Civilisation : MonoBehaviour
                         _autoTechText.text = "No new technology.";
                         continue;
                     }
-                    int turns = 0;
-                    if (data.TechnologyTree[i].type == "religion")
-                        turns = Mathf.FloorToInt(data.TechnologyTree[i].time * (1 - _religion.value / 100f));
-                    else if (data.TechnologyTree[i].type == "social")
-                        turns = Mathf.FloorToInt(data.TechnologyTree[i].time * (1 - _social.value / 100f));
-                    else if (data.TechnologyTree[i].type == "science")
-                        turns = Mathf.FloorToInt(data.TechnologyTree[i].time * (1 - _science.value / 100f));
-                    else if (data.TechnologyTree[i].type == "conquest")
-                        turns = Mathf.FloorToInt(data.TechnologyTree[i].time * (1 - _conquest.value / 100f));
+                    int turns = Mathf.FloorToInt(ComputeTurnTech(data.TechnologyTree[i]));
                     _autoTechText.text = "New Tech : " + data.TechnologyTree[i].name + Environment.NewLine +
                                              "Years : " + turns;
                     break;
