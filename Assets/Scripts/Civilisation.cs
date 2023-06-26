@@ -30,7 +30,7 @@ public class Civilisation : MonoBehaviour
     [FormerlySerializedAs("_exit")] [SerializeField] private GameObject _open;
     [SerializeField] private TextMeshProUGUI _autoTechText;
     [SerializeField]private GameObject _panelAbstract;
-    [SerializeField] private GameObject _openButton;
+    [FormerlySerializedAs("_openButton")] public GameObject OpenButton;
     private Word[] _words;
     private bool _hitting = false;
     private int _indexTech = 0;
@@ -46,7 +46,7 @@ public class Civilisation : MonoBehaviour
 
     public void CloseCivilisation()
     {
-        _openButton.SetActive(true);
+        OpenButton.SetActive(true);
         Player.Instance.Close();
     }
 
@@ -60,7 +60,7 @@ public class Civilisation : MonoBehaviour
         }
         else
         {
-            _openButton.SetActive(false);
+            OpenButton.SetActive(false);
             Player.Instance.Open(this.gameObject);
             _open.SetActive(true);
         }
@@ -320,7 +320,7 @@ public class Civilisation : MonoBehaviour
         Player.Instance.Done(reason);
         Player.Instance.Close();
         _open.SetActive(false);
-        _openButton.SetActive(true);
+        OpenButton.SetActive(true);
     }
 
     

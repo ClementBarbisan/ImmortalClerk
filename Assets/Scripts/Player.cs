@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
     public int lastTurn;
     private List<GameObject> _wordKeepers;
     private bool _open;
+    private GridManager _grid;
 
     public void AddTurn()
     {
@@ -100,6 +101,8 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _grid = FindObjectOfType<GridManager>();
+        _grid.CreateGrid();
         _civilisations = FindObjectsOfType<Civilisation>();
     }
 
