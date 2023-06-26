@@ -202,20 +202,17 @@ public class Civilisation : MonoBehaviour
                 if (count == techs.Count)
                 {
                     // Player.Instance.AddTurn();
-                    _techFound = true;
                     JsonParser.Technos tmpStruct = data.TechnologyTree[i];
                     if (tmpStruct.useable)
                     {
                         Notifications.Instance.gameObject.SetActive(true);
                         Notifications.Instance.TimeVisible += 2.5f;
                         Notifications.Instance.AddText(tmpStruct.name + " already known!");
-                        tmpObject = Vector4.zero;
-                        tmpSubject = Vector4.zero;
-                        tmpVerb = Vector4.zero;
                         break;
                     }
                     else
                     {
+                        _techFound = true;
                         Notifications.Instance.gameObject.SetActive(true);
                         Notifications.Instance.TimeVisible += 2.5f;
                         Notifications.Instance.AddText(this.gameObject.name  + " start to research : " + tmpStruct.name);
@@ -308,9 +305,7 @@ public class Civilisation : MonoBehaviour
 
         if (!_techFound)
         {
-            tmpObject = Vector4.zero;
-            tmpSubject = Vector4.zero;
-            tmpVerb = Vector4.zero;
+            return;
         }
 
         // _subjects.OnDisable();
@@ -523,26 +518,11 @@ public class Civilisation : MonoBehaviour
 
                 if (count == techs.Count)
                 {
-                    bool learnable = false;
-                    if (!data.TechnologyTree[i].useable)
-                    {
-                        Vector4 tmpVector = new Vector4(data.TechnologyTree[i].limits[0],
-                            data.TechnologyTree[i].limits[1],
-                            data.TechnologyTree[i].limits[2],
-                            data.TechnologyTree[i].limits[3]);
-                        if (tmpVector.x < _currentValues.x && tmpVector.y < _currentValues.y &&
-                            tmpVector.z < _currentValues.z && tmpVector.w < _currentValues.w)
-                        {
-                            learnable = true;
-                        }
-                    }
-
                     if (data.TechnologyTree[i].useable)
                     {
                         _autoTechText.text = "No new technology.";
                         continue;
                     }
-
                     int turns = 0;
                     if (data.TechnologyTree[i].type == "religion")
                         turns = Mathf.FloorToInt(data.TechnologyTree[i].time * (1 - _religion.value / 100f));
@@ -552,12 +532,9 @@ public class Civilisation : MonoBehaviour
                         turns = Mathf.FloorToInt(data.TechnologyTree[i].time * (1 - _science.value / 100f));
                     else if (data.TechnologyTree[i].type == "conquest")
                         turns = Mathf.FloorToInt(data.TechnologyTree[i].time * (1 - _conquest.value / 100f));
-                    if (learnable)
-                    {
-                        _autoTechText.text = "New Tech : " + data.TechnologyTree[i].name + Environment.NewLine +
+                    _autoTechText.text = "New Tech : " + data.TechnologyTree[i].name + Environment.NewLine +
                                              "Years : " + turns;
-                        break;
-                    }
+                    break;
                 }
                 _autoTechText.text = "No new technology.";
             }
