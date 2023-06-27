@@ -32,8 +32,20 @@ public class GridManager : MonoBehaviour
                     (_square.Size.y / 2f + j * _square.Size.y) * rect.localScale.y, 0);
                 Square cur = obj.GetComponent<Square>();
                 _grid[i][j] = cur;
+                if (i > 0)
+                {
+                    cur.Sides[0] = _grid[i - 1][j];
+                    _grid[i - 1][j].Sides[2] = cur;
+                }
+
+                if (j > 0)
+                {
+                    cur.Sides[1] = _grid[i][j - 1];
+                    _grid[i][j - 1].Sides[3] = cur;
+                }
                 cur.Coords = new Vector2Int(i, j);
-                if (_nbCiv < _maxCiv && Random.Range(0, 75) < 3)
+                cur.name = cur.Coords.ToString();
+                if (_nbCiv < _maxCiv && Random.Range(0, 70) < 3)
                 {
                     Civilisation civ = Instantiate(_civilisation, transform);
                     civ.name = _nbCiv.ToString();
@@ -41,6 +53,10 @@ public class GridManager : MonoBehaviour
                     cur.Content = civ.gameObject;
                     civ.gameObject.layer = default;
                     _nbCiv++;
+                }
+                if (Player.Instance.playerPos == null && Random.Range(0, 75) < 2)
+                {
+                    Player.Instance.playerPos = cur;
                 }
             }
         }

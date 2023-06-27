@@ -14,12 +14,14 @@ using Random = UnityEngine.Random;
 public class Player : MonoBehaviour
 {
     public static Player Instance;
-    public JsonParser.Data data;
-    public int turn = 0;
+    [FormerlySerializedAs("Data")] public JsonParser.Data data;
+    [FormerlySerializedAs("Turn")] public int turn = 0;
+    [FormerlySerializedAs("PlayerPos")] public Square playerPos = null;
+    public List<Square> currentPath;
     private Civilisation[] _civilisations;
-    private RaycastHit2D hit;
-    private float turns = 0;
-    private TextMeshProUGUI turnText;
+    private RaycastHit2D _hit;
+    private float _turns = 0;
+    private TextMeshProUGUI _turnText;
     [SerializeField] private GameObject _prefabWordKeeper;
     [SerializeField] private Transform _parent;
     public bool debug;
@@ -35,7 +37,7 @@ public class Player : MonoBehaviour
     {
         for (int i = 0; i < _civilisations.Length; i++)
             _civilisations[i].AddTurn();
-        turnText.text = "Year " + turn;
+        _turnText.text = "Year " + turn;
     }
 
     private void Awake()
@@ -43,7 +45,7 @@ public class Player : MonoBehaviour
         // hit = new RaycastHit2D();
         Instance = this;
         _wordKeepers = new List<GameObject>();
-        turnText = GameObject.FindWithTag("Turn").GetComponent<TextMeshProUGUI>();
+        _turnText = GameObject.FindWithTag("Turn").GetComponent<TextMeshProUGUI>();
         if (debug || !File.Exists(Application.persistentDataPath + "/" + gameObject.name + ".save"))
         {
             data = JsonParser.Instance.GetData();
@@ -87,7 +89,7 @@ public class Player : MonoBehaviour
         else
         {
             if (PlayerPrefs.HasKey("year"))
-                turns = PlayerPrefs.GetInt("year");
+                _turns = PlayerPrefs.GetInt("year");
             if (PlayerPrefs.HasKey("debug"))
                 debug = bool.Parse(PlayerPrefs.GetString("debug"));
             if (File.Exists(Application.persistentDataPath + "/" + gameObject.name + ".save"))
@@ -190,10 +192,10 @@ public class Player : MonoBehaviour
     
     void Update()
     {
-        turns += Time.deltaTime;
-        if (turn != (int)(turns))
+        _turns += Time.deltaTime;
+        if (turn != (int)(_turns))
         {
-            turn = (int)(turns);
+            turn = (int)(_turns);
             AddTurn();
         }
 
@@ -210,6 +212,14 @@ public class Player : MonoBehaviour
             if (_open)
                 go.SetActive(false);
             _turnPast = Random.Range(10, 20);
+        }
+
+        if (currentPath != null && currentPath.Count > 0)
+        {
+            foreach (Square square in currentPath)
+            {
+                square.image.color = Color.white;
+            }
         }
     }
 }
