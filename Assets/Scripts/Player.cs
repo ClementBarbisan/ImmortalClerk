@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     private List<GameObject> _wordKeepers;
     private bool _open;
     private GridManager _grid;
+    public Vector2Int playerCoords = new Vector2Int(10, 10);
 
     public void AddTurn()
     {

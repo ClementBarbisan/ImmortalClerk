@@ -177,7 +177,7 @@ MonoBehaviour:
   _civilisation: {fileID: 4605251191362162671, guid: a282f7a19fe3b1a4c9d7921e009b867f,
     type: 3}
   _square: {fileID: 1119758791114995898, guid: 44850d3fa68d5b1418f39257b5349dc1, type: 3}
-  _size: {x: 10, y: 10}
+  _size: {x: 20, y: 20}
   _maxCiv: 3
 --- !u!222 &7035898
 CanvasRenderer:
@@ -827,12 +827,15 @@ MonoBehaviour:
   data:
     TechnologyTree: []
   turn: 0
+  playerPos: {fileID: 0}
+  currentPath: []
   _prefabWordKeeper: {fileID: 6797882220972824072, guid: f963f762af685694f8c01f9f0330e7fe,
     type: 3}
   _parent: {fileID: 60867420}
   debug: 1
   wordKeep: 1
   lastTurn: 0
+  playerCoords: {x: 10, y: 10}
 --- !u!1 &1263358401
 GameObject:
   m_ObjectHideFlags: 0

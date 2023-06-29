@@ -54,7 +54,7 @@ public class GridManager : MonoBehaviour
                     civ.gameObject.layer = default;
                     _nbCiv++;
                 }
-                if (Player.Instance.playerPos == null && Random.Range(0, 75) < 2)
+                if (Player.Instance.playerPos == null && Player.Instance.playerCoords == cur.Coords)
                 {
                     Player.Instance.playerPos = cur;
                 }
