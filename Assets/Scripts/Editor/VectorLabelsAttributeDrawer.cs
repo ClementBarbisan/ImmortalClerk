@@ -6,17 +6,18 @@ public class VectorLabelsAttributeDrawer : PropertyDrawer
 {
     private static readonly GUIContent[] defaultLabels = new GUIContent[] { new GUIContent("X"), new GUIContent("Y"), new GUIContent("Z"), new GUIContent("W") };
 
+    int factor = 1;
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
-        int factor = 3;
+        factor = 4;
         if (property.propertyType == SerializedPropertyType.Vector2Int || property.propertyType == SerializedPropertyType.Vector2)
         {
-            factor = 2;
+            factor = 3;
         }
         else if (property.propertyType == SerializedPropertyType.Vector4)
         {
-            factor = 4;
+            factor = 5;
         }
         return (factor * base.GetPropertyHeight(property, label));
     }
@@ -65,11 +66,11 @@ public class VectorLabelsAttributeDrawer : PropertyDrawer
         // Get the rect of the main label
         Rect mainLabelRect = rect;
         mainLabelRect.width = EditorGUIUtility.labelWidth;
-        mainLabelRect.height *= 0.2f;
+        mainLabelRect.height /= factor;
 
         // Get the size of each field rect
         Rect fieldRect = rect;
-        fieldRect.height *= 0.2f;
+        fieldRect.height /= factor;
         fieldRect.width = rect.width;
         EditorGUI.LabelField(mainLabelRect, mainLabel);
 
