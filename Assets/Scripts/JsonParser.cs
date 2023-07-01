@@ -25,8 +25,9 @@ public class JsonParser : MonoBehaviour
     [Serializable]
     public struct Data
     {
-        public List<Technos> TechnologyTree;
+        public List<JsonParser.Technos> TechnologyTree;
     };
+
     [Serializable]
     public class Word
     {
@@ -66,14 +67,14 @@ public class JsonParser : MonoBehaviour
         public Vector4 limits;
     };
 
-    public Data data;
+    public TechTree data;
     [FormerlySerializedAs("nameFile")] [SerializeField] private string _nameFile;
 
     private void Update()
     {
         if (Load)
         {
-            data = JsonUtility.FromJson<Data>(Resources.Load<TextAsset>(_nameFile).text);
+            data.Data = JsonUtility.FromJson<Data>(Resources.Load<TextAsset>(_nameFile).text);
             Load = false;
         }
 
@@ -99,7 +100,7 @@ public class JsonParser : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        data = JsonUtility.FromJson<Data>(Resources.Load<TextAsset>(_nameFile).text);
+        data.Data = JsonUtility.FromJson<Data>(Resources.Load<TextAsset>(_nameFile).text);
     }
 
     public Data GetData()
