@@ -37,7 +37,9 @@ public class JsonParser : MonoBehaviour
         }
 
         public string name;
+        [VectorLabels("Religion", "Social", "Science", "Conquest")]
         public Vector4 value;
+        [HideInInspector]
         public bool useable;
     }
 
@@ -62,8 +64,11 @@ public class JsonParser : MonoBehaviour
         public WordsStruct words;
         public string type;
         public float time;
+        [HideInInspector]
         public bool useable;
+        [HideInInspector]
         public bool learned;
+        [VectorLabels("Religion", "Social", "Science", "Conquest")]
         public Vector4 limits;
     };
 
