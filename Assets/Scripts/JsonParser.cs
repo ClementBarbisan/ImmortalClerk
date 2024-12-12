@@ -79,7 +79,8 @@ public class JsonParser : MonoBehaviour
     {
         if (Load)
         {
-            data.Data = JsonUtility.FromJson<Data>(Resources.Load<TextAsset>(_nameFile).text);
+            string dataText = Resources.Load<TextAsset>(_nameFile).text;
+            data.Data = JsonUtility.FromJson<Data>(dataText);
             Load = false;
         }
 
