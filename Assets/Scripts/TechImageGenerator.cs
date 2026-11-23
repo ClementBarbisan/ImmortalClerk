@@ -42,6 +42,9 @@ public class TechImageGenerator
     public int steps = 4;
     [Tooltip("How far a new image may move away from the blended parent images (0 = copy, 1 = ignore them).")]
     [Range(0f, 1f)] public float denoisingStrength = 0.75f;
+    [Tooltip("GPU memory (MB) Forge keeps free for generating. Higher keeps less of the model on the GPU: slightly " +
+             "slower steps, but no 10x stalls when Unity and other apps also use the 8 GB GPU.")]
+    public int gpuReserveMb = 3072;
     public int timeoutSeconds = 600;
     [Tooltip("How long to keep retrying while the server is still starting up.")]
     public int serverStartupWaitSeconds = 300;
@@ -79,7 +82,14 @@ public class TechImageGenerator
         return prompt.ToString();
     }
 
-    private string DescribeLeanings(Vector4 values)
+    /// <summary>Image prompt from the chronicler's description of the scene, in the shared style.</summary>
+    public string BuildScenePrompt(string scene)
+    {
+        return scene.Trim() + " Style: " + styleDescription + ".";
+    }
+
+    /// <summary>The civilisation's two strongest leanings, as a sentence.</summary>
+    public string DescribeLeanings(Vector4 values)
     {
         List<KeyValuePair<float, string>> traits = new List<KeyValuePair<float, string>>
         {
@@ -316,7 +326,9 @@ public class TechImageGenerator
         }
 
         StringBuilder options = new StringBuilder("{\"sd_model_checkpoint\":\"")
-            .Append(EscapeJson(checkpointFile)).Append("\",\"forge_additional_modules\":[");
+            .Append(EscapeJson(checkpointFile))
+            .Append("\",\"forge_inference_memory\":").Append(gpuReserveMb.ToString(CultureInfo.InvariantCulture))
+            .Append(",\"forge_additional_modules\":[");
         for (int i = 0; i < paths.Count; i++)
             options.Append(i > 0 ? "," : "").Append('"').Append(EscapeJson(paths[i])).Append('"');
         options.Append("]}");

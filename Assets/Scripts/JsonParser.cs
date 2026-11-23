@@ -26,6 +26,8 @@ public class JsonParser : MonoBehaviour
     public struct Data
     {
         public List<JsonParser.Technos> TechnologyTree;
+        /// <summary>How this civilisation settled its land, written by the chronicler at the start of a game.</summary>
+        public string origin;
     };
 
     [Serializable]
@@ -73,6 +75,9 @@ public class JsonParser : MonoBehaviour
         /// <summary>The words that led this civilisation to the technology, used in its image prompts.</summary>
         [HideInInspector]
         public string imagePhrase;
+        /// <summary>How this civilisation came to the technology, written by the chronicler.</summary>
+        [HideInInspector]
+        public string story;
     };
 
     public TechTree data;

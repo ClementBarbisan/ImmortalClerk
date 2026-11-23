@@ -43,8 +43,101 @@ public static class ImageServerLauncher
     private static void OnPlayModeStateChanged(PlayModeStateChange state)
     {
         if (state == PlayModeStateChange.ExitingEditMode && AutoLaunch)
+        {
             StartServer();
+            StartStoryServer();
+        }
     }
+
+    // ---------------------------------------------------------------- Ollama (story interpreter)
+
+    private const string OllamaFolderKey = "ImmortalClerk.Ollama.Folder";
+    private const string OllamaProcessIdKey = "ImmortalClerk.Ollama.ProcessId";
+    private const int OllamaPort = 11434;
+
+    /// <summary>Portable Ollama folder (the one holding ollama.exe). Defaults to "ollama" next to Assets.</summary>
+    private static string OllamaFolder
+    {
+        get => EditorPrefs.GetString(OllamaFolderKey,
+            Path.GetFullPath(Path.Combine(Application.dataPath, "..", "ollama")));
+        set => EditorPrefs.SetString(OllamaFolderKey, value);
+    }
+
+    /// <summary>Starts Ollama for the story interpreter: on the CPU, with its models kept in its own folder.</summary>
+    [MenuItem("Tools/Image Server/Start Story Server")]
+    public static void StartStoryServer()
+    {
+        if (IsListening(OllamaPort) || IsAlive(OllamaProcessIdKey))
+            return;
+        string folder = OllamaFolder;
+        if (!File.Exists(Path.Combine(folder, "ollama.exe")))
+        {
+            Debug.LogWarning("[ImageServer] No ollama.exe in " + folder +
+                             ". Set its folder with Tools > Image Server > Set Ollama Folder.");
+            return;
+        }
+
+        try
+        {
+            string arguments = "/c set \"OLLAMA_MODELS=" + Path.Combine(folder, "models") + "\"" +
+                               " && set \"OLLAMA_HOST=" + Host + ":" + OllamaPort + "\"" +
+                               " && set \"CUDA_VISIBLE_DEVICES=-1\"" +
+                               " && \"" + Path.Combine(folder, "ollama.exe") + "\" serve";
+            Process process = Process.Start(new ProcessStartInfo("cmd.exe", arguments)
+            {
+                WorkingDirectory = folder,
+                UseShellExecute = true,
+                WindowStyle = ProcessWindowStyle.Minimized
+            });
+            if (process != null)
+                SessionState.SetInt(OllamaProcessIdKey, process.Id);
+            Debug.Log("[ImageServer] Starting Ollama (story interpreter) from " + folder + ".");
+        }
+        catch (Exception e)
+        {
+            Debug.LogWarning("[ImageServer] Couldn't start Ollama: " + e.Message);
+        }
+    }
+
+    [MenuItem("Tools/Image Server/Set Ollama Folder...")]
+    private static void SetOllamaFolder()
+    {
+        string folder = EditorUtility.OpenFolderPanel("Ollama folder (the one with ollama.exe)", OllamaFolder, "");
+        if (!string.IsNullOrEmpty(folder))
+            OllamaFolder = folder;
+    }
+
+    private static bool IsListening(int port)
+    {
+        try
+        {
+            using (TcpClient client = new TcpClient())
+            {
+                return client.ConnectAsync(Host, port).Wait(300) && client.Connected;
+            }
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+    private static bool IsAlive(string processIdKey)
+    {
+        int id = SessionState.GetInt(processIdKey, 0);
+        if (id == 0)
+            return false;
+        try
+        {
+            return !Process.GetProcessById(id).HasExited;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+    // ---------------------------------------------------------------- Forge (images)
 
     [MenuItem("Tools/Image Server/Start Server")]
     public static void StartServer()

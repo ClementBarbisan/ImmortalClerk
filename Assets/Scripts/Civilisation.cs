@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -42,6 +43,10 @@ public class Civilisation : MonoBehaviour
     private bool _techFound = false;
     [FormerlySerializedAs("_done")] public bool done = false;
     [SerializeField] private TechImageGenerator _imageGenerator = new TechImageGenerator();
+    [SerializeField] private StoryInterpreter _storyInterpreter = new StoryInterpreter();
+    /// <summary>This civilisation's technologies that have a story, in the order the stories were written.</summary>
+    private readonly List<JsonParser.Technos> _chronicle = new List<JsonParser.Technos>();
+    private TextMeshProUGUI _chronicleText;
     private readonly Dictionary<string, Sprite> _techSprites = new Dictionary<string, Sprite>();
     private bool _freshStart;
     private RectTransform _researchPanel;
@@ -161,6 +166,14 @@ public class Civilisation : MonoBehaviour
         }
 
         BuildResearchPanel();
+        // Stories from a loaded game, in tech tree order.
+        _chronicle.AddRange(data.TechnologyTree.FindAll(x => !string.IsNullOrEmpty(x.story)));
+        BuildChroniclePanel();
+        UpdateChroniclePanel();
+        if (string.IsNullOrEmpty(data.origin))
+            Player.Instance.StartCoroutine(TellOrigin());
+        else
+            LoadEmblem();
         UpdateResearchPanel();
     }
 
@@ -219,7 +232,7 @@ public class Civilisation : MonoBehaviour
         _researchPanel = panel.GetComponent<RectTransform>();
         _researchPanel.SetParent(_open.transform, false);
         _researchPanel.anchorMin = new Vector2(0.035f, 0.05f);
-        _researchPanel.anchorMax = new Vector2(0.335f, 0.45f);
+        _researchPanel.anchorMax = new Vector2(0.335f, 0.23f);
         _researchPanel.offsetMin = Vector2.zero;
         _researchPanel.offsetMax = Vector2.zero;
         HorizontalLayoutGroup layout = panel.AddComponent<HorizontalLayoutGroup>();
@@ -229,6 +242,84 @@ public class Civilisation : MonoBehaviour
         layout.childControlHeight = true;
         layout.childForceExpandWidth = false;
         layout.childForceExpandHeight = false;
+    }
+
+    /// <summary>
+    /// Scrollable panel above the research row with this civilisation's stories, newest first,
+    /// styled like the result panel.
+    /// </summary>
+    private void BuildChroniclePanel()
+    {
+        GameObject panel = new GameObject("Chronicle", typeof(RectTransform), typeof(Image), typeof(ScrollRect));
+        RectTransform panelRect = panel.GetComponent<RectTransform>();
+        panelRect.SetParent(_open.transform, false);
+        panelRect.anchorMin = new Vector2(0.035f, 0.25f);
+        panelRect.anchorMax = new Vector2(0.335f, 0.48f);
+        panelRect.offsetMin = Vector2.zero;
+        panelRect.offsetMax = Vector2.zero;
+        Image background = panel.GetComponent<Image>();
+        Image resultBackground = _resultPanel.GetComponent<Image>();
+        if (resultBackground != null)
+        {
+            background.sprite = resultBackground.sprite;
+            background.type = resultBackground.type;
+            background.color = resultBackground.color;
+        }
+
+        GameObject viewport = new GameObject("Viewport", typeof(RectTransform), typeof(RectMask2D));
+        RectTransform viewportRect = viewport.GetComponent<RectTransform>();
+        viewportRect.SetParent(panelRect, false);
+        viewportRect.anchorMin = Vector2.zero;
+        viewportRect.anchorMax = Vector2.one;
+        viewportRect.offsetMin = new Vector2(8f, 8f);
+        viewportRect.offsetMax = new Vector2(-8f, -8f);
+
+        GameObject content = new GameObject("Content", typeof(RectTransform), typeof(VerticalLayoutGroup),
+            typeof(ContentSizeFitter));
+        RectTransform contentRect = content.GetComponent<RectTransform>();
+        contentRect.SetParent(viewportRect, false);
+        contentRect.anchorMin = new Vector2(0f, 1f);
+        contentRect.anchorMax = new Vector2(1f, 1f);
+        contentRect.pivot = new Vector2(0.5f, 1f);
+        contentRect.sizeDelta = Vector2.zero;
+        VerticalLayoutGroup layout = content.GetComponent<VerticalLayoutGroup>();
+        layout.childControlWidth = true;
+        layout.childControlHeight = true;
+        layout.childForceExpandWidth = true;
+        layout.childForceExpandHeight = false;
+        content.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+
+        GameObject textObject = new GameObject("Text", typeof(RectTransform));
+        textObject.transform.SetParent(contentRect, false);
+        _chronicleText = textObject.AddComponent<TextMeshProUGUI>();
+        _chronicleText.font = _autoTechText.font;
+        _chronicleText.color = _autoTechText.color;
+        _chronicleText.fontSize = 14f;
+        _chronicleText.alignment = TextAlignmentOptions.TopLeft;
+        _chronicleText.textWrappingMode = TextWrappingModes.Normal;
+        _chronicleText.raycastTarget = false;
+
+        ScrollRect scroll = panel.GetComponent<ScrollRect>();
+        scroll.content = contentRect;
+        scroll.viewport = viewportRect;
+        scroll.horizontal = false;
+        scroll.vertical = true;
+        scroll.movementType = ScrollRect.MovementType.Clamped;
+        scroll.scrollSensitivity = 20f;
+    }
+
+    private void UpdateChroniclePanel()
+    {
+        if (_chronicleText == null)
+            return;
+        StringBuilder text = new StringBuilder("<b>Chronicle</b>");
+        if (_chronicle.Count == 0 && string.IsNullOrEmpty(data.origin))
+            text.Append("\n<i>The chronicler is listening to their elders...</i>");
+        for (int i = _chronicle.Count - 1; i >= 0; i--)
+            text.Append("\n\n<b>").Append(_chronicle[i].name).Append("</b> — ").Append(_chronicle[i].story);
+        if (!string.IsNullOrEmpty(data.origin))
+            text.Append("\n\n<b>Origins</b> — ").Append(data.origin);
+        _chronicleText.text = text.ToString();
     }
 
     private ResearchItem CreateResearchItem(string techName)
@@ -249,20 +340,20 @@ public class Civilisation : MonoBehaviour
         image.preserveAspect = true;
         image.raycastTarget = false;
         LayoutElement imageSize = imageObject.AddComponent<LayoutElement>();
-        imageSize.preferredWidth = 120f;
-        imageSize.preferredHeight = 120f;
+        imageSize.preferredWidth = 80f;
+        imageSize.preferredHeight = 80f;
 
         GameObject labelObject = new GameObject("Label", typeof(RectTransform));
         labelObject.transform.SetParent(root.transform, false);
         TextMeshProUGUI label = labelObject.AddComponent<TextMeshProUGUI>();
         label.font = _autoTechText.font;
         label.color = _autoTechText.color;
-        label.fontSize = 18f;
+        label.fontSize = 14f;
         label.alignment = TextAlignmentOptions.Center;
         label.raycastTarget = false;
         LayoutElement labelSize = labelObject.AddComponent<LayoutElement>();
-        labelSize.preferredWidth = 120f;
-        labelSize.preferredHeight = 44f;
+        labelSize.preferredWidth = 90f;
+        labelSize.preferredHeight = 36f;
 
         return new ResearchItem { root = root, image = image, label = label };
     }
@@ -310,8 +401,9 @@ public class Civilisation : MonoBehaviour
     }
 
     /// <summary>
-    /// Starts generating this civilisation's image for a technology it begins to research,
-    /// from the words used and the images of the technologies it comes from.
+    /// Starts generating this civilisation's image for a technology it begins to research:
+    /// the chronicler first writes how it came to it, then its image is painted from that story
+    /// and the images of the technologies it comes from.
     /// </summary>
     private void RequestTechImage(JsonParser.Technos tech, List<string> parentTechs, string phrase)
     {
@@ -321,30 +413,206 @@ public class Civilisation : MonoBehaviour
 
         List<string> parentPhrases = new List<string>();
         List<Sprite> parentImages = new List<Sprite>();
+        StoryInterpreter.Context context = BuildStoryContext(tech.name, phrase);
+        if (!string.IsNullOrEmpty(data.origin))
+            context.history.Add("origins: " + data.origin);
         foreach (string parentName in new HashSet<string>(parentTechs))
         {
             JsonParser.Technos parent = data.TechnologyTree.Find(x => x.name == parentName);
             if (parent != null && !string.IsNullOrEmpty(parent.imagePhrase))
                 parentPhrases.Add(parent.imagePhrase);
+            if (parent != null && !string.IsNullOrEmpty(parent.story))
+                context.history.Add(parent.name + ": " + parent.story);
             Sprite parentImage = GetTechSprite(parentName);
             if (parentImage != null)
                 parentImages.Add(parentImage);
         }
+        // Plus the latest entry of this civilisation's chronicle, if it isn't already there.
+        if (_chronicle.Count > 0)
+        {
+            JsonParser.Technos latest = _chronicle[_chronicle.Count - 1];
+            string entry = latest.name + ": " + latest.story;
+            if (!context.history.Contains(entry))
+                context.history.Add(entry);
+        }
 
-        string techName = tech.name;
-        string prompt = _imageGenerator.BuildPrompt(techName, phrase, parentPhrases, _currentValues,
+        // Taken now: the values just changed by these words are part of how the tech was learned.
+        string fallbackPrompt = _imageGenerator.BuildPrompt(tech.name, phrase, parentPhrases, _currentValues,
             parentImages.Count > 0);
         // Run on the Player: civilisations get deactivated while another one is open, which would stop the coroutine.
-        Player.Instance.StartCoroutine(_imageGenerator.Generate(techName, prompt, parentImages,
-            TechImageGenerator.ImagePath(gameObject.name, techName),
-            texture =>
+        Player.Instance.StartCoroutine(ChronicleAndPaint(tech, context, fallbackPrompt, parentImages));
+    }
+
+    private IEnumerator ChronicleAndPaint(JsonParser.Technos tech, StoryInterpreter.Context context,
+        string fallbackPrompt, List<Sprite> parentImages)
+    {
+        string techName = tech.name;
+        string prompt = fallbackPrompt;
+        yield return _storyInterpreter.Interpret(context, story =>
+        {
+            if (story == null)
+                return;
+            tech.story = story.story;
+            if (this != null)
             {
-                Sprite sprite = TechImageLibrary.ToSprite(texture);
+                _chronicle.Remove(tech);
+                _chronicle.Add(tech);
+                UpdateChroniclePanel();
+                Notifications.Instance.gameObject.SetActive(true);
+                Notifications.Instance.TimeVisible += 2.5f;
+                Notifications.Instance.AddText(context.civilisation + " tells the story of " + techName + ".");
+            }
+            prompt = _imageGenerator.BuildScenePrompt(story.image);
+            Debug.Log("[Chronicle] " + context.civilisation + " — " + techName + ": " + story.story +
+                      "\nImage: " + story.image);
+        });
+
+        string path = TechImageGenerator.ImagePath(context.folder, techName);
+        yield return _imageGenerator.Generate(techName, prompt, parentImages, path, texture =>
+        {
+            Sprite sprite = TechImageLibrary.ToSprite(texture);
+            if (this != null)
+                _techSprites[techName] = sprite;
+            // Refreshes every civilisation's lists and research row, and the word keeper's next popup.
+            TechImageLibrary.SetLatestSprite(techName, sprite);
+        });
+    }
+
+    /// <summary>
+    /// At the start of a game, the chronicler tells how this civilisation settled its part of the map,
+    /// from its land, its neighbours, its values and its first knowledge (the starting techs and their words).
+    /// </summary>
+    private IEnumerator TellOrigin()
+    {
+        List<string> knowledge = new List<string>();
+        List<string> words = new List<string>();
+        foreach (JsonParser.Technos tech in data.TechnologyTree)
+        {
+            if (tech.dependances.Count > 0)
+                continue;
+            knowledge.Add(tech.name);
+            foreach (JsonParser.Word word in tech.words.subjects) words.Add(word.name);
+            foreach (JsonParser.Word word in tech.words.verbs) words.Add(word.name);
+            foreach (JsonParser.Word word in tech.words.objects) words.Add(word.name);
+        }
+        StoryInterpreter.Context context = BuildStoryContext(string.Join(", ", knowledge), string.Join(", ", words));
+        context.origin = true;
+        context.knowledge = knowledge;
+        StoryInterpreter.Story origin = null;
+        yield return _storyInterpreter.Interpret(context, story => origin = story);
+        if (origin == null || this == null)
+            yield break;
+
+        data.origin = origin.story;
+        UpdateChroniclePanel();
+        Notifications.Instance.gameObject.SetActive(true);
+        Notifications.Instance.TimeVisible += 2.5f;
+        Notifications.Instance.AddText(context.civilisation + " tells of its origins.");
+        Debug.Log("[Chronicle] " + context.civilisation + " — origins: " + origin.story +
+                  "\nLand: " + context.land + "\nNeighbours: " + context.neighbours + "\nEmblem: " + origin.image);
+
+        if (!_imageGenerator.enabled)
+            yield break;
+        string folder = context.folder;
+
+        // The emblem goes on the civilisation's button on the map.
+        yield return _imageGenerator.Generate("emblem of " + context.civilisation,
+            _imageGenerator.BuildScenePrompt(origin.image), new List<Sprite>(),
+            TechImageGenerator.ImagePath(folder, EmblemName), texture =>
+            {
                 if (this != null)
-                    _techSprites[techName] = sprite;
-                // Refreshes every civilisation's lists and research row, and the word keeper's next popup.
-                TechImageLibrary.SetLatestSprite(techName, sprite);
-            }));
+                    ShowEmblem(TechImageLibrary.ToSprite(texture));
+            });
+
+        // Its own version of each first knowledge, grown from the image every civilisation starts with.
+        foreach (string techName in knowledge)
+        {
+            string scene = origin.knowledgeScenes.TryGetValue(techName, out string written)
+                ? written
+                : "A symbol for " + techName + ", painted by a people of this land. " + context.land;
+            List<Sprite> parents = new List<Sprite>();
+            Sprite shared = TechImageLibrary.GetStartSprite(techName);
+            if (shared != null)
+                parents.Add(shared);
+            string name = techName;
+            yield return _imageGenerator.Generate(name + " of " + context.civilisation,
+                _imageGenerator.BuildScenePrompt(scene), parents, TechImageGenerator.ImagePath(folder, name),
+                texture =>
+                {
+                    Sprite sprite = TechImageLibrary.ToSprite(texture);
+                    if (this != null)
+                        _techSprites[name] = sprite;
+                    // Refreshes the lists, the research row and the word keeper.
+                    TechImageLibrary.SetLatestSprite(name, sprite);
+                });
+        }
+    }
+
+    private const string EmblemName = "_emblem";
+    private Image _emblem;
+
+    /// <summary>
+    /// Shows the civilisation's emblem above its button on the map. Clicks on it reach the button.
+    /// </summary>
+    private void ShowEmblem(Sprite sprite)
+    {
+        if (_emblem == null)
+        {
+            GameObject emblem = new GameObject("Emblem", typeof(RectTransform));
+            RectTransform rect = emblem.GetComponent<RectTransform>();
+            rect.SetParent(OpenButton.transform, false);
+            rect.anchorMin = new Vector2(0.5f, 1f);
+            rect.anchorMax = new Vector2(0.5f, 1f);
+            rect.pivot = new Vector2(0.5f, 0f);
+            rect.anchoredPosition = new Vector2(0f, 4f);
+            rect.sizeDelta = new Vector2(64f, 64f);
+            _emblem = emblem.AddComponent<Image>();
+            _emblem.preserveAspect = true;
+        }
+        _emblem.sprite = sprite;
+    }
+
+    /// <summary>The emblem saved with a loaded game.</summary>
+    private void LoadEmblem()
+    {
+        string path = TechImageGenerator.ImagePath(gameObject.name, EmblemName);
+        if (!File.Exists(path))
+            return;
+        Texture2D texture = new Texture2D(2, 2);
+        if (texture.LoadImage(File.ReadAllBytes(path)))
+            ShowEmblem(TechImageLibrary.ToSprite(texture));
+    }
+
+    /// <summary>
+    /// What the chronicler knows about this civilisation: where it is on the map, its neighbours and its values.
+    /// </summary>
+    private StoryInterpreter.Context BuildStoryContext(string technology, string words)
+    {
+        Vector2 position = MapPosition(this);
+        List<KeyValuePair<string, Vector2>> others = new List<KeyValuePair<string, Vector2>>();
+        foreach (Civilisation civ in FindObjectsByType<Civilisation>(FindObjectsInactive.Include,
+                     FindObjectsSortMode.None))
+        {
+            if (civ != this)
+                others.Add(new KeyValuePair<string, Vector2>("Civilisation " + civ.gameObject.name, MapPosition(civ)));
+        }
+        return new StoryInterpreter.Context
+        {
+            folder = gameObject.name,
+            civilisation = "Civilisation " + gameObject.name,
+            land = StoryInterpreter.DescribeLand(position),
+            neighbours = StoryInterpreter.DescribeNeighbours(position, others),
+            values = _imageGenerator.DescribeLeanings(_currentValues),
+            technology = technology,
+            words = words
+        };
+    }
+
+    /// <summary>Where a civilisation's button sits on the map, from 0,0 (bottom left) to 1,1 (top right).</summary>
+    private static Vector2 MapPosition(Civilisation civ)
+    {
+        Vector3 position = civ.OpenButton.transform.position;
+        return new Vector2(Mathf.Clamp01(position.x / Screen.width), Mathf.Clamp01(position.y / Screen.height));
     }
 
     public void AddTurn()
