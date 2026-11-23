@@ -16,8 +16,6 @@ public class Player : MonoBehaviour
     public static Player Instance;
     [FormerlySerializedAs("Data")] public JsonParser.Data data;
     [FormerlySerializedAs("Turn")] public int turn = 0;
-    [FormerlySerializedAs("PlayerPos")] public Square playerPos = null;
-    public List<Square> currentPath;
     private Civilisation[] _civilisations;
     private RaycastHit2D _hit;
     private float _turns = 0;
@@ -31,8 +29,6 @@ public class Player : MonoBehaviour
     public int lastTurn;
     private List<GameObject> _wordKeepers;
     private bool _open;
-    private GridManager _grid;
-    public Vector2Int playerCoords = new Vector2Int(10, 10);
 
     public void AddTurn()
     {
@@ -45,6 +41,9 @@ public class Player : MonoBehaviour
     {
         // hit = new RaycastHit2D();
         Instance = this;
+        // A UI game doesn't need more; rendering uncapped heats the GPU that also generates the tech images.
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 30;
         _wordKeepers = new List<GameObject>();
         _turnText = GameObject.FindWithTag("Turn").GetComponent<TextMeshProUGUI>();
         if (debug || !File.Exists(Application.persistentDataPath + "/" + gameObject.name + ".save"))
@@ -104,8 +103,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _grid = FindObjectOfType<GridManager>();
-        _grid.CreateGrid();
+        FindObjectOfType<CivilisationSpawner>().SpawnCivilisations();
         _civilisations = FindObjectsOfType<Civilisation>();
     }
 
@@ -213,14 +211,6 @@ public class Player : MonoBehaviour
             if (_open)
                 go.SetActive(false);
             _turnPast = Random.Range(10, 20);
-        }
-
-        if (currentPath != null && currentPath.Count > 0)
-        {
-            foreach (Square square in currentPath)
-            {
-                square.image.color = Color.white;
-            }
         }
     }
 }

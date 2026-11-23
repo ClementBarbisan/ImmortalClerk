@@ -70,6 +70,9 @@ public class JsonParser : MonoBehaviour
         public bool learned;
         [VectorLabels("Religion", "Social", "Science", "Conquest")]
         public Vector4 limits;
+        /// <summary>The words that led this civilisation to the technology, used in its image prompts.</summary>
+        [HideInInspector]
+        public string imagePhrase;
     };
 
     public TechTree data;

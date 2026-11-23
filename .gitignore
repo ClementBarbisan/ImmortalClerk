@@ -60,3 +60,6 @@ crashlytics-build.properties
 
 .idea/
 Immortal/
+
+# Local Stable Diffusion server (Forge), installed next to the project
+/forge/

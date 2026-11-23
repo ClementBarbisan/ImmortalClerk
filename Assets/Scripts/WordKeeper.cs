@@ -106,22 +106,25 @@ public class WordKeeper : MonoBehaviour
         subject.transform.localScale = Vector3.one;
 
         subject.GetComponentInChildren<TextMeshProUGUI>().text = _currentSubject.name;
-        if (Resources.Load<Sprite>(_currentSubject.name))
-            subject.GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>(_currentSubject.name);
+        Sprite subjectSprite = TechImageLibrary.GetWordSprite(_currentSubject.name);
+        if (subjectSprite != null)
+            subject.GetComponentInChildren<Image>().sprite = subjectSprite;
         GameObject verb = Instantiate(_prefabTechno, Vector3.zero, Quaternion.identity, _posVerb);
         verb.GetComponentInChildren<TextMeshProUGUI>().text = _currentVerb.name;
         verb.transform.localPosition = Vector3.zero;
         verb.transform.localScale = Vector3.one;
 
-        if (Resources.Load<Sprite>(_currentVerb.name))
-            verb.GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>(_currentVerb.name);
+        Sprite verbSprite = TechImageLibrary.GetWordSprite(_currentVerb.name);
+        if (verbSprite != null)
+            verb.GetComponentInChildren<Image>().sprite = verbSprite;
         GameObject obj = Instantiate(_prefabTechno, Vector3.zero, Quaternion.identity, _posObject);
         obj.GetComponentInChildren<TextMeshProUGUI>().text = _currentObject.name;
         obj.transform.localPosition = Vector3.zero;
         obj.transform.localScale = Vector3.one;
 
-        if (Resources.Load<Sprite>(_currentObject.name))
-            obj.GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>(_currentObject.name);
+        Sprite objectSprite = TechImageLibrary.GetWordSprite(_currentObject.name);
+        if (objectSprite != null)
+            obj.GetComponentInChildren<Image>().sprite = objectSprite;
         for (int i = 0; i < _data.TechnologyTree.Count; i++)
         {
             if (!_data.TechnologyTree[i].learned)
@@ -201,8 +204,10 @@ public class WordKeeper : MonoBehaviour
                 
             });
             go.GetComponentInChildren<TextMeshProUGUI>().text = _data.TechnologyTree[i].name;
-            if (Resources.Load<Sprite>(_data.TechnologyTree[i].name))
-                go.GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>(_data.TechnologyTree[i].name);
+            // The latest image any civilisation generated for this tech, else its starting image.
+            Sprite techSprite = TechImageLibrary.GetLatestSprite(_data.TechnologyTree[i].name);
+            if (techSprite != null)
+                go.GetComponentInChildren<Image>().sprite = techSprite;
         }
     }
 

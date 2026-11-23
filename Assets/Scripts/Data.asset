@@ -356,7 +356,7 @@ MonoBehaviour:
       limits: {x: 20, y: 0, z: 10, w: 10}
     - name: aeronautic
       dependances:
-      - computimg
+      - computing
       - mecanic
       words:
         subjects: []

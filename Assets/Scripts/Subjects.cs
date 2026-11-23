@@ -50,9 +50,9 @@ public class Subjects : MonoBehaviour
                         go.GetComponentInChildren<TextMeshProUGUI>().text = _civ.data.TechnologyTree[i].name;
                     else
                         go.GetComponentInChildren<TextMeshProUGUI>().text = "";
-                    if (Resources.Load<Sprite>(_civ.data.TechnologyTree[i].name))
-                        go.GetComponentInChildren<Image>().sprite =
-                            Resources.Load<Sprite>(_civ.data.TechnologyTree[i].name);
+                    Sprite techSprite = _civ.GetTechSprite(_civ.data.TechnologyTree[i].name);
+                    if (techSprite != null)
+                        go.GetComponentInChildren<Image>().sprite = techSprite;
                 }
             }
         }
@@ -82,8 +82,9 @@ public class Subjects : MonoBehaviour
             go.GetComponentInChildren<Button>().onClick.AddListener(delegate
             {
                 ChooseSubject(tmpInt, tech); });
-            if (Resources.Load<Sprite>(_civ.data.TechnologyTree[tech].words.subjects[i].name))
-                go.GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>(_civ.data.TechnologyTree[tech].words.subjects[i].name);
+            Sprite wordSprite = TechImageLibrary.GetWordSprite(_civ.data.TechnologyTree[tech].words.subjects[i].name);
+            if (wordSprite != null)
+                go.GetComponentInChildren<Image>().sprite = wordSprite;
             go.transform.SetParent(_panel.transform);
         }
     }
@@ -105,8 +106,9 @@ public class Subjects : MonoBehaviour
         currentWord.type = Word.wordType.subject;
         _civ.tmpSubject = new Vector4(currentWord.word.value[0], currentWord.word.value[1],
                                                                 currentWord.word.value[2],currentWord.word.value[3]);
-        if (Resources.Load<Sprite>(_civ.data.TechnologyTree[tech].words.subjects[index].name))
-            go.GetComponentInChildren<Image>().sprite = Resources.Load<Sprite>(_civ.data.TechnologyTree[tech].words.subjects[index].name);
+        Sprite wordSprite = TechImageLibrary.GetWordSprite(_civ.data.TechnologyTree[tech].words.subjects[index].name);
+        if (wordSprite != null)
+            go.GetComponentInChildren<Image>().sprite = wordSprite;
         go.transform.localPosition = Vector3.zero;
         _panel.SetActive(false);
     }
